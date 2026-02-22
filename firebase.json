@@ -1,0 +1,31 @@
+{
+  "functions": [
+    {
+      "source": "apps/backend",
+      "codebase": "camp42-api",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "pnpm --filter @camp42/backend build"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "apps/web/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "predeploy": [
+      "pnpm --filter @camp42/frontend build"
+    ],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}

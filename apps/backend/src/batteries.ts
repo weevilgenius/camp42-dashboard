@@ -1,31 +1,32 @@
 import { createEcoflowClient } from './libEcoflow.js';
-import { DeviceType } from './EcoflowTypes.js';
+import { BatteryType, type BatteryState } from '@camp42/shared';
 import type { Delta2MaxState, DeltaPro3State } from './EcoflowTypes.js';
 
-export interface BatteryState {
-  type: DeviceType;
-  name: string;
-  sn: string;
-  online: boolean;
-  state: {
-    charge_pct: number;
-    dc_on: boolean;
-    dc_watts: number;
-    ac_on: boolean;
-    ac_watts: number;
-    total_input: number;
-    total_output: number;
-  };
-}
 
-export async function batteryState(accessKey: string, secretKey: string): Promise<[hank: BatteryState, bertha: BatteryState]> {
+export async function getBatteryStates(accessKey: string, secretKey: string): Promise<[hank: BatteryState, bertha: BatteryState]> {
 
   if (!accessKey || !secretKey) {
     throw new Error('Missing Ecoflow accessKey or secretKey');
   }
 
+  // const Bill_Battery: BatteryState = {
+  //   type: BatteryType.River_2_Pro,
+  //   name: "Bill the Pony",
+  //   sn: "R621ZAB6XFCT0320",
+  //   online: false,
+  //   state: {
+  //     charge_pct: -1,
+  //     dc_on: false,
+  //     dc_watts: -1,
+  //     ac_on: false,
+  //     ac_watts: -1,
+  //     total_input: -1,
+  //     total_output: -1,
+  //   },
+  // };
+
   const Hank_Battery: BatteryState = {
-    type: DeviceType.Delta_2_Max,
+    type: BatteryType.Delta_2_Max,
     name: "Hank the Tank",
     sn: "R351ZAB4HF6A0268",
     online: false,
@@ -41,7 +42,7 @@ export async function batteryState(accessKey: string, secretKey: string): Promis
   };
 
   const Bertha_Battery: BatteryState = {
-    type: DeviceType.Delta_3_Pro,
+    type: BatteryType.Delta_3_Pro,
     name: "Big Bertha",
     sn: "MR51ZAS5PG7U0302",
     online: false,

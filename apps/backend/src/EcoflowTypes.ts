@@ -1,13 +1,8 @@
-/* ========================================================= *\
- *  Device types                                              *
-\* ========================================================= */
+import type { BatteryType } from '@camp42/shared';
 
-/** Specific EcoFlow device types. */
-export enum DeviceType {
-  River_2_Pro = "RIVER 2 Pro",
-  Delta_2_Max = "DELTA 2 Max",
-  Delta_3_Pro = "DELTA Pro 3",
-}
+/* ========================================================= *\
+ *  Device info                                              *
+\* ========================================================= */
 
 /** Device info returned by the list-devices endpoint. */
 export interface DeviceInfo {
@@ -22,7 +17,7 @@ export interface DeviceInfo {
 }
 
 /* ========================================================= *\
- *  Sub-interfaces                                            *
+ *  Sub-interfaces                                           *
 \* ========================================================= */
 
 /** Entry in the `bms_kitInfo.watts` array (Delta 2 Max). */
@@ -60,7 +55,7 @@ export interface PvDcChgSettingEntry {
 }
 
 /* ========================================================= *\
- *  River 2 Pro state                                         *
+ *  River 2 Pro state                                        *
 \* ========================================================= */
 
 /** Device state for the RIVER 2 Pro. */
@@ -108,13 +103,13 @@ export interface River2ProState {
 }
 
 /* ========================================================= *\
- *  Delta 2 Max state                                         *
+ *  Delta 2 Max state                                        *
 \* ========================================================= */
 
 /** Device state for the DELTA 2 Max. */
 export interface Delta2MaxState {
   /* ------------------------------------------------------- *\
-   *  pd.* - Power delivery                                   *
+   *  pd.* - Power delivery                                  *
   \* ------------------------------------------------------- */
 
   /** Total input power (W). */
@@ -1381,10 +1376,10 @@ export interface DeltaPro3State {
 
 /** Maps each DeviceType to its state interface. */
 export interface DeviceStateMap {
-  [DeviceType.River_2_Pro]: River2ProState;
-  [DeviceType.Delta_2_Max]: Delta2MaxState;
-  [DeviceType.Delta_3_Pro]: DeltaPro3State;
+  [BatteryType.River_2_Pro]: River2ProState;
+  [BatteryType.Delta_2_Max]: Delta2MaxState;
+  [BatteryType.Delta_3_Pro]: DeltaPro3State;
 }
 
 /** Union of all device state types. */
-export type DeviceState = DeviceStateMap[DeviceType];
+export type DeviceState = DeviceStateMap[BatteryType];

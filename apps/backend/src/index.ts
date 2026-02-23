@@ -1,34 +1,85 @@
-import { batteryState, type BatteryState } from './batteries.js';
+import { logger } from "firebase-functions";
+import { onCall, type CallableOptions, HttpsError } from "firebase-functions/https";
+import { defineBoolean, defineSecret, defineString } from "firebase-functions/params";
+
+import { StatusType } from '@camp42/shared';
+import type {
+  BatteryState,
+  StatusRequest,
+  StatusResponse,
+} from '@camp42/shared';
+import { getBatteryStates } from './batteries.js';
 
 
-function reportBatteryState(battery: BatteryState) {
-  console.log(`
+/* ========================================================= *\
+ *  Config Values                                            *
+\* ========================================================= */
+
+const VERBOSE = defineBoolean('VERBOSE', {
+  description: 'Flag that specifies extra logging, more specific response errors',
+  default: false,
+});
+
+const ECOFLOW_ACCESS_KEY = defineString('ECOFLOW_ACCESS_KEY', {
+  description: 'API key for Ecoflow',
+});
+
+const ECOFLOW_SECRET_KEY = defineSecret('ECOFLOW_SECRET_KEY');
+
+
+/* ========================================================= *\
+ *  Cloud Function                                           *
+\* ========================================================= */
+
+// a Firebase "Callable" function that gets camp status data
+// see https://firebase.google.com/docs/functions/callable?gen=2nd
+const campStatusOpts: CallableOptions<StatusRequest> = {
+  secrets: [ECOFLOW_SECRET_KEY],
+};
+export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campStatusOpts, async (request) => {
+
+  // Because this is a "Callable" function, we don't need to deal with HTTP method or response codes.
+  // SDK will automatically handle authentication and deserialize the request body into request.data
+  if (VERBOSE.value()) { logger.debug('debug parameters', request.data); }
+
+  // what are we being asked to do?
+  switch(request.data.type) {
+
+  // battery status
+  case StatusType.Batteries: {
+    const [hank, bertha] = await getBatteryStates(ECOFLOW_ACCESS_KEY.value(), ECOFLOW_SECRET_KEY.value());
+
+    if (VERBOSE.value()) {
+      debugBatteryState(hank);
+      debugBatteryState(bertha);
+    }
+
+    return {
+      code: "SUCCESS",
+      status: {
+        hank,
+        bertha,
+      },
+    };
+  }
+
+  // weather status
+  case StatusType.Weather:
+    throw new HttpsError("unimplemented", "The weather type has not been implemented");
+
+  // unknown status
+  default:
+    throw new HttpsError("invalid-argument", "Unknown status type: "+ String(request.data.type));
+  }
+
+});
+
+function debugBatteryState(battery: BatteryState) {
+  logger.debug(`
 ${battery.name} is ${battery.online ? 'online. Current state:' : 'offline. Last known state:'}
   ${battery.state.charge_pct}% charged.
   ${battery.state.total_output} watts output, ${battery.state.total_input} watts input
   DC output ${battery.state.dc_on ? "on" : "off"}: ${battery.state.dc_watts} watts
   AC output ${battery.state.ac_on ? "on" : "off"}: ${battery.state.ac_watts} watts`);
 
-}
-
-
-const ecoflowAccessKey = process.env.ECOFLOW_ACCESS_KEY;
-const ecoflowSecretKey = process.env.ECOFLOW_SECRET_KEY;
-
-if (!ecoflowAccessKey || !ecoflowSecretKey) {
-  console.error('Missing ECOFLOW_ACCESS_KEY or ECOFLOW_SECRET_KEY environment variables');
-  process.exit(1);
-}
-
-try {
-  const [hank_battery, bertha_battery] = await batteryState(ecoflowAccessKey, ecoflowSecretKey);
-
-  // report Hank's status
-  reportBatteryState(hank_battery);
-
-  // report Bertha's status
-  reportBatteryState(bertha_battery);
-} catch (err) {
-  console.error(`failed to fetch battery state: ${String(err)}`);
-  process.exitCode = 1;
 }

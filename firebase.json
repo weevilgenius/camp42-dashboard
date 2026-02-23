@@ -26,6 +26,23 @@
     "predeploy": [
       "pnpm --filter @camp42/frontend build"
     ],
-    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
   }
 }

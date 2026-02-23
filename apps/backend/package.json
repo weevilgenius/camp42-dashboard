@@ -9,8 +9,8 @@
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "build": "tsup",
     "lint": "eslint src",
-    "dev": "tsup --watch --onSuccess 'firebase emulators:start --only functions'",
     "check": "pnpm run typecheck && pnpm run lint",
+    "serve": "pnpm run build && cd .. && firebase emulators:start --only functions",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -20,11 +20,11 @@
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^5.0.2",
-    "firebase-admin": "^13.6.1",
     "firebase-functions": "^7.0.5"
   },
   "devDependencies": {
     "@camp42/shared": "workspace:*",
+    "firebase-admin": "^13.6.1",
     "firebase-functions-test": "^3.4.1",
     "tsup": "^8.5.1"
   }

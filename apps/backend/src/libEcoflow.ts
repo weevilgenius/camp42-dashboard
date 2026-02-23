@@ -5,7 +5,7 @@ import type { DeviceInfo } from './EcoflowTypes.js';
 const ECOFLOW_API = "https://api-a.ecoflow.com";
 
 /* ========================================================= *\
- *  Public interface                                          *
+ *  Public interface                                         *
 \* ========================================================= */
 
 /** Common envelope for all EcoFlow API responses. */

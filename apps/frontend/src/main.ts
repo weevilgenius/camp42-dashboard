@@ -1,5 +1,10 @@
 import m from 'mithril';
-import { SystemStatus } from '@camp42/shared';
+
+interface SystemStatus {
+  service: 'ecoflow' | 'tempest' | 'reolink';
+  status: 'online' | 'offline';
+  lastPing: number;
+}
 
 const weatherStation: SystemStatus = {
   service: 'tempest',

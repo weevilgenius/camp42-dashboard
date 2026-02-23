@@ -119,6 +119,15 @@ export default defineConfig(
       // complain about using a computed key with a constant
       "no-useless-computed-key": "warn",
 
+      // warn about importing a type without annotating it as a type only import
+      "@typescript-eslint/consistent-type-imports": ["warn", {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      }],
+
+      // flag import { type A, type B } when all imports are types
+      "@typescript-eslint/no-import-type-side-effects": "warn",
+
       // ==================================================
       // Style/formatting rules
       // ==================================================
@@ -169,7 +178,7 @@ export default defineConfig(
     },
   },
 
-  // 7. BACKEND & SHARED: This is a node environment
+  // BACKEND & SHARED: This is a node environment
   {
     files: [
       'apps/backend/**/*.{ts,mts,cts,js,mjs,cjs}',

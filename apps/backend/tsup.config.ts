@@ -2,9 +2,12 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/index.ts'],
+  target: 'es2022',
+  platform: 'node',
   format: ['esm'],
   clean: true,
   minify: true,
-  // bundle (inline) the workspace package
+  tsconfig: 'tsconfig.app.json',
+  // always inline the shared package
   noExternal: ['@camp42/shared'],
 });

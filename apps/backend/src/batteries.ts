@@ -27,7 +27,7 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
 
   const Hank_Battery: BatteryState = {
     type: BatteryType.Delta_2_Max,
-    name: "Hank the Tank",
+    name: "Hank",
     sn: "R351ZAB4HF6A0268",
     online: false,
     state: {
@@ -43,7 +43,7 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
 
   const Bertha_Battery: BatteryState = {
     type: BatteryType.Delta_3_Pro,
-    name: "Big Bertha",
+    name: "Bertha",
     sn: "MR51ZAS5PG7U0302",
     online: false,
     state: {
@@ -64,11 +64,14 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
   if (devices_request.code === "0" && devices_request.data) {
     for (const device of devices_request.data) {
       const online = device.online === 1;
+      const name = device.deviceName;
       if (device.sn === Hank_Battery.sn) {
         Hank_Battery.online = online;
+        Hank_Battery.name = name;
       }
       if (device.sn === Bertha_Battery.sn) {
         Bertha_Battery.online = online;
+        Bertha_Battery.name = name;
       }
     }
   } else {

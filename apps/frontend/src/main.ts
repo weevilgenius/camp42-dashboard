@@ -6,6 +6,7 @@ import "@awesome.me/webawesome/dist/styles/themes/default.css";
 
 // our components
 import BatteryDashboard from './components/BatteryDashboard.js';
+import WeatherDashboard from './components/WeatherDashboard.js';
 
 
 // Lit (used by Web Awesome components) generates spurious update warnings in development mode only
@@ -47,7 +48,11 @@ registerIconLibrary('material', {
 // main app component
 const Dashboard: m.Component = {
   view: () => {
-    return m('main', [m('h1', 'Camp 42 Dashboard'), m(BatteryDashboard)]);
+    return m('main', [
+      m('h1', 'Camp 42 Dashboard'),
+      m(BatteryDashboard),
+      m(WeatherDashboard),
+    ]);
   },
 };
 

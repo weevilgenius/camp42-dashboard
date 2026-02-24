@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pnpm run:*)",
       "Bash(pnpm exec:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "WebFetch(domain:webawesome.com)"
     ]
   }
 }

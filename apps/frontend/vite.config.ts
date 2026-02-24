@@ -22,6 +22,8 @@ export default defineConfig(() => {
 
   const config: UserConfig = {
     plugins,
+    // Serve apps/frontend/assets/ as static files (weather icons, etc.)
+    publicDir: 'assets',
     build: {
       // browser target
       target: 'baseline-widely-available',

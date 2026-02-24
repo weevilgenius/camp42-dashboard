@@ -1,0 +1,84 @@
+.battery-card {
+  background: var(--wa-color-surface-raised);
+  border: 1px solid var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-large);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.battery-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.battery-card__name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.battery-card__type {
+  color: var(--wa-color-text-quiet);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.battery-card__charge {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.battery-card__charge wa-progress-bar {
+  --indicator-color: var(--wa-color-neutral-fill-loud);
+}
+
+.battery-card__charge wa-progress-bar.good {
+  --indicator-color: var(--wa-color-success-fill-loud);
+}
+
+.battery-card__charge wa-progress-bar.low {
+  --indicator-color: var(--wa-color-warning-fill-loud);
+}
+
+.battery-card__charge wa-progress-bar.empty {
+  --indicator-color: var(--wa-color-danger-fill-loud);
+}
+
+.battery-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.battery-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.battery-card__stat-label {
+  font-size: 0.75rem;
+  color: var(--wa-color-text-quiet);
+  text-transform: uppercase;
+}
+
+.battery-card__stat-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.battery-card__panels {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.battery-card__panel {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.85rem;
+}

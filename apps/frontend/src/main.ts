@@ -1,27 +1,57 @@
 import m from 'mithril';
 
-interface SystemStatus {
-  service: 'ecoflow' | 'tempest' | 'reolink';
-  status: 'online' | 'offline';
-  lastPing: number;
+// Webawesome components
+import { registerIconLibrary } from '@awesome.me/webawesome/dist/webawesome.js';
+import "@awesome.me/webawesome/dist/styles/themes/default.css";
+
+// our components
+import BatteryDashboard from './components/BatteryDashboard.js';
+
+
+// Lit (used by Web Awesome components) generates spurious update warnings in development mode only
+// this does not affect production builds
+if (import.meta.env.DEV) {
+  console.log('silencing lit update warnings');
+  const { LitElement } = await import('lit');
+  LitElement.disableWarning?.('change-in-update');
 }
 
-const weatherStation: SystemStatus = {
-  service: 'tempest',
-  status: 'online',
-  lastPing: Date.now(),
-};
 
-const Dashboard = {
+// detect light/dark mode
+function configureDarkLightTheme() {
+  const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  function manageDarkLightTheme() {
+    if (darkModeQuery.matches) {
+      document.documentElement.classList.add('wa-dark');
+    } else {
+      document.documentElement.classList.remove('wa-dark');
+    }
+  }
+  manageDarkLightTheme();
+  darkModeQuery.addEventListener('change', manageDarkLightTheme);
+}
+configureDarkLightTheme();
+
+// Configure Webawesome icons to use Material Symbols
+registerIconLibrary('material', {
+  resolver: (name) => {
+    const match = name.match(/^(.*?)(_(rounded|sharp))?$/);
+    if (match) {
+      return `https://cdn.jsdelivr.net/npm/@material-symbols/svg-400@0.32.0/${match[3] ?? 'outlined'}/${match[1]}.svg`;
+    }
+    return '';
+  },
+  mutator: (svg) => svg.setAttribute('fill', 'currentColor'),
+});
+
+// main app component
+const Dashboard: m.Component = {
   view: () => {
-    return m('main', [
-      m('h1', 'Camp 42 Dashboard'),
-      m('p', `Tempest Weather: ${weatherStation.status}`),
-    ]);
+    return m('main', [m('h1', 'Camp 42 Dashboard'), m(BatteryDashboard)]);
   },
 };
 
-const root = document.getElementById('app');
-if (root) {
-  m.mount(root, Dashboard);
-}
+// Ask Mithril to render the page, our componet gets placed into the body element.
+// Mithril will rerender automatically after DOM event handlers defined in component
+// views and also whenever m.redraw() is called.
+m.mount(document.body, Dashboard);

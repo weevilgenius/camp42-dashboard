@@ -47,6 +47,9 @@ export default defineConfig(() => {
               if (/node_modules[/\\]@floating-ui[/\\]/.test(id)) {
                 return 'webawesome';
               }
+              if (/node_modules[/\\]@?firebase[/\\]/.test(id)) {
+                return 'firebase';
+              }
             }
 
             // default: let Rollup decide

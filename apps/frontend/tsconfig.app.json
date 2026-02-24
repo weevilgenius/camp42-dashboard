@@ -3,7 +3,8 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": [
-      "vitest/globals" // to reduce type imports in test files
+      "vitest/globals", // to reduce type imports in test files
+      "vite/client"
     ],
     "useDefineForClassFields": true,
     "noEmit": true,

@@ -1,10 +1,7 @@
-/* eslint-disable unused-imports/no-unused-imports */
-/* eslint-disable unused-imports/no-unused-vars */
-
 // command line script for testing and exploring the Ecoflow API
 import { config } from 'dotenv';
 import { createEcoflowClient } from './libEcoflow.js';
-import type { River2ProState, Delta2MaxState, DeltaPro3State } from './libEcoflow.js';
+import type { River2ProState } from './libEcoflow.js';
 
 // load the environment from Firebase config
 const dotenv = config({ path: ['.env.local', '.env', '.secret.local']});
@@ -23,8 +20,8 @@ if (!ECOFLOW_ACCESS_KEY || !ECOFLOW_SECRET_KEY) {
 
 // known batteries
 const Bill_Serial = "R621ZAB6XFCT0320";
-const Hank_Serial = "R351ZAB4HF6A0268";
-const Bertha_Serial = "MR51ZAS5PG7U0302";
+//const Hank_Serial = "R351ZAB4HF6A0268";
+//const Bertha_Serial = "MR51ZAS5PG7U0302";
 
 // create the API client
 const ecoflow = createEcoflowClient(ECOFLOW_ACCESS_KEY, ECOFLOW_SECRET_KEY);

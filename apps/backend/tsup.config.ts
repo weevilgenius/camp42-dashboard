@@ -8,6 +8,4 @@ export default defineConfig({
   clean: true,
   minify: true,
   tsconfig: 'tsconfig.app.json',
-  // always inline the shared package
-  noExternal: ['@camp42/shared'],
 });

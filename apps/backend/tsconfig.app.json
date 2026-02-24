@@ -3,6 +3,10 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@camp42/shared": ["../../shared/src/index.ts"],
+    },
     "noEmit": true // tsup handles compiling
   },
   "include": [

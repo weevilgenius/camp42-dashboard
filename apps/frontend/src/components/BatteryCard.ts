@@ -25,7 +25,7 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
 
       const chargeState = state.charge_pct > 50 ? 'good' : state.charge_pct > 20 ? 'low' : 'empty';
 
-      return m('.battery-card', [
+      return m(`.battery-card${battery.online ? '' : '.offline'}`, [
         m('.header', [
           m('div', [
             m('h3.name', battery.name),

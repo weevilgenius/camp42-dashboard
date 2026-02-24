@@ -76,6 +76,12 @@
   gap: 0.75rem;
 }
 
+.battery-card.offline .charge,
+.battery-card.offline .stats,
+.battery-card.offline .panels {
+  opacity: 0.4;
+}
+
 .battery-card .panel {
   display: flex;
   align-items: center;

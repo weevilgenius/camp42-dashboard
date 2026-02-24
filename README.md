@@ -76,11 +76,13 @@ camp-dashboard/
 │       └── src/
 │           ├── index.ts      # Cloud Function exports
 │           ├── batteries.ts  # battery status and management
-│           └── libEcoflow.ts # simple library wrapping Ecoflow REST API
+│           ├── weather.ts    # weather status and forecast
+│           ├── libEcoflow.ts # simple library wrapping Ecoflow REST API
+│           └── libTempest.ts # simple library wrapping Tempest REST API
 ├── shared/                   # '@camp42/shared' TypeScript interfaces
 │   └── src/
 │       └── index.ts          # types shared between front and back end
 ├── firebase.json             # Firebase project config & emulator ports
 ├── tsconfig.base.json        # shared TypeScript settings
-└── eslint.config.js          # lint settings
+└── eslint.config.js          # lint configuration
 ```

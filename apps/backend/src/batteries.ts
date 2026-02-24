@@ -1,6 +1,6 @@
 import { createEcoflowClient } from './libEcoflow.js';
+import type { Delta2MaxState, DeltaPro3State } from './libEcoflow.js';
 import { BatteryType, type BatteryState } from '@camp42/shared';
-import type { Delta2MaxState, DeltaPro3State } from './EcoflowTypes.js';
 
 
 export async function getBatteryStates(accessKey: string, secretKey: string): Promise<[hank: BatteryState, bertha: BatteryState]> {

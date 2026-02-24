@@ -9,6 +9,7 @@ import type {
   StatusResponse,
 } from '@camp42/shared';
 import { getBatteryStates } from './batteries.js';
+import { getWeatherState } from "./weather.js";
 
 
 /* ========================================================= *\
@@ -22,6 +23,10 @@ const VERBOSE = defineBoolean('VERBOSE', {
 
 const ECOFLOW_ACCESS_KEY = defineString('ECOFLOW_ACCESS_KEY', {
   description: 'API key for Ecoflow',
+});
+
+const TEMPEST_ACCESS_TOKEN = defineString('TEMPEST_ACCESS_TOKEN', {
+  description: 'API token for Tempest weather',
 });
 
 const ECOFLOW_SECRET_KEY = defineSecret('ECOFLOW_SECRET_KEY');
@@ -64,8 +69,14 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
   }
 
   // weather status
-  case StatusType.Weather:
-    throw new HttpsError("unimplemented", "The weather type has not been implemented");
+  case StatusType.Weather: {
+    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value());
+    if (VERBOSE.value()) { logger.debug('weather response', weather); }
+    return {
+      code: "SUCCESS",
+      status: weather,
+    };
+  }
 
   // unknown status
   default:

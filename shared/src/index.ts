@@ -40,6 +40,85 @@ export interface BatteryState {
 
 
 /* ========================================================= *\
+ *  Weather State                                            *
+\* ========================================================= */
+
+/** Current weather conditions, slimmed from the Tempest BetterForecast response. */
+export interface WeatherCurrent {
+  /** Unix epoch (seconds) of this conditions snapshot. */
+  time: number;
+  /** Human-readable weather conditions summary, e.g. "Clear", "Rain Likely". */
+  conditions: string;
+  /** Weather icon identifier, e.g. "clear-day", "rainy". */
+  icon: string;
+  /** Air temperature. */
+  air_temperature: number;
+  /** Apparent temperature accounting for wind and humidity. */
+  feels_like: number;
+  /** Relative humidity (%). */
+  relative_humidity: number;
+  /** Average wind speed. */
+  wind_avg: number;
+  /** Maximum wind gust. */
+  wind_gust: number;
+  /** Cardinal wind direction, e.g. "NE", "SSW". */
+  wind_direction_cardinal: string;
+  /** Probability of precipitation (%). */
+  precip_probability: number;
+  /** Accumulated precipitation since local midnight. */
+  precip_accum_local_day: number;
+}
+
+/** A single day in the daily forecast, slimmed from the Tempest BetterForecast response. */
+export interface WeatherDaily {
+  /** Unix epoch (seconds) of the start of this local day. */
+  day_start_local: number;
+  /** Day of the month (1-31). */
+  day_num: number;
+  /** Month number (1-12). */
+  month_num: number;
+  /** Human-readable conditions summary. */
+  conditions: string;
+  /** Weather icon identifier. */
+  icon: string;
+  /** Forecasted high temperature. */
+  air_temp_high: number;
+  /** Forecasted low temperature. */
+  air_temp_low: number;
+  /** Probability of precipitation (%). */
+  precip_probability: number;
+  /** Unix epoch (seconds) of sunrise. */
+  sunrise: number;
+  /** Unix epoch (seconds) of sunset. */
+  sunset: number;
+}
+
+/** A single hour in the hourly forecast, slimmed from the Tempest BetterForecast response. */
+export interface WeatherHourly {
+  /** Unix epoch (seconds) of this forecast hour. */
+  time: number;
+  /** Human-readable conditions summary. */
+  conditions: string;
+  /** Weather icon identifier. */
+  icon: string;
+  /** Forecasted air temperature. */
+  air_temperature: number;
+  /** Apparent temperature. */
+  feels_like: number;
+  /** Probability of precipitation (%). */
+  precip_probability: number;
+  /** Average wind speed. */
+  wind_avg: number;
+  /** Maximum wind gust. */
+  wind_gust: number;
+  /** Cardinal wind direction. */
+  wind_direction_cardinal: string;
+  /** Hour of the day in local time (0-23). */
+  local_hour: number;
+}
+
+
+/* ========================================================= *\
  *  Cloud Function Interface                                 *
 \* ========================================================= */
 
@@ -62,7 +141,12 @@ export interface BatteryStatus {
 
 /** Response from weather status request */
 export interface WeatherStatus {
-  temp: number;
+  /** Current weather conditions. */
+  current: WeatherCurrent;
+  /** Daily forecast. */
+  daily: WeatherDaily[];
+  /** Hourly forecast. */
+  hourly: WeatherHourly[];
 }
 
 /** Maps each StatusType to its corresponding response payload */

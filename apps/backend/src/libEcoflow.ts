@@ -44,7 +44,7 @@ export function createEcoflowClient(accessKey: string, secretKey: string): Ecofl
 }
 
 /* ========================================================= *\
- *  Internal helpers                                          *
+ *  Internal helpers                                         *
 \* ========================================================= */
 
 /** Options for an API request. */

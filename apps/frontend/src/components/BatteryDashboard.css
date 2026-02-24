@@ -4,32 +4,32 @@
   margin: 0 auto;
 }
 
-.battery-dashboard__header {
+.battery-dashboard .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
 
-.battery-dashboard__title {
+.battery-dashboard .title {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
 }
 
-.battery-dashboard__grid {
+.battery-dashboard .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 }
 
 @media (min-width: 640px) {
-  .battery-dashboard__grid {
+  .battery-dashboard .grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.battery-dashboard__loading {
+.battery-dashboard .loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@
   gap: 0.75rem;
 }
 
-.battery-dashboard__error {
+.battery-dashboard .error {
   display: flex;
   flex-direction: column;
   align-items: center;

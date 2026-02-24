@@ -3,7 +3,7 @@ import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 
 const app = initializeApp({ projectId: 'camp42-dashboard' });
 
-/** Firebase Functions instance, connected to the emulator in dev mode. */
+/** Firebase Functions instance */
 export const functions = getFunctions(app);
 
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {

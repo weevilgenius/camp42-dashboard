@@ -26,10 +26,10 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
       const chargeState = state.charge_pct > 50 ? 'good' : state.charge_pct > 20 ? 'low' : 'empty';
 
       return m('.battery-card', [
-        m('.battery-card__header', [
+        m('.header', [
           m('div', [
-            m('h3.battery-card__name', battery.name),
-            m('p.battery-card__type', battery.type),
+            m('h3.name', battery.name),
+            m('p.type', battery.type),
           ]),
           m(
             'wa-badge',
@@ -41,26 +41,26 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
           ),
         ]),
 
-        m('.battery-card__charge', [
+        m('.charge', [
           m('wa-progress-bar', {
             className: chargeState,
             value: state.charge_pct,
           }, `${state.charge_pct}%`),
         ]),
 
-        m('.battery-card__stats', [
-          m('.battery-card__stat', [
-            m('span.battery-card__stat-label', 'Input'),
-            m('span.battery-card__stat-value', `${state.total_input} W`),
+        m('.stats', [
+          m('.stat', [
+            m('span.stat-label', 'Input'),
+            m('span.stat-value', `${state.total_input} W`),
           ]),
-          m('.battery-card__stat', [
-            m('span.battery-card__stat-label', 'Output'),
-            m('span.battery-card__stat-value', `${state.total_output} W`),
+          m('.stat', [
+            m('span.stat-label', 'Output'),
+            m('span.stat-value', `${state.total_output} W`),
           ]),
         ]),
 
-        m('.battery-card__panels', [
-          m('.battery-card__panel', [
+        m('.panels', [
+          m('.panel', [
             m(
               'wa-badge',
               {
@@ -72,7 +72,7 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
             ),
             m('span', `${state.ac_watts} W`),
           ]),
-          m('.battery-card__panel', [
+          m('.panel', [
             m(
               'wa-badge',
               {

@@ -45,8 +45,8 @@ export const BatteryDashboard: m.ClosureComponent = () => {
 
     view: () => {
       return m('.battery-dashboard', [
-        m('.battery-dashboard__header', [
-          m('h2.battery-dashboard__title', 'Batteries'),
+        m('.header', [
+          m('h2.title', 'Batteries'),
           m(
             'wa-button',
             {
@@ -65,9 +65,9 @@ export const BatteryDashboard: m.ClosureComponent = () => {
         ]),
 
         state.loading
-          ? m('.battery-dashboard__loading', [m('wa-spinner'), m('span', 'Loading...')])
+          ? m('.loading', [m('wa-spinner'), m('span', 'Loading...')])
           : state.error
-            ? m('.battery-dashboard__error', [
+            ? m('.error', [
               m('p', state.error),
               m(
                 'wa-button',
@@ -81,7 +81,7 @@ export const BatteryDashboard: m.ClosureComponent = () => {
               ),
             ])
             : state.batteries
-              ? m('.battery-dashboard__grid', [
+              ? m('.grid', [
                 m(BatteryCard, { key: 'hank', battery: state.batteries.hank }),
                 m(BatteryCard, { key: 'bertha', battery: state.batteries.bertha }),
               ])

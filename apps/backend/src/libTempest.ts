@@ -1,3 +1,5 @@
+import type { ForecastCondition, ForecastIcon } from '@camp42/shared';
+
 /* ========================================================= *\
  *  Tempest Response Types                                   *
 \* ========================================================= */
@@ -613,52 +615,19 @@ export type TempestPrecipitationUnit = 'mm' | 'cm' | 'in';
 /** Distance unit for API requests. */
 export type TempestDistanceUnit = 'km' | 'mi';
 
-// Forecast value enumerations
-
-/** Human-readable weather condition strings returned by the forecast API. */
-export type ForecastCondition =
-  | 'Clear'
-  | 'Cloudy'
-  | 'Foggy'
-  | 'Partly Cloudy'
-  | 'Rain Likely'
-  | 'Rain Possible'
-  | 'Snow'
-  | 'Snow Possible'
-  | 'Thunderstorms Likely'
-  | 'Thunderstorms Possible'
-  | 'Very Light Rain'
-  | 'Windy'
-  | 'Wintry Mix Likely'
-  | 'Wintry Mix Possible';
-
-/** Weather icon identifiers returned by the forecast API. */
-export type ForecastIcon =
-  | 'clear-day'
-  | 'clear-night'
-  | 'cloudy'
-  | 'foggy'
-  | 'partly-cloudy-day'
-  | 'partly-cloudy-night'
-  | 'possibly-rainy-day'
-  | 'possibly-rainy-night'
-  | 'possibly-sleet-day'
-  | 'possibly-sleet-night'
-  | 'possibly-snow-day'
-  | 'possibly-snow-night'
-  | 'possibly-thunderstorm-day'
-  | 'possibly-thunderstorm-night'
-  | 'rainy'
-  | 'sleet'
-  | 'snow'
-  | 'thunderstorm'
-  | 'windy';
+// Forecast value enumerations — ForecastCondition and ForecastIcon are
+// defined in @camp42/shared and re-exported here for convenience.
+export type { ForecastCondition, ForecastIcon } from '@camp42/shared';
 
 /** Precipitation type values returned by the forecast API. */
-export type ForecastPrecipType = 'rain' | 'snow' | 'sleet' | 'storm';
+export type ForecastPrecipType = 'rain' | 'snow' | 'sleet' | 'storm' | 'none';
 
 /** Precipitation icon identifiers returned by the forecast API. */
-export type ForecastPrecipIcon = 'chance-rain' | 'chance-snow' | 'chance-sleet';
+export type ForecastPrecipIcon =
+  | 'chance-rain'
+  | 'chance-snow'
+  | 'chance-sleet'
+  | 'chance-storm';
 
 /** Pressure trend values returned by the forecast and observation APIs. */
 export type PressureTrend = 'falling' | 'steady' | 'rising' | 'unknown';

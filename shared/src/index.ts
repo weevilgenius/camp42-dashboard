@@ -43,14 +43,63 @@ export interface BatteryState {
  *  Weather State                                            *
 \* ========================================================= */
 
+/** Human-readable weather condition strings returned by the Tempest forecast API. */
+export type ForecastCondition =
+  | 'Clear'
+  | 'Cloudy'
+  | 'Foggy'
+  | 'Heavy Rain'
+  | 'Heavy Snow'
+  | 'Light Rain'
+  | 'Light Snow'
+  | 'Partly Cloudy'
+  | 'Rain Likely'
+  | 'Rain Possible'
+  | 'Sleet'
+  | 'Sleet Likely'
+  | 'Sleet Possible'
+  | 'Snow'
+  | 'Snow Likely'
+  | 'Snow Possible'
+  | 'Thunderstorms'
+  | 'Thunderstorms Likely'
+  | 'Thunderstorms Possible'
+  | 'Very Light Rain'
+  | 'Windy'
+  | 'Wintry Mix'
+  | 'Wintry Mix Likely'
+  | 'Wintry Mix Possible';
+
+/** Weather icon identifiers returned by the Tempest forecast API. */
+export type ForecastIcon =
+  | 'clear-day'
+  | 'clear-night'
+  | 'cloudy'
+  | 'foggy'
+  | 'partly-cloudy-day'
+  | 'partly-cloudy-night'
+  | 'possibly-rainy-day'
+  | 'possibly-rainy-night'
+  | 'possibly-sleet-day'
+  | 'possibly-sleet-night'
+  | 'possibly-snow-day'
+  | 'possibly-snow-night'
+  | 'possibly-thunderstorm-day'
+  | 'possibly-thunderstorm-night'
+  | 'rainy'
+  | 'sleet'
+  | 'snow'
+  | 'thunderstorm'
+  | 'windy';
+
 /** Current weather conditions, slimmed from the Tempest BetterForecast response. */
 export interface WeatherCurrent {
   /** Unix epoch (seconds) of this conditions snapshot. */
   time: number;
   /** Human-readable weather conditions summary, e.g. "Clear", "Rain Likely". */
-  conditions: string;
+  conditions: ForecastCondition;
   /** Weather icon identifier, e.g. "clear-day", "rainy". */
-  icon: string;
+  icon: ForecastIcon;
   /** Air temperature. */
   air_temperature: number;
   /** Apparent temperature accounting for wind and humidity. */
@@ -78,9 +127,9 @@ export interface WeatherDaily {
   /** Month number (1-12). */
   month_num: number;
   /** Human-readable conditions summary. */
-  conditions: string;
+  conditions: ForecastCondition;
   /** Weather icon identifier. */
-  icon: string;
+  icon: ForecastIcon;
   /** Forecasted high temperature. */
   air_temp_high: number;
   /** Forecasted low temperature. */
@@ -98,9 +147,9 @@ export interface WeatherHourly {
   /** Unix epoch (seconds) of this forecast hour. */
   time: number;
   /** Human-readable conditions summary. */
-  conditions: string;
+  conditions: ForecastCondition;
   /** Weather icon identifier. */
-  icon: string;
+  icon: ForecastIcon;
   /** Forecasted air temperature. */
   air_temperature: number;
   /** Apparent temperature. */

@@ -13,7 +13,9 @@
     "analyze": "tsc -p tsconfig.app.json --noEmit && ANALYZE=1 vite build",
     "check": "pnpm run typecheck && pnpm run lint",
     "serve": "pnpm run build && cd .. && firebase emulators:start --only hosting",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "private": true,
   "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
@@ -25,6 +27,8 @@
   },
   "devDependencies": {
     "@camp42/mocks": "workspace:*",
+    "@storybook/addon-a11y": "^10.2.12",
+    "@storybook/web-components-vite": "^10.2.12",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/mithril": "^2.2.7",
@@ -33,6 +37,7 @@
     "happy-dom": "^20.7.0",
     "lit": "^3.3.2",
     "rollup-plugin-visualizer": "^7.0.0",
+    "storybook": "^10.2.12",
     "vite": "^7.3.1"
   }
 }

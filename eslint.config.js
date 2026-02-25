@@ -16,6 +16,7 @@ export default defineConfig(
       "**/dist/**",
       "**/lib/**",
       "**/.firebase/**",
+      "**/storybook-static/**",
       "node_modules/**",
     ],
   },

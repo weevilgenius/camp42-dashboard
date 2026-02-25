@@ -52,7 +52,7 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
 
   // battery status
   case StatusType.Batteries: {
-    const [hank, bertha] = await getBatteryStates(ECOFLOW_ACCESS_KEY.value(), ECOFLOW_SECRET_KEY.value());
+    const [hank, bertha] = await getBatteryStates(ECOFLOW_ACCESS_KEY.value(), ECOFLOW_SECRET_KEY.value(), VERBOSE.value());
 
     if (VERBOSE.value()) {
       debugBatteryState(hank);
@@ -70,7 +70,7 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
 
   // weather status
   case StatusType.Weather: {
-    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value());
+    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value(), 10, 24, VERBOSE.value());
     if (VERBOSE.value()) { logger.debug('weather response', weather); }
     return {
       code: "SUCCESS",

@@ -1,12 +1,26 @@
 import type { WeatherStatus } from '@camp42/shared';
+import { withCache } from './utils.js';
 import { createTempestClient } from './libTempest.js';
 
 
 // this is the station at Camp 42
 const STATION_ID = 136917;
 
+/**
+ * Gets the current and forecasted weather from Tempest
+ * @param token Tempest API token
+ * @param days Number of days in forecast (1 - 10)
+ * @param hours Number of hours in forecast (1 - 24)
+ * @param verbose Flag for verbose logging
+ * @returns Weather status and forecast
+ */
+async function fetchWeatherState(token: string, days = 7, hours = 12, verbose = false): Promise<WeatherStatus> {
 
-export async function getWeatherState(token: string, days = 7, hours = 12): Promise<WeatherStatus> {
+  if (!token) {
+    throw new Error('Missing Tempest API token');
+  }
+
+  if (verbose) { console.log('fetching weather from Tempest'); }
 
   const client = createTempestClient(token);
 
@@ -56,3 +70,12 @@ export async function getWeatherState(token: string, days = 7, hours = 12): Prom
   return status;
 };
 
+/**
+ * Gets the current and forecasted weather from Tempest
+ * @param token Tempest API token
+ * @param days Number of days in forecast: 1 - 10, default 7
+ * @param hours Number of hours in forecast: 1 - 24, default 12
+ * @param verbose Flag for verbose logging (optional)
+ * @returns Weather status and forecast
+ */
+export const getWeatherState = withCache(fetchWeatherState, 5 * 60 * 1000);

@@ -1,29 +1,23 @@
+import { withCache } from './utils.js';
 import { createEcoflowClient } from './libEcoflow.js';
 import type { Delta2MaxState, DeltaPro3State } from './libEcoflow.js';
 import { BatteryType, type BatteryState } from '@camp42/shared';
 
 
-export async function getBatteryStates(accessKey: string, secretKey: string): Promise<[hank: BatteryState, bertha: BatteryState]> {
+/**
+ * Fetch battery status from Ecoflow
+ * @param accessKey Ecoflow API access key
+ * @param secretKey Ecoflow API secret key
+ * @param verbose Flag for verbose debugging
+ * @returns Battery status for Hank and Bertha
+ */
+async function fetchBatteryStates(accessKey: string, secretKey: string, verbose = false): Promise<[hank: BatteryState, bertha: BatteryState]> {
 
   if (!accessKey || !secretKey) {
     throw new Error('Missing Ecoflow accessKey or secretKey');
   }
 
-  // const Bill_Battery: BatteryState = {
-  //   type: BatteryType.River_2_Pro,
-  //   name: "Bill the Pony",
-  //   sn: "R621ZAB6XFCT0320",
-  //   online: false,
-  //   state: {
-  //     charge_pct: -1,
-  //     dc_on: false,
-  //     dc_watts: -1,
-  //     ac_on: false,
-  //     ac_watts: -1,
-  //     total_input: -1,
-  //     total_output: -1,
-  //   },
-  // };
+  if (verbose) { console.log('fetching battery state from Ecoflow'); }
 
   const Hank_Battery: BatteryState = {
     type: BatteryType.Delta_2_Max,
@@ -60,6 +54,7 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
   const ecoflow = createEcoflowClient(accessKey, secretKey);
 
   // without using MQTT, you can only get online/offline state by querying the user's device list
+  if (verbose) { console.log('invoking list devices'); }
   const devices_request = await ecoflow.listDevices();
   if (devices_request.code === "0" && devices_request.data) {
     for (const device of devices_request.data) {
@@ -81,6 +76,7 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
   // the "GetAllQuota" endpoint appears to return the last known values for the device, regardless of online status
 
   // collect current state for Hank
+  if (verbose) { console.log('invoking get state for Hank'); }
   const hank_request = await ecoflow.getState<Delta2MaxState>(Hank_Battery.sn);
   if (hank_request.code === "0" && hank_request.data) {
     const status = hank_request.data;
@@ -96,6 +92,7 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
   }
 
   // collect current state for Bertha
+  if (verbose) { console.log('invoking get state for Bertha'); }
   const bertha_request = await ecoflow.getState<DeltaPro3State>(Bertha_Battery.sn);
   if (bertha_request.code === "0" && bertha_request.data) {
     const status = bertha_request.data;
@@ -112,3 +109,13 @@ export async function getBatteryStates(accessKey: string, secretKey: string): Pr
 
   return [Hank_Battery, Bertha_Battery];
 }
+
+
+/**
+ * Gets battery states from Ecoflow. Results are cached for 60 seconds.
+ * @param accessKey Ecoflow API access key
+ * @param secretKey Ecoflow API secret key
+ * @param verbose Flag for verbose debugging
+ * @returns Battery status for Hank and Bertha
+ */
+export const getBatteryStates = withCache(fetchBatteryStates, 60 * 1000);

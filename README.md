@@ -74,6 +74,18 @@ http://localhost:5173/?battery=low&weather=stormy
 Parameters can be used individually or combined. Omitted parameters fall back to
 their defaults (`normal` for battery, `clear-day` for weather).
 
+### Storybook
+
+The frontend uses [Storybook](https://storybook.js.org/) for developing and previewing
+UI components in isolation. Stories live alongside their components in
+`apps/frontend/src/components/` as `*.stories.ts` files and use mock data from
+`@camp42/mocks`.
+
+```bash
+cd apps/frontend
+pnpm run storybook
+```
+
 ## Scripts
 
 Root-level scripts that operate across all packages:

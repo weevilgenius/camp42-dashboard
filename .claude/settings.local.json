@@ -4,7 +4,9 @@
       "Bash(pnpm run:*)",
       "Bash(pnpm exec:*)",
       "Bash(ls:*)",
-      "WebFetch(domain:webawesome.com)"
+      "WebFetch(domain:webawesome.com)",
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)"
     ]
   }
 }

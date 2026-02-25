@@ -7,7 +7,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "lint": "eslint src",
-    "dev": "vite",
+    "dev": "VITE_USE_EMULATOR=true vite",
+    "dev:mock": "VITE_USE_MOCKS=true vite",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
     "analyze": "tsc -p tsconfig.app.json --noEmit && ANALYZE=1 vite build",
     "check": "pnpm run typecheck && pnpm run lint",
@@ -23,6 +24,7 @@
     "mithril": "^2.3.8"
   },
   "devDependencies": {
+    "@camp42/mocks": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/mithril": "^2.2.7",

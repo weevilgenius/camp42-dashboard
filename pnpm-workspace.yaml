@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - shared
+  - mocks
 
 onlyBuiltDependencies:
   - '@firebase/util'

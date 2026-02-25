@@ -10,6 +10,7 @@ This project is a monorepo using **pnpm workspace** with three packages:
 - **`apps/frontend`** -- Vite + Mithril + Web Awesome. A lightweight SPA that displays camp status.
 - **`apps/backend`** -- Firebase Cloud Functions (2nd Gen, Node 24, ESM). Bundled with tsup, which inlines the shared package for seamless cloud deployment.
 - **`shared`** -- `@camp42/shared`, an internal package containing TypeScript interfaces and data contracts used by both frontend and backend.
+- **`mocks`** -- `@camp42/mocks`, mock data factories and scenarios for frontend development and testing without live APIs.
 
 ## Prerequisites
 
@@ -48,6 +49,31 @@ cd apps/frontend
 pnpm run dev
 ```
 
+### Mock Data Mode
+
+You can run the frontend with mock data, without needing a backend or API
+credentials. This is useful for UI development and visual testing.
+
+```bash
+cd apps/frontend
+pnpm run dev:mock
+```
+
+By default the mock server returns normal/clear-day data. Use query parameters to
+switch scenarios:
+
+```
+http://localhost:5173/?battery=low&weather=stormy
+```
+
+| Parameter  | Available values |
+| ---------- | ---------------- |
+| `battery`  | `normal`, `charging`, `full`, `low`, `one-offline`, `both-offline`, `heavy-load` |
+| `weather`  | `clear-day`, `clear-night`, `partly-cloudy`, `rainy`, `stormy`, `snowy`, `windy`, `hot` |
+
+Parameters can be used individually or combined. Omitted parameters fall back to
+their defaults (`normal` for battery, `clear-day` for weather).
+
 ## Scripts
 
 Root-level scripts that operate across all packages:
@@ -82,6 +108,11 @@ camp-dashboard/
 ├── shared/                   # '@camp42/shared' TypeScript interfaces
 │   └── src/
 │       └── index.ts          # types shared between front and back end
+├── mocks/                    # '@camp42/mocks' mock data for dev & testing
+│   └── src/
+│       ├── batteries/        # battery factories, scenarios, raw API mocks
+│       ├── weather/          # weather factories, scenarios, raw API mocks
+│       └── service.ts        # drop-in mock service with query param switching
 ├── firebase.json             # Firebase project config & emulator ports
 ├── tsconfig.base.json        # shared TypeScript settings
 └── eslint.config.js          # lint configuration

@@ -22,6 +22,12 @@ const weatherStatus = httpsCallable<StatusRequest, StatusResponse<StatusType.Wea
 
 /** Fetch battery status from the campStatus cloud function. */
 export async function fetchBatteryStatus(): Promise<BatteryStatus> {
+  // are we supposed to use mock data?
+  if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    const mock = await import('@camp42/mocks/src/service.js');
+    return mock.fetchBatteryStatus();
+  }
+
   const result = await batteryStatus({ type: StatusType.Batteries });
   const response = result.data;
 
@@ -34,6 +40,12 @@ export async function fetchBatteryStatus(): Promise<BatteryStatus> {
 
 /** Fetch weather status from the campStatus cloud function. */
 export async function fetchWeatherStatus(): Promise<WeatherStatus> {
+  // are we supposed to use mock data?
+  if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    const mock = await import('@camp42/mocks/src/service.js');
+    return mock.fetchWeatherStatus();
+  }
+
   const result = await weatherStatus({ type: StatusType.Weather });
   const response = result.data;
 

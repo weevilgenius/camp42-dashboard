@@ -31,7 +31,6 @@ export const WeatherDaily: m.ClosureComponent<WeatherDailyAttrs> = () => {
         m('wa-card',
           {
             key: day.day_start_local,
-            appearance: 'plain',
           },
           m('.row', [
 

@@ -10,6 +10,7 @@ import { WeatherHourly } from './WeatherHourly.js';
 // WebAwesome components
 import '@awesome.me/webawesome/dist/components/spinner/spinner.js';
 import '@awesome.me/webawesome/dist/components/button/button.js';
+import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
 import './WeatherDashboard.css';
 
@@ -45,6 +46,21 @@ export const WeatherDashboard: m.ClosureComponent = () => {
       return m('.weather-dashboard', [
         m('.header', [
           m('h2.title', 'Weather'),
+          m(
+            'wa-button',
+            {
+              variant: 'neutral',
+              appearance: 'outlined',
+              size: 'small',
+              disabled: state.loading,
+              onclick: () => {
+                void load();
+              },
+            },
+            [
+              m('wa-icon', { library: 'material', name: 'refresh', slot: 'start' }), 'Refresh',
+            ],
+          ),
         ]),
 
         state.loading

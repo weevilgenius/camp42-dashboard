@@ -17,6 +17,7 @@
     "@stylistic/eslint-plugin": "^5.9.0",
     "@types/node": "^24.10.15",
     "eslint": "^10.0.2",
+    "eslint-plugin-storybook": "^10.2.13",
     "eslint-plugin-unused-imports": "^4.4.1",
     "globals": "^17.3.0",
     "tsx": "^4.21.0",

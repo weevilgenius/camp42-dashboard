@@ -1,8 +1,9 @@
 import eslint from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin';
 import unusedImports from 'eslint-plugin-unused-imports';
+import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 
 // this configures ESLint using their new flat config system
@@ -20,6 +21,9 @@ export default defineConfig(
       "node_modules/**",
     ],
   },
+
+  // add .storybook
+  globalIgnores(['!.storybook'], 'Include Storybook Directory'),
 
   // register all of the plugins up front
   {
@@ -55,6 +59,7 @@ export default defineConfig(
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
+      storybook.configs['flat/recommended'],
     ],
 
     // apply to all typescript and javascript files, except the ignores above

@@ -40,11 +40,11 @@ export const WeatherDaily: m.ClosureComponent<WeatherDailyAttrs> = () => {
               m('span.conditions', day.conditions),
             ]),
 
-            // extra whitespace
-            m('.spacer'),
-
             // forecast icon
             m('.icon', m('img', { src: weatherIconUrl(day.icon), alt: day.conditions })),
+
+            // extra whitespace
+            m('.spacer'),
 
             // high/low temps
             m('.temps', [

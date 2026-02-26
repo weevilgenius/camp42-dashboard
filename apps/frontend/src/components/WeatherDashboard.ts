@@ -1,17 +1,20 @@
 import m from 'mithril';
 
+// types shared with back end
 import type { WeatherStatus } from '@camp42/shared';
 
+// other components
 import { fetchWeatherStatus } from '../services/campStatus.js';
-import { WeatherCurrent } from './WeatherCurrent.js';
-import { WeatherDaily } from './WeatherDaily.js';
-import { WeatherHourly } from './WeatherHourly.js';
+import WeatherCurrent from './WeatherCurrent.js';
+import WeatherDaily from './WeatherDaily.js';
+import WeatherHourly from './WeatherHourly.js';
+import WeatherDashboardSkeleton from './WeatherDashboardSkeleton.js';
 
 // WebAwesome components
-import '@awesome.me/webawesome/dist/components/spinner/spinner.js';
 import '@awesome.me/webawesome/dist/components/button/button.js';
 import '@awesome.me/webawesome/dist/components/icon/icon.js';
 
+// CSS for this component
 import './WeatherDashboard.css';
 
 /** Fetches and displays weather status. */
@@ -64,7 +67,7 @@ export const WeatherDashboard: m.ClosureComponent = () => {
         ]),
 
         state.loading
-          ? m('.loading', [m('wa-spinner'), m('span', 'Loading...')])
+          ? m(WeatherDashboardSkeleton)
           : state.error
             ? m('.error', [
               m('p', state.error),

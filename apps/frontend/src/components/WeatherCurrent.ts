@@ -1,8 +1,11 @@
 import m from 'mithril';
 
+// types shared with back end
 import type { WeatherCurrent as WeatherCurrentData } from '@camp42/shared';
 
 import { weatherIconUrl } from '../utilities.js';
+
+// CSS for this component
 import './WeatherCurrent.css';
 
 /** Attrs for the WeatherCurrent component. */

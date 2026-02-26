@@ -1,5 +1,6 @@
 import m from 'mithril';
 
+// types shared with back end
 import type { WeatherDaily as WeatherDailyData } from '@camp42/shared';
 
 import { weatherIconUrl } from '../utilities.js';
@@ -7,6 +8,7 @@ import { weatherIconUrl } from '../utilities.js';
 // WebAwesome components
 import '@awesome.me/webawesome/dist/components/card/card.js';
 
+// CSS for this component
 import './WeatherDaily.css';
 
 /** Attrs for the WeatherDaily component. */

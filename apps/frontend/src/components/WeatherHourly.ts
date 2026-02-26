@@ -1,8 +1,11 @@
 import m from 'mithril';
 
+// types shared with back end
 import type { WeatherHourly as WeatherHourlyData } from '@camp42/shared';
 
 import { weatherIconUrl } from '../utilities.js';
+
+// CSS for this component
 import './WeatherHourly.css';
 
 /** Attrs for the WeatherHourly component. */

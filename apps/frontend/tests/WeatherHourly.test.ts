@@ -1,14 +1,15 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import m from 'mithril';
 import type { WeatherHourly as WeatherHourlyData } from '@camp42/shared';
 import { WeatherHourly } from '../src/components/WeatherHourly.js';
+import { renderComponent } from './helpers/MithrilTestHarness.js';
+import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 describe('WeatherHourly', () => {
-  const root = document.createElement('div');
-  document.body.appendChild(root);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let view: MountedComponent<any>;
 
   afterEach(() => {
-    m.mount(root, null);
+    view?.unmount();
   });
 
   const hourly: WeatherHourlyData[] = [
@@ -51,42 +52,37 @@ describe('WeatherHourly', () => {
   ];
 
   it('renders one item per hourly entry', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const items = root.querySelectorAll('.item');
+    const items = view.root.querySelectorAll('.item');
     expect(items.length).toBe(3);
   });
 
   it('formats hour 14 as "2 PM"', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const times = root.querySelectorAll('.time');
+    const times = view.root.querySelectorAll('.time');
     expect(times[0].textContent).toBe('2 PM');
   });
 
   it('formats hour 15 as "3 PM"', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const times = root.querySelectorAll('.time');
+    const times = view.root.querySelectorAll('.time');
     expect(times[1].textContent).toBe('3 PM');
   });
 
   it('formats hour 0 (midnight) as "12 AM"', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const times = root.querySelectorAll('.time');
+    const times = view.root.querySelectorAll('.time');
     expect(times[2].textContent).toBe('12 AM');
   });
 
   it('renders rounded temperatures', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const temps = root.querySelectorAll('.temp');
+    const temps = view.root.querySelectorAll('.temp');
     // Math.round(78.6) = 79
     expect(temps[0].textContent).toContain('79');
     // Math.round(76.2) = 76
@@ -94,10 +90,9 @@ describe('WeatherHourly', () => {
   });
 
   it('shows precipitation percentage only when > 0', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const items = root.querySelectorAll('.item');
+    const items = view.root.querySelectorAll('.item');
 
     // first item: precip_probability = 0 -> no .precip element
     expect(items[0].querySelector('.precip')).toBeNull();
@@ -112,10 +107,9 @@ describe('WeatherHourly', () => {
   });
 
   it('renders weather icons with alt text', () => {
-    m.mount(root, { view: () => m(WeatherHourly, { hourly }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherHourly, { attrs: { hourly } });
 
-    const imgs = root.querySelectorAll<HTMLImageElement>('.icon img');
+    const imgs = view.root.querySelectorAll<HTMLImageElement>('.icon img');
     expect(imgs.length).toBe(3);
     expect(imgs[0].alt).toBe('Clear');
     expect(imgs[1].alt).toBe('Partly Cloudy');

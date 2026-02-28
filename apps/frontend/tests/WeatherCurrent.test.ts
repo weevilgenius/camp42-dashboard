@@ -1,14 +1,15 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import m from 'mithril';
 import type { WeatherCurrent as WeatherCurrentData } from '@camp42/shared';
 import { WeatherCurrent } from '../src/components/WeatherCurrent.js';
+import { renderComponent } from './helpers/MithrilTestHarness.js';
+import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 describe('WeatherCurrent', () => {
-  const root = document.createElement('div');
-  document.body.appendChild(root);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let view: MountedComponent<any>;
 
   afterEach(() => {
-    m.mount(root, null);
+    view?.unmount();
   });
 
   const current: WeatherCurrentData = {
@@ -26,65 +27,58 @@ describe('WeatherCurrent', () => {
   };
 
   it('displays the rounded temperature', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const temp = root.querySelector('.temp');
+    const temp = view.root.querySelector('.temp');
     // Math.round(72.4) = 72
     expect(temp?.textContent).toContain('72');
   });
 
   it('displays the feels-like temperature', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const feels = root.querySelector('.feels');
+    const feels = view.root.querySelector('.feels');
     // Math.round(68.8) = 69
     expect(feels?.textContent).toContain('69');
   });
 
   it('displays the conditions string', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const condition = root.querySelector('.condition');
+    const condition = view.root.querySelector('.condition');
     expect(condition?.textContent).toBe('Partly Cloudy');
   });
 
   it('renders the weather icon with the correct alt text', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const img = root.querySelector('.icon img') as HTMLImageElement;
+    const img = view.root.querySelector('.icon img') as HTMLImageElement;
     expect(img).not.toBeNull();
     expect(img?.alt).toBe('Partly Cloudy');
     expect(img?.src).toContain('cloudy');
   });
 
   it('displays humidity percentage', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const stats = root.querySelectorAll('.stat');
+    const stats = view.root.querySelectorAll('.stat');
     const humidityText = Array.from(stats).map((s) => s.textContent).join(' ');
     expect(humidityText).toContain('45%');
   });
 
   it('displays wind speed and direction', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const stats = root.querySelectorAll('.stat');
+    const stats = view.root.querySelectorAll('.stat');
     const windText = Array.from(stats).map((s) => s.textContent).join(' ');
     // Math.round(8.3) = 8
     expect(windText).toContain('8 mph SW');
   });
 
   it('displays precipitation probability', () => {
-    m.mount(root, { view: () => m(WeatherCurrent, { current }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherCurrent, { attrs: { current } });
 
-    const stats = root.querySelectorAll('.stat');
+    const stats = view.root.querySelectorAll('.stat');
     const precipText = Array.from(stats).map((s) => s.textContent).join(' ');
     expect(precipText).toContain('15%');
   });

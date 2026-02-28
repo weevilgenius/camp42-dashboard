@@ -1,23 +1,20 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import m from 'mithril';
 import { BatteryGauge } from '../src/components/BatteryGauge.js';
-
-// We render Mithril components into a real DOM node provided by happy-dom.
-// This approach tests the vnode tree output without needing a full browser.
+import { renderComponent } from './helpers/MithrilTestHarness.js';
+import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 describe('BatteryGauge', () => {
-  const root = document.createElement('div');
-  document.body.appendChild(root);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let view: MountedComponent<any>;
 
   afterEach(() => {
-    m.mount(root, null);
+    view?.unmount();
   });
 
   it('renders a meter element with the correct ARIA attributes', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 75 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 75 } });
 
-    const gauge = root.querySelector('[role="meter"]');
+    const gauge = view.root.querySelector('[role="meter"]');
     expect(gauge).not.toBeNull();
     expect(gauge?.getAttribute('aria-valuenow')).toBe('75');
     expect(gauge?.getAttribute('aria-valuemin')).toBe('0');
@@ -26,93 +23,82 @@ describe('BatteryGauge', () => {
 
   it('clamps the level between 0 and 100', () => {
     // level above 100 should be clamped to 100
-    m.mount(root, { view: () => m(BatteryGauge, { level: 150 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 150 } });
 
     // the aria-valuenow should still reflect the raw value for accessibility,
     // but the CSS variable should be clamped
-    const fill = root.querySelector('.fill') as HTMLElement;
+    const fill = view.root.querySelector('.fill') as HTMLElement;
     expect(fill?.style.getPropertyValue('--fill-level')).toBe('100%');
   });
 
   it('applies the "good" class when level > 50', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 75 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 75 } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('good')).toBe(true);
   });
 
   it('applies the "low" class when level is between 21 and 50', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 35 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 35 } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('low')).toBe(true);
   });
 
   it('applies the "empty" class when level <= 20', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 10 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 10 } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('empty')).toBe(true);
   });
 
   it('applies the "charging" class when charging is true', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 50, charging: true }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 50, charging: true } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('charging')).toBe(true);
   });
 
   it('does not apply the "charging" class when charging is false', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 50, charging: false }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 50, charging: false } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('charging')).toBe(false);
   });
 
   it('defaults to horizontal layout', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 50 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 50 } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('horizontal')).toBe(true);
   });
 
   it('supports vertical layout', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 50, layout: 'vertical' }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 50, layout: 'vertical' } });
 
-    const gauge = root.querySelector('.battery-gauge');
+    const gauge = view.root.querySelector('.battery-gauge');
     expect(gauge?.classList.contains('vertical')).toBe(true);
   });
 
   it('shows the percentage in the label', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 42 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 42 } });
 
-    const label = root.querySelector('.label');
+    const label = view.root.querySelector('.label');
     expect(label?.textContent).toContain('42%');
   });
 
   it('includes a lightning bolt in the label when charging', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 42, charging: true }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 42, charging: true } });
 
-    const label = root.querySelector('.label');
+    const label = view.root.querySelector('.label');
     // the component uses the unicode lightning symbol \u26A1
     expect(label?.textContent).toContain('\u26A1');
   });
 
   it('sets the --fill-level CSS variable on the fill element', () => {
-    m.mount(root, { view: () => m(BatteryGauge, { level: 63 }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryGauge, { attrs: { level: 63 } });
 
-    const fill = root.querySelector('.fill') as HTMLElement;
+    const fill = view.root.querySelector('.fill') as HTMLElement;
     expect(fill?.style.getPropertyValue('--fill-level')).toBe('63%');
   });
 });

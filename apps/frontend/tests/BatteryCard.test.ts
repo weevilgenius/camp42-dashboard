@@ -1,15 +1,16 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import m from 'mithril';
 import { BatteryType } from '@camp42/shared';
 import type { BatteryState } from '@camp42/shared';
 import { BatteryCard } from '../src/components/BatteryCard.js';
+import { renderComponent } from './helpers/MithrilTestHarness.js';
+import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 describe('BatteryCard', () => {
-  const root = document.createElement('div');
-  document.body.appendChild(root);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let view: MountedComponent<any>;
 
   afterEach(() => {
-    m.mount(root, null);
+    view?.unmount();
   });
 
   const onlineBattery: BatteryState = {
@@ -44,79 +45,70 @@ describe('BatteryCard', () => {
   };
 
   it('renders the battery name', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const name = root.querySelector('.name');
+    const name = view.root.querySelector('.name');
     expect(name?.textContent).toBe('Hank');
   });
 
   it('renders the battery type', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const type = root.querySelector('.type');
+    const type = view.root.querySelector('.type');
     expect(type?.textContent).toBe('DELTA 2 Max');
   });
 
   it('shows "Online" badge when battery is online', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const badge = root.querySelector('wa-badge');
+    const badge = view.root.querySelector('wa-badge');
     expect(badge?.textContent).toContain('Online');
   });
 
   it('shows "Offline" badge when battery is offline', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: offlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: offlineBattery } });
 
-    const badge = root.querySelector('wa-badge');
+    const badge = view.root.querySelector('wa-badge');
     expect(badge?.textContent).toContain('Offline');
   });
 
   it('adds the .offline class when battery is offline', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: offlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: offlineBattery } });
 
-    const card = root.querySelector('.battery-card');
+    const card = view.root.querySelector('.battery-card');
     expect(card?.classList.contains('offline')).toBe(true);
   });
 
   it('does not add the .offline class when battery is online', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const card = root.querySelector('.battery-card');
+    const card = view.root.querySelector('.battery-card');
     expect(card?.classList.contains('offline')).toBe(false);
   });
 
   it('renders input and output wattage stats', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const stats = root.querySelectorAll('.stat');
+    const stats = view.root.querySelectorAll('.stat');
     const texts = Array.from(stats).map((s) => s.textContent);
     expect(texts.some((t) => t?.includes('210 W'))).toBe(true);
     expect(texts.some((t) => t?.includes('57 W'))).toBe(true);
   });
 
   it('renders AC and DC panel wattage', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
-    const panels = root.querySelectorAll('.panel');
+    const panels = view.root.querySelectorAll('.panel');
     const texts = Array.from(panels).map((p) => p.textContent);
     expect(texts.some((t) => t?.includes('45 W'))).toBe(true);
     expect(texts.some((t) => t?.includes('12 W'))).toBe(true);
   });
 
   it('includes a BatteryGauge with the correct charge level', () => {
-    m.mount(root, { view: () => m(BatteryCard, { battery: onlineBattery }) });
-    m.redraw.sync();
+    view = renderComponent(BatteryCard, { attrs: { battery: onlineBattery } });
 
     // BatteryGauge renders a [role="meter"] with aria-valuenow
-    const meter = root.querySelector('[role="meter"]');
+    const meter = view.root.querySelector('[role="meter"]');
     expect(meter?.getAttribute('aria-valuenow')).toBe('78');
   });
 });

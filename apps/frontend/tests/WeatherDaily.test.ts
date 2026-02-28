@@ -55,8 +55,11 @@ describe('WeatherDaily', () => {
     m.redraw.sync();
 
     const dates = root.querySelectorAll('.date');
-    // Monday Jan 8 -- the component converts epoch to day name
-    expect(dates[0].textContent).toContain('Mon');
+    // The component uses getDay() (local TZ) so the rendered day name depends
+    // on the machine's timezone.  We verify the format is "<DayName> <num>"
+    // and that the day number from the data is present.
+    const dayNamePattern = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) \d+$/;
+    expect(dates[0].textContent).toMatch(dayNamePattern);
     expect(dates[0].textContent).toContain('8');
   });
 

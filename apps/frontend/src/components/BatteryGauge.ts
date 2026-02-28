@@ -38,9 +38,9 @@ export const BatteryGauge: m.ClosureComponent<BatteryGaugeAttrs> = () => {
 
       const classes = [
         '.battery-gauge',
-        `.battery-gauge--${layout}`,
-        `.battery-gauge--${state}`,
-        charging ? '.battery-gauge--charging' : '',
+        `.${layout}`,
+        `.${state}`,
+        charging ? '.charging' : '',
       ].join('');
 
       return m(
@@ -53,12 +53,12 @@ export const BatteryGauge: m.ClosureComponent<BatteryGaugeAttrs> = () => {
           'aria-label': `Battery charge: ${level}%`,
         },
         [
-          m('.battery-gauge__terminal'),
-          m('.battery-gauge__body', [
-            m('.battery-gauge__fill', {
+          m('.terminal'),
+          m('.body', [
+            m('.fill', {
               style: { '--fill-level': `${level}%` },
             }),
-            m('.battery-gauge__label', `${level}%`),
+            m('.label', `${level}%`),
           ]),
         ],
       );

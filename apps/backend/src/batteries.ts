@@ -88,7 +88,7 @@ async function fetchBatteryStates(accessKey: string, secretKey: string, verbose 
     Hank_Battery.state.total_output = status['pd.wattsOutSum'];
     Hank_Battery.state.total_input = status['inv.inputWatts'] + status['mppt.inWatts'];
   } else {
-    console.warn(`unable to query Hank battery status: ${JSON.stringify(hank_request, null, 2)}`);
+    throw new Error(`unable to query Hank battery status: ${JSON.stringify(hank_request, null, 2)}`);
   }
 
   // collect current state for Bertha
@@ -104,7 +104,7 @@ async function fetchBatteryStates(accessKey: string, secretKey: string, verbose 
     Bertha_Battery.state.total_output = status.powOutSumW;
     Bertha_Battery.state.total_input = status.powInSumW;
   } else {
-    console.warn(`unable to query Bertha battery status: ${JSON.stringify(bertha_request, null, 2)}`);
+    throw new Error(`unable to query Bertha battery status: ${JSON.stringify(bertha_request, null, 2)}`);
   }
 
   return [Hank_Battery, Bertha_Battery];

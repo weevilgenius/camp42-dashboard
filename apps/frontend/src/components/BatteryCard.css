@@ -28,24 +28,11 @@
 
 .battery-card .charge {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
 }
 
-.battery-card .charge wa-progress-bar {
-  --indicator-color: var(--wa-color-neutral-fill-loud);
-}
-
-.battery-card .charge wa-progress-bar.good {
-  --indicator-color: var(--wa-color-success-fill-loud);
-}
-
-.battery-card .charge wa-progress-bar.low {
-  --indicator-color: var(--wa-color-warning-fill-loud);
-}
-
-.battery-card .charge wa-progress-bar.empty {
-  --indicator-color: var(--wa-color-danger-fill-loud);
+.battery-card .charge .battery-gauge {
+  --gauge-height: 100%;
+  width: 100%;
 }
 
 .battery-card .stats {

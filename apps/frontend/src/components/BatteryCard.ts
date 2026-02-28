@@ -5,7 +5,9 @@ import type { BatteryState } from '@camp42/shared';
 
 // WebAwesome components
 import '@awesome.me/webawesome/dist/components/badge/badge.js';
-import '@awesome.me/webawesome/dist/components/progress-bar/progress-bar.js';
+
+// sibling components
+import { BatteryGauge } from './BatteryGauge.js';
 
 // this component's CSS
 import './BatteryCard.css';
@@ -23,7 +25,7 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
       const { battery } = attrs;
       const { state } = battery;
 
-      const chargeState = state.charge_pct > 50 ? 'good' : state.charge_pct > 20 ? 'low' : 'empty';
+      const charging = state.total_input > 0;
 
       return m(`.battery-card${battery.online ? '' : '.offline'}`, [
         m('.header', [
@@ -42,10 +44,7 @@ export const BatteryCard: m.ClosureComponent<BatteryCardAttrs> = () => {
         ]),
 
         m('.charge', [
-          m('wa-progress-bar', {
-            className: chargeState,
-            value: state.charge_pct,
-          }, `${state.charge_pct}%`),
+          m(BatteryGauge, { level: state.charge_pct, charging }),
         ]),
 
         m('.stats', [

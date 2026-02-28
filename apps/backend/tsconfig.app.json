@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "baseUrl": ".",
     "paths": {
       "@camp42/shared": ["../../shared/src/index.ts"],
@@ -10,6 +10,7 @@
     "noEmit": true // tsup handles compiling
   },
   "include": [
-    "src"
+    "src",
+    "tests"
   ]
 }

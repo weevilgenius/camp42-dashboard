@@ -6,14 +6,14 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
-    "lint": "eslint src",
+    "lint": "eslint src tests",
     "dev": "VITE_USE_EMULATOR=true vite --host",
     "dev:mock": "VITE_USE_MOCKS=true vite --host",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
     "analyze": "tsc -p tsconfig.app.json --noEmit && ANALYZE=1 vite build",
     "check": "pnpm run typecheck && pnpm run lint",
     "serve": "pnpm run build && cd .. && firebase emulators:start --only hosting",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

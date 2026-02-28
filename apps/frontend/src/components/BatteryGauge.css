@@ -1,0 +1,246 @@
+/* ========================================================= *\
+ *  BatteryGauge - Liquid-fill battery charge indicator       *
+\* ========================================================= */
+
+.battery-gauge {
+  /* Configurable dimensions */
+  --gauge-width: 80px;
+  --gauge-height: 160px;
+  --terminal-size: 10px;
+  --body-radius: 10px;
+  --wave-size: 300px;
+
+  /* Internal theming */
+  --body-bg: var(--wa-color-gray-10);
+  --body-border: var(--wa-color-gray-25);
+  --liquid-color: var(--wa-color-success-fill-loud);
+  --liquid-color-dark: color-mix(in srgb, var(--liquid-color) 80%, black);
+  --liquid-color-light: color-mix(in srgb, var(--liquid-color) 60%, white);
+  --liquid-glow: var(--wa-color-success-fill-loud);
+
+  display: inline-flex;
+  position: relative;
+}
+
+/* ---- Charge-state color schemes ---- */
+
+.battery-gauge--good {
+  --liquid-color: var(--wa-color-success-fill-loud);
+  --liquid-glow: var(--wa-color-success-fill-loud);
+}
+
+.battery-gauge--low {
+  --liquid-color: var(--wa-color-warning-fill-loud);
+  --liquid-glow: var(--wa-color-warning-fill-loud);
+}
+
+.battery-gauge--empty {
+  --liquid-color: var(--wa-color-danger-fill-loud);
+  --liquid-glow: var(--wa-color-danger-fill-loud);
+}
+
+/* ========================================================= *\
+ *  Fill appearance (shared across layouts)                   *
+\* ========================================================= */
+
+.battery-gauge__fill {
+  background: linear-gradient(
+    to top,
+    var(--liquid-color-dark),
+    var(--liquid-color),
+    var(--liquid-color-light)
+  );
+  box-shadow:
+    inset 0 0 20px 5px color-mix(in srgb, var(--liquid-glow) 40%, transparent),
+    0 0 15px 3px color-mix(in srgb, var(--liquid-glow) 25%, transparent);
+  transition: height 0.6s ease, width 0.6s ease;
+}
+
+.battery-gauge--horizontal .battery-gauge__fill {
+  background: linear-gradient(
+    to right,
+    var(--liquid-color-dark),
+    var(--liquid-color),
+    var(--liquid-color-light)
+  );
+}
+
+/* Charging glow pulse */
+.battery-gauge--charging .battery-gauge__fill {
+  animation: battery-gauge-glow 2s ease-in-out infinite;
+}
+
+/* ---- Label ---- */
+
+.battery-gauge__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: white;
+  z-index: 2;
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.7),
+    0 0 8px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* ========================================================= *\
+ *  Vertical layout                                          *
+\* ========================================================= */
+
+.battery-gauge--vertical {
+  flex-direction: column;
+  align-items: center;
+  width: var(--gauge-width);
+}
+
+.battery-gauge--vertical .battery-gauge__terminal {
+  width: 40%;
+  height: var(--terminal-size);
+  background: var(--body-border);
+  border-radius: calc(var(--body-radius) / 2) calc(var(--body-radius) / 2) 0 0;
+  margin-bottom: -2px;
+  z-index: 1;
+}
+
+.battery-gauge--vertical .battery-gauge__body {
+  width: 100%;
+  height: var(--gauge-height);
+  background: var(--body-bg);
+  border: 2px solid var(--body-border);
+  border-radius: var(--body-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.battery-gauge--vertical .battery-gauge__fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--fill-level, 0%);
+}
+
+/* Wave pseudo-elements (vertical) */
+.battery-gauge--vertical.battery-gauge--charging .battery-gauge__fill::before,
+.battery-gauge--vertical.battery-gauge--charging .battery-gauge__fill::after {
+  content: '';
+  position: absolute;
+  width: var(--wave-size);
+  height: var(--wave-size);
+  top: calc(var(--wave-size) * -1 + 12px);
+  left: 50%;
+  background: var(--body-bg);
+  border-radius: 45%;
+  animation: battery-gauge-wave 4s linear infinite;
+}
+
+.battery-gauge--vertical.battery-gauge--charging .battery-gauge__fill::after {
+  border-radius: 42%;
+  animation-duration: 5.5s;
+  animation-direction: reverse;
+}
+
+/* ========================================================= *\
+ *  Horizontal layout                                        *
+\* ========================================================= */
+
+.battery-gauge--horizontal {
+  flex-direction: row;
+  align-items: center;
+  height: var(--gauge-width);
+}
+
+.battery-gauge--horizontal .battery-gauge__body {
+  width: var(--gauge-height);
+  height: 100%;
+  background: var(--body-bg);
+  border: 2px solid var(--body-border);
+  border-radius: var(--body-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.battery-gauge--horizontal .battery-gauge__terminal {
+  width: var(--terminal-size);
+  height: 40%;
+  background: var(--body-border);
+  border-radius: 0 calc(var(--body-radius) / 2) calc(var(--body-radius) / 2) 0;
+  margin-left: -2px;
+  z-index: 1;
+  order: 1;
+}
+
+.battery-gauge--horizontal .battery-gauge__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--fill-level, 0%);
+}
+
+/* Wave pseudo-elements (horizontal) */
+.battery-gauge--horizontal.battery-gauge--charging .battery-gauge__fill::before,
+.battery-gauge--horizontal.battery-gauge--charging .battery-gauge__fill::after {
+  content: '';
+  position: absolute;
+  width: var(--wave-size);
+  height: var(--wave-size);
+  right: calc(var(--wave-size) * -1 + 12px);
+  top: 50%;
+  background: var(--body-bg);
+  border-radius: 45%;
+  animation: battery-gauge-wave-h 4s linear infinite;
+}
+
+.battery-gauge--horizontal.battery-gauge--charging .battery-gauge__fill::after {
+  border-radius: 42%;
+  animation-duration: 5.5s;
+  animation-direction: reverse;
+}
+
+/* ========================================================= *\
+ *  Animations                                               *
+\* ========================================================= */
+
+@keyframes battery-gauge-wave {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes battery-gauge-wave-h {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes battery-gauge-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+/* ---- Reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .battery-gauge--charging .battery-gauge__fill,
+  .battery-gauge--charging .battery-gauge__fill::before,
+  .battery-gauge--charging .battery-gauge__fill::after {
+    animation: none;
+  }
+}

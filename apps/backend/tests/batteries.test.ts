@@ -96,8 +96,9 @@ describe('getBatteryStates', () => {
     await expect(getBatteryStates('key', 'secret')).rejects.toThrow('Ecoflow request failed');
   });
 
-  it('keeps default -1 values when getState fails for a device', async () => {
-    // device list succeeds, but individual state queries fail
+  it('throws when getState fails for a device', async () => {
+    // device list succeeds, but individual state queries fail --
+    // fetchBatteryStates throws rather than returning partial data
     mockListDevices.mockResolvedValue({
       code: "0",
       data: [
@@ -107,11 +108,9 @@ describe('getBatteryStates', () => {
     });
     mockGetState.mockResolvedValue({ code: "1", message: "Quota error" });
 
-    const [hank, bertha] = await getBatteryStates('key', 'secret');
-
-    // state values should remain at their -1 defaults
-    expect(hank.state.charge_pct).toBe(-1);
-    expect(bertha.state.charge_pct).toBe(-1);
+    await expect(getBatteryStates('key', 'secret')).rejects.toThrow(
+      'unable to query Hank battery status',
+    );
   });
 
   it('updates device name from the list-devices response', async () => {
@@ -122,7 +121,27 @@ describe('getBatteryStates', () => {
         { sn: "MR51ZAS5PG7U0302", deviceName: "Custom Bertha Name", online: 0 },
       ],
     });
-    mockGetState.mockResolvedValue({ code: "1" });
+    // must provide valid state responses so the function completes --
+    // it throws on getState failure, so we can't test name updates in isolation
+    mockGetState.mockImplementation((sn: string) => {
+      if (sn === "R351ZAB4HF6A0268") {
+        return Promise.resolve({
+          code: "0",
+          data: {
+            'pd.soc': 50, 'pd.carState': 0, 'pd.carWatts': 0,
+            'inv.cfgAcEnabled': 0, 'inv.outputWatts': 0,
+            'pd.wattsOutSum': 0, 'inv.inputWatts': 0, 'mppt.inWatts': 0,
+          },
+        });
+      }
+      return Promise.resolve({
+        code: "0",
+        data: {
+          cmsBattSoc: 40, flowInfo12v: 0, powGet12v: 0,
+          flowInfoAcLvOut: 0, powGetAcLvOut: 0, powOutSumW: 0, powInSumW: 0,
+        },
+      });
+    });
 
     const [hank, bertha] = await getBatteryStates('key', 'secret');
 

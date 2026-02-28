@@ -4,7 +4,7 @@
 
 .battery-gauge {
   /* Configurable dimensions */
-  --gauge-width: 80px;
+  --gauge-width: 40px;
   --gauge-height: 160px;
   --terminal-size: 10px;
   --body-radius: 10px;

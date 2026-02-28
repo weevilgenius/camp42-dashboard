@@ -22,17 +22,17 @@ const meta: Meta<BatteryGaugeAttrs> = {
 
   argTypes: {
     level: { control: { type: 'range', min: 0, max: 100, step: 1 } },
-    layout: { control: 'select', options: ['vertical', 'horizontal'] },
+    layout: { control: 'select', options: ['horizontal', 'vertical'] },
     charging: { control: 'boolean' },
   },
 };
 export default meta;
 
 /* ========================================================= *\
- *  Vertical layout stories                                  *
+ *  Horizontal layout stories (default)                      *
 \* ========================================================= */
 
-/** Healthy charge at 75%. */
+/** Healthy charge at 75% in the default horizontal layout. */
 export const Default: Story = {
   args: { level: 75 },
 };
@@ -42,7 +42,7 @@ export const FullCharge: Story = {
   args: { level: 100 },
 };
 
-/** Medium-low charge at 35%, still in the "low" warning band. */
+/** Medium-low charge at 25%, in the "low" warning band. */
 export const LowCharge: Story = {
   args: { level: 25 },
 };
@@ -73,27 +73,27 @@ export const ChargingFull: Story = {
 };
 
 /* ========================================================= *\
- *  Horizontal layout stories                                *
+ *  Vertical layout stories                                  *
 \* ========================================================= */
 
-/** Horizontal layout at 65% charge. */
-export const Horizontal: Story = {
-  args: { level: 65, layout: 'horizontal' },
+/** Vertical layout at 65% charge. */
+export const Vertical: Story = {
+  args: { level: 65, layout: 'vertical' },
 };
 
-/** Horizontal layout with active charging animation. */
-export const HorizontalCharging: Story = {
-  args: { level: 40, layout: 'horizontal', charging: true },
+/** Vertical layout with active charging animation. */
+export const VerticalCharging: Story = {
+  args: { level: 40, layout: 'vertical', charging: true },
 };
 
-/** Horizontal layout at critically low charge. */
-export const HorizontalLow: Story = {
-  args: { level: 12, layout: 'horizontal' },
+/** Vertical layout at critically low charge. */
+export const VerticalLow: Story = {
+  args: { level: 12, layout: 'vertical' },
 };
 
-/** Horizontal layout fully charged. */
-export const HorizontalFull: Story = {
-  args: { level: 100, layout: 'horizontal' },
+/** Vertical layout fully charged. */
+export const VerticalFull: Story = {
+  args: { level: 100, layout: 'vertical' },
 };
 
 /* ========================================================= *\
@@ -102,7 +102,7 @@ export const HorizontalFull: Story = {
 
 /** Large vertical gauge using custom CSS properties. */
 export const LargeVertical: Story = {
-  args: { level: 60, charging: true },
+  args: { level: 60, layout: 'vertical', charging: true },
   decorators: [
     (story) => {
       const wrapper = document.createElement('div');
@@ -115,11 +115,11 @@ export const LargeVertical: Story = {
 
 /** Compact horizontal gauge using custom CSS properties. */
 export const CompactHorizontal: Story = {
-  args: { level: 50, layout: 'horizontal' },
+  args: { level: 50 },
   decorators: [
     (story) => {
       const wrapper = document.createElement('div');
-      wrapper.style.cssText = '--gauge-width: 48px; --gauge-height: 100px;';
+      wrapper.style.cssText = '--gauge-width: 28px; --gauge-height: 100px;';
       wrapper.appendChild(story() as Node);
       return wrapper;
     },
@@ -132,7 +132,7 @@ export const AllStates: Story = {
     const container = document.createElement('div');
     container.style.display = 'flex';
     container.style.gap = '1.5rem';
-    container.style.alignItems = 'flex-end';
+    container.style.alignItems = 'center';
 
     m.render(container, [
       m(BatteryGauge, { level: 100, key: 'full' }),

@@ -9,7 +9,7 @@ export type BatteryGaugeLayout = 'horizontal' | 'vertical';
 export interface BatteryGaugeAttrs extends m.Attributes {
   /** Charge level as a percentage (0-100). */
   level: number;
-  /** Layout orientation. Defaults to 'vertical'. */
+  /** Layout orientation. Defaults to 'horizontal'. */
   layout?: BatteryGaugeLayout;
   /** Whether the battery is actively charging. Defaults to false. */
   charging?: boolean;
@@ -32,7 +32,7 @@ export const BatteryGauge: m.ClosureComponent<BatteryGaugeAttrs> = () => {
   return {
     view: ({ attrs }) => {
       const level = Math.max(0, Math.min(100, attrs.level));
-      const layout = attrs.layout ?? 'vertical';
+      const layout = attrs.layout ?? 'horizontal';
       const charging = attrs.charging ?? false;
       const state = chargeState(level);
 

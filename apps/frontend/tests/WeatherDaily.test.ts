@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import m from 'mithril';
 import type { WeatherDaily as WeatherDailyData } from '@camp42/shared';
 import { WeatherDaily } from '../src/components/WeatherDaily.js';
@@ -92,6 +92,32 @@ describe('WeatherDaily', () => {
     const precips = root.querySelectorAll('.precip');
     expect(precips[0].textContent).toContain('5%');
     expect(precips[1].textContent).toContain('80%');
+  });
+
+  // BUG: the component uses getDay() (local TZ) instead of getUTCDay() to
+  // derive the weekday from the day_start_local epoch.  This test simulates a
+  // western timezone so getDay() returns Sunday for the Monday-UTC epoch.
+  // It will FAIL until the component switches to getUTCDay().
+  it.fails('shows the correct UTC day name regardless of local timezone', () => {
+    // Mock getDay() to behave as if we are in UTC-8 (Pacific).
+    // For 2024-01-08 00:00:00 UTC, a Pacific machine sees Sunday Jan 7,
+    // so getDay() returns 0 (Sun) instead of 1 (Mon).
+    vi.spyOn(Date.prototype, 'getDay').mockImplementation(function (this: Date) {
+      const utcDay = this.getUTCDay();
+      return utcDay === 0 ? 6 : utcDay - 1;
+    });
+
+    try {
+      m.mount(root, { view: () => m(WeatherDaily, { daily }) });
+      m.redraw.sync();
+
+      const dates = root.querySelectorAll('.date');
+      // The correct answer is "Mon 8" (UTC weekday).
+      // With getDay() and the mock, the component renders "Sun 8" → assertion fails.
+      expect(dates[0].textContent).toBe('Mon 8');
+    } finally {
+      vi.restoreAllMocks();
+    }
   });
 
   it('renders weather icons', () => {

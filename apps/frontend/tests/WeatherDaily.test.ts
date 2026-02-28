@@ -2,13 +2,15 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import m from 'mithril';
 import type { WeatherDaily as WeatherDailyData } from '@camp42/shared';
 import { WeatherDaily } from '../src/components/WeatherDaily.js';
+import { renderComponent } from './helpers/MithrilTestHarness.js';
+import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 describe('WeatherDaily', () => {
-  const root = document.createElement('div');
-  document.body.appendChild(root);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let view: MountedComponent<any>;
 
   afterEach(() => {
-    m.mount(root, null);
+    view?.unmount();
   });
 
   // Use a known Monday: 2024-01-08 00:00:00 UTC
@@ -43,18 +45,16 @@ describe('WeatherDaily', () => {
   ];
 
   it('renders one card per daily entry', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const cards = root.querySelectorAll('wa-card');
+    const cards = view.root.querySelectorAll('wa-card');
     expect(cards.length).toBe(2);
   });
 
   it('shows the day name and day number', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const dates = root.querySelectorAll('.date');
+    const dates = view.root.querySelectorAll('.date');
     // The component uses getDay() (local TZ) so the rendered day name depends
     // on the machine's timezone.  We verify the format is "<DayName> <num>"
     // and that the day number from the data is present.
@@ -64,20 +64,18 @@ describe('WeatherDaily', () => {
   });
 
   it('displays the conditions string', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const conditions = root.querySelectorAll('.conditions');
+    const conditions = view.root.querySelectorAll('.conditions');
     expect(conditions[0].textContent).toBe('Clear');
     expect(conditions[1].textContent).toBe('Rain Likely');
   });
 
   it('shows rounded high and low temperatures', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const highs = root.querySelectorAll('.high');
-    const lows = root.querySelectorAll('.low');
+    const highs = view.root.querySelectorAll('.high');
+    const lows = view.root.querySelectorAll('.low');
 
     // Math.round(85.4) = 85
     expect(highs[0].textContent).toContain('85');
@@ -86,10 +84,9 @@ describe('WeatherDaily', () => {
   });
 
   it('displays precipitation probability', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const precips = root.querySelectorAll('.precip');
+    const precips = view.root.querySelectorAll('.precip');
     expect(precips[0].textContent).toContain('5%');
     expect(precips[1].textContent).toContain('80%');
   });
@@ -98,6 +95,8 @@ describe('WeatherDaily', () => {
   // derive the weekday from the day_start_local epoch.  This test simulates a
   // western timezone so getDay() returns Sunday for the Monday-UTC epoch.
   // It will FAIL until the component switches to getUTCDay().
+  //
+  // Uses manual mount/unmount because getDay must be mocked before rendering.
   it.fails('shows the correct UTC day name regardless of local timezone', () => {
     // Mock getDay() to behave as if we are in UTC-8 (Pacific).
     // For 2024-01-08 00:00:00 UTC, a Pacific machine sees Sunday Jan 7,
@@ -107,24 +106,28 @@ describe('WeatherDaily', () => {
       return utcDay === 0 ? 6 : utcDay - 1;
     });
 
+    const root = document.createElement('div');
+    document.body.appendChild(root);
+
     try {
       m.mount(root, { view: () => m(WeatherDaily, { daily }) });
       m.redraw.sync();
 
       const dates = root.querySelectorAll('.date');
       // The correct answer is "Mon 8" (UTC weekday).
-      // With getDay() and the mock, the component renders "Sun 8" → assertion fails.
+      // With getDay() and the mock, the component renders "Sun 8" -> assertion fails.
       expect(dates[0].textContent).toBe('Mon 8');
     } finally {
+      m.mount(root, null);
+      root.remove();
       vi.restoreAllMocks();
     }
   });
 
   it('renders weather icons', () => {
-    m.mount(root, { view: () => m(WeatherDaily, { daily }) });
-    m.redraw.sync();
+    view = renderComponent(WeatherDaily, { attrs: { daily } });
 
-    const imgs = root.querySelectorAll<HTMLImageElement>('.icon img');
+    const imgs = view.root.querySelectorAll<HTMLImageElement>('.icon img');
     expect(imgs.length).toBe(2);
     expect(imgs[0].alt).toBe('Clear');
     expect(imgs[1].alt).toBe('Rain Likely');

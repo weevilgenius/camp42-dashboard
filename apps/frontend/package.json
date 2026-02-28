@@ -11,7 +11,7 @@
     "dev:mock": "VITE_USE_MOCKS=true vite --host",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
     "analyze": "tsc -p tsconfig.app.json --noEmit && ANALYZE=1 vite build",
-    "check": "pnpm run typecheck && pnpm run lint",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test",
     "serve": "pnpm run build && cd .. && firebase emulators:start --only hosting",
     "test": "vitest run",
     "storybook": "storybook dev -p 6006",

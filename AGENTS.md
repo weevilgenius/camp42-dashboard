@@ -38,8 +38,18 @@ APIs directly.
 Ensure the project compiles and lint checks when making changes:
 - Check compilation: `pnpm run typecheck`
 - Check lint rules: `pnpm run lint`
-- Check both: `pnpm run check`
+- Run tests: `pnpm run test`
+- Check all (typecheck + lint + test): `pnpm run check`
 - Build project: `pnpm run build`
+
+### Testing
+
+Both `apps/frontend` and `apps/backend` have unit tests run by [Vitest](https://vitest.dev/).
+Tests live in the `tests/` directory of each app. The frontend uses `happy-dom` as
+its DOM environment (configured in `vitest.config.ts`); a setup file
+(`tests/setup.ts`) suppresses known harmless warnings from Web Awesome and Lit in
+that environment. `pnpm run check` includes tests, so all tests must pass before
+merging.
 
 ## Coding Conventions
 

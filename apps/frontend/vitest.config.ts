@@ -6,6 +6,8 @@ export default defineConfig({
     environment: 'happy-dom',
     root: '.',
     include: ['tests/**/*.test.ts'],
+    // suppress noisy Web Awesome / Lit warnings (see tests/setup.ts)
+    setupFiles: ['tests/setup.ts'],
     // make describe/it/expect available without imports
     globals: true,
   },

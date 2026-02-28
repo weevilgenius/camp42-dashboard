@@ -13,10 +13,10 @@
   /* Internal theming */
   --body-bg: var(--wa-color-gray-10);
   --body-border: var(--wa-color-gray-25);
-  --liquid-color: var(--wa-color-success-fill-loud);
+  --liquid-color: var(--wa-color-green-50);
   --liquid-color-dark: color-mix(in srgb, var(--liquid-color) 80%, black);
   --liquid-color-light: color-mix(in srgb, var(--liquid-color) 60%, white);
-  --liquid-glow: var(--wa-color-success-fill-loud);
+  --liquid-glow: var(--wa-color-green-50);
 
   display: inline-flex;
   position: relative;
@@ -25,18 +25,18 @@
 /* ---- Charge-state color schemes ---- */
 
 .battery-gauge--good {
-  --liquid-color: var(--wa-color-success-fill-loud);
-  --liquid-glow: var(--wa-color-success-fill-loud);
+  --liquid-color: var(--wa-color-green-50);
+  --liquid-glow: var(--wa-color-green-50);
 }
 
 .battery-gauge--low {
-  --liquid-color: var(--wa-color-warning-fill-loud);
-  --liquid-glow: var(--wa-color-warning-fill-loud);
+  --liquid-color: var(--wa-color-orange-50);
+  --liquid-glow: var(--wa-color-orange-50);
 }
 
 .battery-gauge--empty {
-  --liquid-color: var(--wa-color-danger-fill-loud);
-  --liquid-glow: var(--wa-color-danger-fill-loud);
+  --liquid-color: var(--wa-color-red-50);
+  --liquid-glow: var(--wa-color-red-50);
 }
 
 /* ========================================================= *\

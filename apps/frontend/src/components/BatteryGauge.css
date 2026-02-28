@@ -24,17 +24,17 @@
 
 /* ---- Charge-state color schemes ---- */
 
-.battery-gauge--good {
+.battery-gauge.good {
   --liquid-color: var(--wa-color-green-50);
   --liquid-glow: var(--wa-color-green-50);
 }
 
-.battery-gauge--low {
+.battery-gauge.low {
   --liquid-color: var(--wa-color-orange-50);
   --liquid-glow: var(--wa-color-orange-50);
 }
 
-.battery-gauge--empty {
+.battery-gauge.empty {
   --liquid-color: var(--wa-color-red-50);
   --liquid-glow: var(--wa-color-red-50);
 }
@@ -43,7 +43,7 @@
  *  Fill appearance (shared across layouts)                   *
 \* ========================================================= */
 
-.battery-gauge__fill {
+.battery-gauge .fill {
   background: linear-gradient(
     to top,
     var(--liquid-color-dark),
@@ -57,7 +57,7 @@
   transition: height 0.6s ease, width 0.6s ease;
 }
 
-.battery-gauge--horizontal .battery-gauge__fill {
+.battery-gauge.horizontal .fill {
   background: linear-gradient(
     to right,
     var(--liquid-color-dark),
@@ -67,13 +67,13 @@
 }
 
 /* Charging glow pulse */
-.battery-gauge--charging .battery-gauge__fill {
+.battery-gauge.charging .fill {
   animation: battery-gauge-glow 2s ease-in-out infinite;
 }
 
 /* ---- Label ---- */
 
-.battery-gauge__label {
+.battery-gauge .label {
   position: absolute;
   inset: 0;
   display: flex;
@@ -93,13 +93,13 @@
  *  Vertical layout                                          *
 \* ========================================================= */
 
-.battery-gauge--vertical {
+.battery-gauge.vertical {
   flex-direction: column;
   align-items: center;
   width: var(--gauge-width);
 }
 
-.battery-gauge--vertical .battery-gauge__terminal {
+.battery-gauge.vertical .terminal {
   width: 40%;
   height: var(--terminal-size);
   background: var(--body-border);
@@ -108,7 +108,7 @@
   z-index: 1;
 }
 
-.battery-gauge--vertical .battery-gauge__body {
+.battery-gauge.vertical .body {
   width: 100%;
   height: var(--gauge-height);
   background: var(--body-bg);
@@ -118,7 +118,7 @@
   overflow: hidden;
 }
 
-.battery-gauge--vertical .battery-gauge__fill {
+.battery-gauge.vertical .fill {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -127,7 +127,7 @@
 }
 
 /* Energy-flow pulse bands (vertical) */
-.battery-gauge--vertical.battery-gauge--charging .battery-gauge__fill::after {
+.battery-gauge.vertical.charging .fill::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -146,13 +146,13 @@
  *  Horizontal layout                                        *
 \* ========================================================= */
 
-.battery-gauge--horizontal {
+.battery-gauge.horizontal {
   flex-direction: row;
   align-items: center;
   height: var(--gauge-width);
 }
 
-.battery-gauge--horizontal .battery-gauge__body {
+.battery-gauge.horizontal .body {
   width: var(--gauge-height);
   height: 100%;
   background: var(--body-bg);
@@ -162,7 +162,7 @@
   overflow: hidden;
 }
 
-.battery-gauge--horizontal .battery-gauge__terminal {
+.battery-gauge.horizontal .terminal {
   width: var(--terminal-size);
   height: 40%;
   background: var(--body-border);
@@ -172,7 +172,7 @@
   order: 1;
 }
 
-.battery-gauge--horizontal .battery-gauge__fill {
+.battery-gauge.horizontal .fill {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -181,7 +181,7 @@
 }
 
 /* Energy-flow pulse bands (horizontal) */
-.battery-gauge--horizontal.battery-gauge--charging .battery-gauge__fill::after {
+.battery-gauge.horizontal.charging .fill::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -231,8 +231,8 @@
 /* ---- Reduced motion ---- */
 
 @media (prefers-reduced-motion: reduce) {
-  .battery-gauge--charging .battery-gauge__fill,
-  .battery-gauge--charging .battery-gauge__fill::after {
+  .battery-gauge.charging .fill,
+  .battery-gauge.charging .fill::after {
     animation: none;
   }
 }

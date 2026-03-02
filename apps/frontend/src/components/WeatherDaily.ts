@@ -23,7 +23,7 @@ export const WeatherDaily: m.ClosureComponent<WeatherDailyAttrs> = () => {
 
   /** Converts a unix epoch (seconds) to a short weekday name. */
   const formatDayName = (epoch: number): string => {
-    const day = new Date(epoch * 1000).getDay();
+    const day = new Date(epoch * 1000).getUTCDay();
     return DAY_NAMES[day];
   };
 

@@ -110,8 +110,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       rollup-plugin-visualizer:
-        specifier: ^7.0.0
-        version: 7.0.0(rollup@4.59.0)
+        specifier: ^7.0.1
+        version: 7.0.1(rollup@4.59.0)
       storybook:
         specifier: ^10.2.16
         version: 10.2.16(@testing-library/dom@10.4.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3386,8 +3386,8 @@ packages:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
     hasBin: true
 
-  rollup-plugin-visualizer@7.0.0:
-    resolution: {integrity: sha512-loo4kmhTg7GMO0hqaUv/azvLPUT2B4jXU3gNMG35gm1mWKpOzhV6rspb/Mqmsfg7oOTdkzdmOckCIwGB5Ca1CA==}
+  rollup-plugin-visualizer@7.0.1:
+    resolution: {integrity: sha512-UJUT4+1Ho4OcWmPYU3sYXgUqI8B8Ayfe06MX7y0qCJ1K8aGoKtR/NDd/2nZqM7ADkrzny+I99Ul7GgyoiVNAgg==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -7824,7 +7824,7 @@ snapshots:
     dependencies:
       glob: 10.5.0
 
-  rollup-plugin-visualizer@7.0.0(rollup@4.59.0):
+  rollup-plugin-visualizer@7.0.1(rollup@4.59.0):
     dependencies:
       open: 11.0.0
       picomatch: 4.0.3

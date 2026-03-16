@@ -2,12 +2,12 @@ import { defineConfig, type PluginOption, type UserConfig } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { env } from 'node:process';
 
-// https://vitejs.dev/config/
-export default defineConfig(() => {
+// https://vite.dev/config/
+export default defineConfig(({ command }) => {
 
   const plugins: PluginOption[] = [];
 
-  if (env.ANALYZE === '1') {
+  if (command === 'build' && env.ANALYZE === '1') {
     // add the visualizer to see the module break-down
     plugins.push(
       visualizer({
@@ -31,32 +31,39 @@ export default defineConfig(() => {
       sourcemap: true,
       // Clean the output directory before each build.
       emptyOutDir: true,
-      rollupOptions: {
+      rolldownOptions: {
         output: {
 
-          // configure Rollup to break some libraries out into separate files
-          manualChunks: (id: string) => {
-            if (id.includes('node_modules')) {
-              if (/node_modules[/\\]mithril/.test(id)) {
-                return 'mithril';
-              }
-              if (/node_modules[/\\]@awesome.me[/\\]webawesome[/\\]/.test(id)) {
-                return 'webawesome';
-              }
-              if (/node_modules[/\\](lit|@lit|lit-html|lit-element)[/\\]/.test(id)) {
-                return 'webawesome';
-              }
-              if (/node_modules[/\\]@floating-ui[/\\]/.test(id)) {
-                return 'webawesome';
-              }
-              if (/node_modules[/\\]@?firebase[/\\]/.test(id)) {
-                return 'firebase';
-              }
-            }
-
-            // default: let Rollup decide
-            return undefined;
+          // configure rolldown to break some libraries out into separate files
+          codeSplitting: {
+            groups: [
+              {
+                name: (id: string): string | null => {
+                  if (!id.includes('node_modules')) {
+                    return null;
+                  }
+                  if (/node_modules[/\\]mithril/.test(id)) {
+                    return 'mithril';
+                  }
+                  if (/node_modules[/\\]@awesome\.me[/\\]webawesome[/\\]/.test(id)) {
+                    return 'webawesome';
+                  }
+                  if (/node_modules[/\\](lit|@lit|lit-html|lit-element)[/\\]/.test(id)) {
+                    return 'webawesome';
+                  }
+                  if (/node_modules[/\\]@floating-ui[/\\]/.test(id)) {
+                    return 'webawesome';
+                  }
+                  if (/node_modules[/\\]firebase[/\\]/.test(id)) {
+                    return 'firebase';
+                  }
+                  return null;
+                },
+                test: /node_modules[/\\]/,
+              },
+            ],
           },
+
         },
       },
     },

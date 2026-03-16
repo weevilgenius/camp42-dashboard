@@ -95,8 +95,8 @@ importers:
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       '@types/mithril':
-        specifier: ^2.2.7
-        version: 2.2.7
+        specifier: ^2.2.8
+        version: 2.2.8
       '@typescript-eslint/utils':
         specifier: ^8.56.1
         version: 8.56.1(eslint@10.0.2)(typescript@5.9.3)
@@ -1277,8 +1277,8 @@ packages:
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
 
-  '@types/mithril@2.2.7':
-    resolution: {integrity: sha512-uetxoYizBMHPELl6DSZUfO6Q/aOm+h0NUCv9bVAX2iAxfrdBSOvU9KKFl+McTtxR13F+BReYLY814pJsZvnSxg==}
+  '@types/mithril@2.2.8':
+    resolution: {integrity: sha512-FN9Tv1+Nlr0LNPGnIL/xOxLJfu5WW2n8HAFeo4yxF+/O0per/8g080xlXoo+xj8baowAcfsNI3k80DxyLY34gQ==}
 
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
@@ -5349,7 +5349,7 @@ snapshots:
 
   '@types/mime@1.3.5': {}
 
-  '@types/mithril@2.2.7': {}
+  '@types/mithril@2.2.8': {}
 
   '@types/ms@2.1.0': {}
 

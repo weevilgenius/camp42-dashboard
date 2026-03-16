@@ -31,7 +31,7 @@
     "@storybook/web-components-vite": "^10.2.19",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",
-    "@types/mithril": "^2.2.7",
+    "@types/mithril": "^2.2.8",
     "@typescript-eslint/utils": "^8.56.1",
     "@vitest/coverage-v8": "^4.0.18",
     "happy-dom": "^20.8.3",

@@ -25,7 +25,7 @@
   "dependencies": {
     "@awesome.me/webawesome": "^3.3.1",
     "@camp42/shared": "workspace:*",
-    "firebase": "^12.10.0",
+    "firebase": "^12.11.0",
     "mithril": "^2.3.8"
   },
   "devDependencies": {

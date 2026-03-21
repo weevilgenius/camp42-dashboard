@@ -4,9 +4,8 @@ import m from 'mithril';
 import { registerIconLibrary } from '@awesome.me/webawesome/dist/webawesome.js';
 import "@awesome.me/webawesome/dist/styles/themes/default.css";
 
-// our components
-import BatteryDashboard from './components/BatteryDashboard.js';
-import WeatherDashboard from './components/WeatherDashboard.js';
+// our app component
+import App from './App.js';
 
 
 // Lit (used by Web Awesome components) generates spurious update warnings in development mode only
@@ -45,18 +44,7 @@ registerIconLibrary('material', {
   mutator: (svg) => svg.setAttribute('fill', 'currentColor'),
 });
 
-// main app component
-const Dashboard: m.Component = {
-  view: () => {
-    return m('main', [
-      m('h1', 'Camp 42 Dashboard'),
-      m(BatteryDashboard),
-      m(WeatherDashboard),
-    ]);
-  },
-};
-
 // Ask Mithril to render the page, our componet gets placed into the body element.
 // Mithril will rerender automatically after DOM event handlers defined in component
 // views and also whenever m.redraw() is called.
-m.mount(document.body, Dashboard);
+m.mount(document.body, App);

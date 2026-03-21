@@ -1,10 +1,8 @@
 import m from 'mithril';
 import {
   GoogleAuthProvider,
-  getRedirectResult,
   onAuthStateChanged,
   signInWithPopup,
-  signInWithRedirect,
 } from 'firebase/auth';
 import type { Unsubscribe, User } from 'firebase/auth';
 
@@ -14,11 +12,6 @@ import WeatherDashboard from './components/WeatherDashboard.js';
 import { auth } from './firebase.js';
 
 const provider = new GoogleAuthProvider();
-
-const isLocalDevHost = (): boolean => {
-  const { hostname } = window.location;
-  return hostname === 'localhost' || hostname === '127.0.0.1';
-};
 
 const logAuthError = (context: string, error: unknown) => {
   const details = error as { code?: string; message?: string; customData?: unknown };
@@ -43,11 +36,9 @@ export const App: m.ClosureComponent = () => {
       return;
     }
 
-    const usePopup = isLocalDevHost();
-    const mode = usePopup ? 'popup' : 'redirect';
     if (import.meta.env.DEV) {
       console.info('[auth] starting Google sign-in', {
-        mode,
+        mode: 'popup',
         hostname: window.location.hostname,
       });
     }
@@ -55,23 +46,19 @@ export const App: m.ClosureComponent = () => {
     m.redraw();
 
     try {
-      if (usePopup) {
-        const result = await signInWithPopup(auth, provider);
-        if (import.meta.env.DEV) {
-          console.info('[auth] popup sign-in result received', {
-            uid: result.user.uid,
-            email: result.user.email,
-            providerIds: result.user.providerData.map((providerInfo) => providerInfo.providerId),
-          });
-        }
-        state.signingIn = false;
-        m.redraw();
-      } else {
-        await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      if (import.meta.env.DEV) {
+        console.info('[auth] popup sign-in result received', {
+          uid: result.user.uid,
+          email: result.user.email,
+          providerIds: result.user.providerData.map((providerInfo) => providerInfo.providerId),
+        });
       }
+      state.signingIn = false;
+      m.redraw();
     } catch (error) {
       state.signingIn = false;
-      logAuthError(`Google sign-in (${mode}) failed`, error);
+      logAuthError('Google sign-in (popup) failed', error);
       m.redraw();
     }
   };
@@ -84,25 +71,6 @@ export const App: m.ClosureComponent = () => {
           path: window.location.pathname,
         });
       }
-
-      void getRedirectResult(auth)
-        .then((result) => {
-          if (!result) {
-            console.info('[auth] redirect result: none');
-            return;
-          }
-
-          if (import.meta.env.DEV) {
-            console.info('[auth] redirect result received', {
-              uid: result.user.uid,
-              email: result.user.email,
-              providerIds: result.user.providerData.map((providerInfo) => providerInfo.providerId),
-            });
-          }
-        })
-        .catch((error: unknown) => {
-          logAuthError('getRedirectResult failed', error);
-        });
 
       state.unsubscribe = onAuthStateChanged(auth, (user) => {
         if (import.meta.env.DEV) {

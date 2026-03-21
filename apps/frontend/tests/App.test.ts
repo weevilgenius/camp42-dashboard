@@ -5,10 +5,8 @@ import type { MountedComponent } from './helpers/MithrilTestHarness.js';
 
 const authMocks = vi.hoisted(() => {
   return {
-    getRedirectResult: vi.fn(),
     onAuthStateChanged: vi.fn(),
     signInWithPopup: vi.fn(),
-    signInWithRedirect: vi.fn(),
   };
 });
 
@@ -21,10 +19,8 @@ vi.mock('@awesome.me/webawesome/dist/components/button/button.js', () => ({}));
 vi.mock('firebase/auth', () => {
   return {
     GoogleAuthProvider: class GoogleAuthProvider {},
-    getRedirectResult: authMocks.getRedirectResult,
     onAuthStateChanged: authMocks.onAuthStateChanged,
     signInWithPopup: authMocks.signInWithPopup,
-    signInWithRedirect: authMocks.signInWithRedirect,
   };
 });
 
@@ -58,7 +54,6 @@ describe('App auth gate', () => {
         return unsubscribe;
       },
     );
-    authMocks.getRedirectResult.mockResolvedValue(null);
     authMocks.signInWithPopup.mockResolvedValue({
       user: {
         uid: 'popup-user',
@@ -66,7 +61,6 @@ describe('App auth gate', () => {
         providerData: [],
       },
     });
-    authMocks.signInWithRedirect.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
@@ -78,7 +72,7 @@ describe('App auth gate', () => {
     view = renderComponent(App);
 
     expect(view.root.textContent?.trim()).toBe('');
-    expect(authMocks.signInWithRedirect).not.toHaveBeenCalled();
+    expect(authMocks.signInWithPopup).not.toHaveBeenCalled();
   });
 
   it('renders the dashboard when authenticated', () => {
@@ -103,10 +97,10 @@ describe('App auth gate', () => {
     expect(signInButton).not.toBeNull();
     expect(signInButton?.textContent).toContain('Sign in with Google');
     expect(view.root.querySelector('h1')).toBeNull();
-    expect(authMocks.signInWithRedirect).not.toHaveBeenCalled();
+    expect(authMocks.signInWithPopup).not.toHaveBeenCalled();
   });
 
-  it('triggers Google popup sign-in after clicking the sign-in button on localhost', () => {
+  it('triggers Google popup sign-in after clicking the sign-in button', () => {
     view = renderComponent(App);
 
     authStateChangedCallback?.(null);
@@ -116,7 +110,6 @@ describe('App auth gate', () => {
     signInButton?.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
 
     expect(authMocks.signInWithPopup).toHaveBeenCalledTimes(1);
-    expect(authMocks.signInWithRedirect).not.toHaveBeenCalled();
   });
 
   it('unsubscribes auth listener on unmount', () => {

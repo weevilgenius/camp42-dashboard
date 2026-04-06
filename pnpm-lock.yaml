@@ -67,8 +67,8 @@ importers:
   apps/frontend:
     dependencies:
       '@awesome.me/webawesome':
-        specifier: ^3.4.0
-        version: 3.4.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)
+        specifier: ^3.5.0
+        version: 3.5.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)
       '@camp42/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -132,8 +132,8 @@ packages:
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
 
-  '@awesome.me/webawesome@3.4.0':
-    resolution: {integrity: sha512-aebBd8s1P11Em8W9R1Kg7/nEcQ5uCwcWJCpG0Xl3LR7h2jOoQdpoOMZgvdqsWVuuSYB/eLLqFPYXOTdEemEj2w==}
+  '@awesome.me/webawesome@3.5.0':
+    resolution: {integrity: sha512-/hJOe5vsKu9GejyTB3xFyQvvGRzXCLqdOGtBa4a+ifDNPRwzQLR3bzxcEpJsLmVfOhhem1XGbyOD9cMwefuAlA==}
     engines: {node: '>=14.17.0'}
 
   '@babel/code-frame@7.29.0':
@@ -3126,6 +3126,11 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
+  marked@11.2.0:
+    resolution: {integrity: sha512-HR0m3bvu0jAPYiIvLUUQtdg1g6D247//lvcekpHO1WMvbwDlwSkZAX9Lw4F4YHE1T0HaaNve0tuAWuV1UJ6vtw==}
+    engines: {node: '>= 18'}
+    hasBin: true
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -4222,7 +4227,7 @@ snapshots:
 
   '@adobe/css-tools@4.4.4': {}
 
-  '@awesome.me/webawesome@3.4.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)':
+  '@awesome.me/webawesome@3.5.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)':
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@floating-ui/dom': 1.7.6
@@ -4231,6 +4236,7 @@ snapshots:
       '@shoelace-style/localize': 3.2.1
       composed-offset-position: 0.0.6(@floating-ui/utils@0.2.11)
       lit: 3.3.2
+      marked: 11.2.0
       nanoid: 5.1.7
       qr-creator: 1.0.0
     transitivePeerDependencies:
@@ -7731,6 +7737,8 @@ snapshots:
   makeerror@1.0.12:
     dependencies:
       tmpl: 1.0.5
+
+  marked@11.2.0: {}
 
   math-intrinsics@1.1.0: {}
 

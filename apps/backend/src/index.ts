@@ -10,6 +10,7 @@ import type {
 } from '@camp42/shared';
 import { getBatteryStates } from './batteries.js';
 import { getWeatherState } from "./weather.js";
+import { getAIMessage } from "./ai.js";
 
 
 /* ========================================================= *\
@@ -31,6 +32,8 @@ const TEMPEST_ACCESS_TOKEN = defineString('TEMPEST_ACCESS_TOKEN', {
 
 const ECOFLOW_SECRET_KEY = defineSecret('ECOFLOW_SECRET_KEY');
 
+const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
+
 
 /* ========================================================= *\
  *  Cloud Function                                           *
@@ -39,7 +42,10 @@ const ECOFLOW_SECRET_KEY = defineSecret('ECOFLOW_SECRET_KEY');
 // a Firebase "Callable" function that gets camp status data
 // see https://firebase.google.com/docs/functions/callable?gen=2nd
 const campStatusOpts: CallableOptions<StatusRequest> = {
-  secrets: [ECOFLOW_SECRET_KEY],
+  secrets: [
+    ECOFLOW_SECRET_KEY,
+    GEMINI_API_KEY,
+  ],
 };
 export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campStatusOpts, async (request) => {
 
@@ -75,6 +81,18 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
     return {
       code: "SUCCESS",
       status: weather,
+    };
+  }
+
+  // AI response
+  case StatusType.AI: {
+    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value(), 1, 12);
+    const batteries = await getBatteryStates(ECOFLOW_ACCESS_KEY.value(), ECOFLOW_SECRET_KEY.value());
+    const response = await getAIMessage(GEMINI_API_KEY.value(), weather, batteries, VERBOSE.value());
+    if (VERBOSE.value()) { logger.debug('AI response', response); }
+    return {
+      code: "SUCCESS",
+      message: response,
     };
   }
 

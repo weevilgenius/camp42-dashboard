@@ -175,6 +175,7 @@ export interface WeatherHourly {
 export enum StatusType {
   Batteries = "batteries",
   Weather = "weather",
+  AI = "ai",
 }
 
 /** Request status */
@@ -198,10 +199,17 @@ export interface WeatherStatus {
   hourly: WeatherHourly[];
 }
 
+/** Response from AI request */
+export interface AIStatus {
+  /** AI response message */
+  message: string;
+}
+
 /** Maps each StatusType to its corresponding response payload */
 interface StatusPayloadMap {
   [StatusType.Batteries]: BatteryStatus;
   [StatusType.Weather]: WeatherStatus;
+  [StatusType.AI]: AIStatus;
 }
 
 /** Response from status request */

@@ -92,7 +92,7 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
     if (VERBOSE.value()) { logger.debug('AI response', response); }
     return {
       code: "SUCCESS",
-      message: response,
+      status: response,
     };
   }
 

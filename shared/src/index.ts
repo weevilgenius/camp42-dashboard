@@ -201,6 +201,8 @@ export interface WeatherStatus {
 
 /** Response from AI request */
 export interface AIStatus {
+  /** Name of the character responding */
+  name: string;
   /** AI response message */
   message: string;
 }

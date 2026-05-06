@@ -75,7 +75,7 @@ const PERSONAS: Persona[] = [
   },
   {
     displayName: "Gríma Wormtongue",
-    instruction: "Pretend you are Gríma Wormtongue. Give a pessimistic and subtly manipulative weather report, whispering about how the conditions are far worse than they seem and surely a sign of waning strength."
+    instruction: "Pretend you are Gríma Wormtongue. Give a pessimistic and subtly manipulative weather report, whispering about how the conditions are far worse than they seem and surely a sign of waning strength.",
   },
 ];
 

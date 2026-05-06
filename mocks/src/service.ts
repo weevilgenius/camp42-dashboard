@@ -1,4 +1,4 @@
-import type { BatteryStatus, WeatherStatus } from '@camp42/shared';
+import type { AIStatus, BatteryStatus, WeatherStatus } from '@camp42/shared';
 import {
   BATTERIES_NORMAL,
   BATTERIES_CHARGING,
@@ -87,4 +87,13 @@ export async function fetchBatteryStatus(): Promise<BatteryStatus> {
 export async function fetchWeatherStatus(): Promise<WeatherStatus> {
   await delay(MOCK_DELAY_MS);
   return getScenarioFromParams('weather', WEATHER_SCENARIOS, weatherScenario)();
+}
+
+/** Drop-in replacement for the real fetchAIStatus. Returns a mock response after a short delay. */
+export async function fetchAIStatus(): Promise<AIStatus> {
+  await delay(MOCK_DELAY_MS);
+  return {
+    name: "Bilbo",
+    message: 'The air is brisk and the breeze is picking up from the west, so I shall pack an extra wool waistcoat before I venture into the woods. It looks to be a clear evening for adventure, and one must always be prepared for a bit of a chill when the stars begin to peek through the clouds.',
+  };
 }

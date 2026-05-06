@@ -36,6 +36,12 @@ vi.mock('../src/components/WeatherDashboard.js', () => ({
   },
 }));
 
+vi.mock('../src/components/SummaryCard.js', () => ({
+  default: {
+    view: () => 'summary card',
+  },
+}));
+
 import { App } from '../src/App.js';
 
 describe('App auth gate', () => {
@@ -83,6 +89,7 @@ describe('App auth gate', () => {
     view.redraw();
 
     expect(view.root.querySelector('h1')?.textContent).toBe('Camp 42 Dashboard');
+    expect(view.root.textContent).toContain('summary card');
     expect(view.root.textContent).toContain('battery dashboard');
     expect(view.root.textContent).toContain('weather dashboard');
   });

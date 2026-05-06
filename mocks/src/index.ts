@@ -56,6 +56,7 @@ export type {
 
 // Mock service layer
 export {
+  fetchAIStatus,
   fetchBatteryStatus,
   fetchWeatherStatus,
   setMockBatteryScenario,

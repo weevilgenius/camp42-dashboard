@@ -1,7 +1,7 @@
 .battery-card {
   background: var(--wa-color-surface-raised);
   border: 1px solid var(--wa-color-surface-border);
-  border-radius: var(--wa-border-radius-large);
+  border-radius: 0.5rem;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;

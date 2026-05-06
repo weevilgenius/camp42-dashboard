@@ -1,0 +1,59 @@
+.summary-card {
+  padding: 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-card .header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.summary-card .card {
+  padding: 1rem;
+  background: var(--wa-color-surface-raised);
+  border: 1px solid var(--wa-color-surface-border);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-card .title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.summary-card .message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-line;
+  color: var(--wa-color-text-normal);
+}
+
+.summary-card .error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+  color: var(--wa-color-danger-fill-normal);
+}
+
+.summary-card .skeleton-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-card wa-skeleton {
+  --border-radius: 0.25rem;
+  height: 1rem;
+}

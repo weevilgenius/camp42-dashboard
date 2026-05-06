@@ -2,6 +2,7 @@ import { httpsCallable } from 'firebase/functions';
 
 import { StatusType } from '@camp42/shared';
 import type {
+  AIStatus,
   BatteryStatus,
   StatusRequest,
   StatusResponse,
@@ -16,6 +17,11 @@ const batteryStatus = httpsCallable<StatusRequest, StatusResponse<StatusType.Bat
 );
 
 const weatherStatus = httpsCallable<StatusRequest, StatusResponse<StatusType.Weather>>(
+  functions,
+  'campStatus',
+);
+
+const aiStatus = httpsCallable<StatusRequest, StatusResponse<StatusType.AI>>(
   functions,
   'campStatus',
 );
@@ -51,6 +57,24 @@ export async function fetchWeatherStatus(): Promise<WeatherStatus> {
 
   if (response.code !== 'SUCCESS' || !response.status) {
     throw new Error(response.error ?? 'Failed to fetch weather status');
+  }
+
+  return response.status;
+}
+
+/** Fetch the AI-generated camp summary from the campStatus cloud function. */
+export async function fetchAIStatus(): Promise<AIStatus> {
+  // are we supposed to use mock data?
+  if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    const mock = await import('@camp42/mocks/src/service.js');
+    return mock.fetchAIStatus();
+  }
+
+  const result = await aiStatus({ type: StatusType.AI });
+  const response = result.data;
+
+  if (response.code !== 'SUCCESS' || !response.status) {
+    throw new Error(response.error ?? 'Failed to fetch AI summary');
   }
 
   return response.status;

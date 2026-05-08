@@ -1,6 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
 import type { WeatherStatus } from '@camp42/shared';
-import type { BatteryState } from '@camp42/shared';
 
 
 interface Persona {
@@ -92,7 +91,7 @@ export interface AIMessage {
  * @param verbose Optional flag to log debug information
  * @returns
  */
-export async function getAIMessage(gemini_api_key: string, weather_state: WeatherStatus, battery_state: BatteryState[], verbose = false): Promise<AIMessage> {
+export async function getAIMessage(gemini_api_key: string, weather_state: WeatherStatus, verbose = false): Promise<AIMessage> {
   if (verbose) { console.log('creating Gemini API client'); }
   const ai = new GoogleGenAI({apiKey: gemini_api_key});
 

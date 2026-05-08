@@ -2,7 +2,6 @@
 import { config } from 'dotenv';
 import { getAIMessage } from './ai.js';
 import { getWeatherState } from "./weather.js";
-import { getBatteryStates } from './batteries.js';
 
 
 // load the environment from Firebase config
@@ -26,21 +25,9 @@ if (!TEMPEST_ACCESS_TOKEN) {
   process.exit(1);
 }
 
-// get the Ecoflow API keys
-const ECOFLOW_ACCESS_KEY = process.env.ECOFLOW_ACCESS_KEY as string;
-const ECOFLOW_SECRET_KEY = process.env.ECOFLOW_SECRET_KEY as string;
-if (!ECOFLOW_ACCESS_KEY || !ECOFLOW_SECRET_KEY) {
-  console.error('Ecoflow API keys not found');
-  process.exit(1);
-}
-
-
 // request weather
 const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN, 1, 12);
 
-// request battery states
-const batteries = await getBatteryStates(ECOFLOW_ACCESS_KEY, ECOFLOW_SECRET_KEY);
-
 // request ai message
-const response = await getAIMessage(GEMINI_API_KEY, weather, batteries, true);
+const response = await getAIMessage(GEMINI_API_KEY, weather, true);
 console.log(response);

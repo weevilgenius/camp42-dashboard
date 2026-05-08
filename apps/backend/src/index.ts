@@ -86,7 +86,7 @@ export const campStatus = onCall<StatusRequest, Promise<StatusResponse>>(campSta
 
   // AI response
   case StatusType.AI: {
-    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value(), 1, 12);
+    const weather = await getWeatherState(TEMPEST_ACCESS_TOKEN.value(), 10, 24);
     const response = await getAIMessage(GEMINI_API_KEY.value(), weather, VERBOSE.value());
     if (VERBOSE.value()) { logger.debug('AI response', response); }
     return {

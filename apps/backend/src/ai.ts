@@ -104,10 +104,24 @@ export async function getAIMessage(gemini_api_key: string, weather_state: Weathe
   // select a persona
   const persona = PERSONAS[Math.floor(Math.random() * PERSONAS.length)];
 
+  // determine sunrise and sunset
+  const sun = getCampSunTimes();
+
+  // current local time at camp (24-hour, America/Los_Angeles)
+  const currentTime = new Date().toLocaleTimeString('en-US', {
+    timeZone: 'America/Los_Angeles',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+
   // build the prompt
   const prompt = `
-The user is looking at a dashboard for a remote camping site.
+The user is looking at a dashboard for a remote camping site. The camp is in a redwood forest in Northern California with the ocean visible in the distance.
 
+Current time: ${currentTime}
+Sunrise: ${sun.sunrise}
+Sunset: ${sun.sunset}
 Weather: ${JSON.stringify(weather)}
 
 ${persona.instruction}
@@ -127,5 +141,47 @@ citing numbers (which sound out of character). Limit your response to 1 or 2 sen
   return {
     name: persona.displayName,
     message: response.text ?? "",
+  };
+}
+
+function getCampSunTimes() {
+  // Camp 42 coordinates (Jenner, CA)
+  const lat = 38.45;
+  const lng = -123.12;
+
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / 86400000);
+
+  const radians = Math.PI / 180;
+
+  // 1. Calculate Solar Declination
+  const declination = 23.45 * Math.sin(radians * (360 / 365) * (dayOfYear - 81));
+
+  // 2. Calculate Hour Angle (H)
+  const cosH = (Math.sin(-0.833 * radians) - Math.sin(lat * radians) * Math.sin(declination * radians)) /
+    (Math.cos(lat * radians) * Math.cos(declination * radians));
+  const H = Math.acos(cosH) / radians;
+
+  // 3. Solar Noon in UTC (Longitude is negative for West)
+  const solarNoonUTC = 12 - (lng / 15);
+  const sunriseUTC = solarNoonUTC - (H / 15);
+  const sunsetUTC = solarNoonUTC + (H / 15);
+
+  // 4. Convert UTC decimal hours to Pacific 24-hour string
+  const formatToPacific = (utcDecimal: number) => {
+    const date = new Date(now);
+    date.setUTCHours(Math.floor(utcDecimal), (utcDecimal % 1) * 60, 0, 0);
+    return date.toLocaleTimeString('en-US', {
+      timeZone: 'America/Los_Angeles',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+  };
+
+  return {
+    sunrise: formatToPacific(sunriseUTC),
+    sunset: formatToPacific(sunsetUTC),
   };
 }

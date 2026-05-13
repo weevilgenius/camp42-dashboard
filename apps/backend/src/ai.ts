@@ -133,7 +133,7 @@ citing numbers (which sound out of character). Limit your response to 1 or 2 sen
 
   // send the request to the AI
   const response = await ai.models.generateContent({
-    model: 'gemini-3.1-flash-lite-preview',
+    model: 'gemini-3.1-flash-lite',
     contents: prompt,
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "camp-dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dashboard for Camp 42",
   "private": true,
   "type": "module",

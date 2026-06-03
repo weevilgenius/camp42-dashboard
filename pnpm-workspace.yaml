@@ -2,9 +2,9 @@ packages:
   - apps/*
   - shared
   - mocks
-
-onlyBuiltDependencies:
-  - '@firebase/util'
-  - esbuild
-  - protobufjs
-  - unrs-resolver
+allowBuilds:
+  '@firebase/util': true
+  '@google/genai': false
+  esbuild: true
+  protobufjs: true
+  unrs-resolver: true

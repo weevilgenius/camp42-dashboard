@@ -70,8 +70,8 @@ importers:
   apps/frontend:
     dependencies:
       '@awesome.me/webawesome':
-        specifier: ^3.7.0
-        version: 3.7.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)
+        specifier: ^3.8.0
+        version: 3.8.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)
       '@camp42/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -135,8 +135,8 @@ packages:
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
 
-  '@awesome.me/webawesome@3.7.0':
-    resolution: {integrity: sha512-rAhTpJsJShv/4JWWGh+d7yQZ3pmk9j+YbwZjWWbgnPQPA+9I2/BrTUgNY+bOLehUovIbDd11J6+myGwGh0hl2w==}
+  '@awesome.me/webawesome@3.8.0':
+    resolution: {integrity: sha512-LBu/vkivsVaXoC7SGQAKf579lLoLtgk9zJYstA31mRchrkVPGQsUNH1osoXefOhra0VLk9ZuIRT23+Ynw/xCKw==}
     engines: {node: '>=14.17.0'}
 
   '@babel/code-frame@7.29.7':
@@ -1089,8 +1089,17 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
+  '@konnorr/qr-creator@1.0.1':
+    resolution: {integrity: sha512-EmRR9rny1ENBtQy7TLOguO/79h1EpzXUmqIdMTGp2BW8NkZtRRPr5hmQcE+n9QXYo4T8NjcaJ14hnZg+s/+K+A==}
+
+  '@lit-labs/ssr-client@1.1.8':
+    resolution: {integrity: sha512-PjGh81oKsoI64m3IDjTqqjhC7dr2uC/o0jrllUb5gRAyp/RlAHxapgJrjq9kWz97faCHLQ8jUlTi6tGm+8fgyA==}
+
   '@lit-labs/ssr-dom-shim@1.6.0':
     resolution: {integrity: sha512-VHb0ALPMTlgKjM6yIxxoQNnpKyUKLD04VzeQdsiXkMqkvYlAHxq9glGLmgbb889/1GsohSOAjvQYoiBppXFqrQ==}
+
+  '@lit/context@1.1.6':
+    resolution: {integrity: sha512-M26qDE6UkQbZA2mQ3RjJ3Gzd8TxP+/0obMgE5HfkfLhEEyYE3Bui4A5XHiGPjy0MUGAyxB3QgVuw2ciS0kHn6A==}
 
   '@lit/react@1.0.8':
     resolution: {integrity: sha512-p2+YcF+JE67SRX3mMlJ1TKCSTsgyOVdAwd/nxp3NuV1+Cb6MWALbN6nT7Ld4tpmYofcE5kcaSY1YBB9erY+6fw==}
@@ -3981,9 +3990,6 @@ packages:
   pure-rand@7.0.1:
     resolution: {integrity: sha512-oTUZM/NAZS8p7ANR3SHh30kXB+zK2r2BPcEn/awJIbOvq82WoMN4p62AWWp3Hhw50G0xMsw1mhIBLqHw64EcNQ==}
 
-  qr-creator@1.0.0:
-    resolution: {integrity: sha512-C0cqfbS1P5hfqN4NhsYsUXePlk9BO+a45bAQ3xLYjBL3bOIFzoVEjs79Fado9u9BPBD3buHi3+vY+C8tHh4qMQ==}
-
   qs@6.15.2:
     resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
     engines: {node: '>=0.6'}
@@ -4733,10 +4739,13 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@awesome.me/webawesome@3.7.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)':
+  '@awesome.me/webawesome@3.8.0(@floating-ui/utils@0.2.11)(@types/react@19.2.14)':
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@floating-ui/dom': 1.7.6
+      '@konnorr/qr-creator': 1.0.1
+      '@lit-labs/ssr-client': 1.1.8
+      '@lit/context': 1.1.6
       '@lit/react': 1.0.8(@types/react@19.2.14)
       '@shoelace-style/animations': 1.2.0
       '@shoelace-style/localize': 3.2.2
@@ -4744,7 +4753,6 @@ snapshots:
       lit: 3.3.3
       marked: 11.2.0
       nanoid: 5.1.11
-      qr-creator: 1.0.0
     transitivePeerDependencies:
       - '@floating-ui/utils'
       - '@types/react'
@@ -5825,7 +5833,19 @@ snapshots:
   '@js-sdsl/ordered-map@4.4.2':
     optional: true
 
+  '@konnorr/qr-creator@1.0.1': {}
+
+  '@lit-labs/ssr-client@1.1.8':
+    dependencies:
+      '@lit/reactive-element': 2.1.2
+      lit: 3.3.3
+      lit-html: 3.3.3
+
   '@lit-labs/ssr-dom-shim@1.6.0': {}
+
+  '@lit/context@1.1.6':
+    dependencies:
+      '@lit/reactive-element': 2.1.2
 
   '@lit/react@1.0.8(@types/react@19.2.14)':
     dependencies:
@@ -8924,8 +8944,6 @@ snapshots:
   punycode@2.3.1: {}
 
   pure-rand@7.0.1: {}
-
-  qr-creator@1.0.0: {}
 
   qs@6.15.2:
     dependencies:

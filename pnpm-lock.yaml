@@ -45,8 +45,8 @@ importers:
   apps/backend:
     dependencies:
       '@google-cloud/functions-framework':
-        specifier: ^5.0.2
-        version: 5.0.2
+        specifier: ^5.0.5
+        version: 5.0.5
       '@google/genai':
         specifier: ^2.10.0
         version: 2.10.0
@@ -923,8 +923,8 @@ packages:
     resolution: {integrity: sha512-TdvZHfwQj5B5CSDEgDqyrhdVqtOSupmBXDQPasMAJiC64tjsGvyMooNiC43fdk1TsUHeklyoZ6/vQ1TjWKVMbg==}
     engines: {node: '>=18'}
 
-  '@google-cloud/functions-framework@5.0.2':
-    resolution: {integrity: sha512-QDPRkPO1KWqbJ+z5RexKjZzHilIK5vM58YFkr/GZU5NIBcCb7Vd4dBKn9cLxEMaBxg6bXbmqEhF6O6977gLNkQ==}
+  '@google-cloud/functions-framework@5.0.5':
+    resolution: {integrity: sha512-/w+OB1MxJux1uO9KRud4CRPLouaB7bZcy0v6STfFVh7yqafZ1L5coWIpseoKPLUgyNfawyoEfE2mEBDRZNGL2w==}
     engines: {node: '>=10.0.0'}
     hasBin: true
 
@@ -5558,7 +5558,7 @@ snapshots:
       - supports-color
     optional: true
 
-  '@google-cloud/functions-framework@5.0.2':
+  '@google-cloud/functions-framework@5.0.5':
     dependencies:
       '@types/express': 5.0.6
       body-parser: 2.3.0

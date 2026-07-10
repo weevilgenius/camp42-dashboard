@@ -48,8 +48,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
       '@google/genai':
-        specifier: ^2.10.0
-        version: 2.10.0
+        specifier: ^2.11.0
+        version: 2.11.0
       firebase-admin:
         specifier: ^14.1.0
         version: 14.1.0
@@ -944,8 +944,8 @@ packages:
     resolution: {integrity: sha512-l+IFTkd+6Y5LoAuXyYCKNAKtw/Ci+rAMqgdTB1jv4iZiLhw0rtq+0qjIRbBizXkNzEFmXiXUW0H7sZQQvk1ffA==}
     engines: {node: '>=14'}
 
-  '@google/genai@2.10.0':
-    resolution: {integrity: sha512-e4cFxj3tiuMtsgOT4G9c1hXyGJhg7/Buj7VVeBacRY3fRtkRZZ59Q3nuVp2xbq8BGQXLXCDB253qMhklMOeUDg==}
+  '@google/genai@2.11.0':
+    resolution: {integrity: sha512-d2Csf29vS0GfHc52H0MG25ccY4FKvvbDgqDlEovLrPLF8sPegWr/GGO+LMOy85/1SnX0iV0zDAW7R8SsvWg8Vg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.25.2
@@ -5607,7 +5607,7 @@ snapshots:
       - supports-color
     optional: true
 
-  '@google/genai@2.10.0':
+  '@google/genai@2.11.0':
     dependencies:
       google-auth-library: 10.9.0
       p-retry: 4.6.2

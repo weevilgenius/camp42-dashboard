@@ -4,7 +4,7 @@ packages:
   - mocks
 peerDependencyRules:
   allowedVersions:
-    # firebase-functions (and firebase-functions-test) still reference firebase-admin 13 and below
+    # firebase-functions-test still references firebase-admin 13 and below
     firebase-admin: "14"
 allowBuilds:
   '@firebase/util': true

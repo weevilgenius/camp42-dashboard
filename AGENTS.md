@@ -24,7 +24,7 @@ to SVG assets in `src/utilities.ts`. Component-scoped CSS files sit alongside th
 
 ### Back End
 
-Exposes a single Firebase callable function `campStatus` (`src/index.ts`) that
+Exposes a single Firebase callable function `campStatus` (`src/campStatus.ts`, exported via `src/index.ts`) that
 dispatches on `StatusType` to fetch battery or weather data. Battery data comes from
 the Ecoflow API via a client (`src/libEcoflow.ts`), normalizing two different device
 models (Delta 2 Max, Delta Pro 3) into a shared `BatteryState`. Weather data comes

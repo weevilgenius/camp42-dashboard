@@ -2,10 +2,6 @@ packages:
   - apps/*
   - shared
   - mocks
-peerDependencyRules:
-  allowedVersions:
-    # firebase-functions-test still references firebase-admin 13 and below
-    firebase-admin: "14"
 allowBuilds:
   '@firebase/util': true
   '@google/genai': false

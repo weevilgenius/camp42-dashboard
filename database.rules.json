@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "presence": {
+      // logged in users can see presence
+      ".read": "auth != null && auth.provider != 'anonymous'",
+      // only cloud functions can update
+      ".write": false
+    }
+  }
+}

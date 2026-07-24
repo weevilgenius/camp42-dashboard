@@ -6,10 +6,12 @@
     "paths": {
       "@camp42/shared": ["../../shared/src/index.ts"],
     },
-    "noEmit": true // tsup handles compiling
+    "noEmit": true, // tsup handles compiling
+    "allowImportingTsExtensions": true
   },
   "include": [
     "src",
-    "tests"
+    "tests",
+    "scripts"
   ]
 }

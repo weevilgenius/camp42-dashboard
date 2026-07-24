@@ -35,3 +35,8 @@ export const ECOFLOW_SECRET_KEY = defineSecret('ECOFLOW_SECRET_KEY');
  * API key for Gemini AI.
  */
 export const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
+
+/**
+ * Shared secret required by the presence reporting endpoint.
+ */
+export const PRESENCE_SECRET = defineSecret('PRESENCE_SECRET');

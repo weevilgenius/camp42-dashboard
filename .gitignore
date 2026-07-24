@@ -40,3 +40,8 @@ apps/*/dist/
 # Storybook
 *storybook.log
 storybook-static
+
+# presence configuration & generated scripts
+apps/backend/src/devices.config.ts
+apps/backend/doc/presence-detection.script
+

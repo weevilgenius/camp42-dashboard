@@ -8,6 +8,9 @@ vi.mock('../src/services/presence.js', () => ({
   fetchPresence: fetchPresenceMock,
 }));
 
+vi.mock('@awesome.me/webawesome/dist/components/button/button.js', () => ({}));
+vi.mock('@awesome.me/webawesome/dist/components/icon/icon.js', () => ({}));
+
 const { PresenceDashboard } = await import('../src/components/PresenceDashboard.js');
 
 describe('PresenceDashboard', () => {
@@ -36,7 +39,43 @@ describe('PresenceDashboard', () => {
     view = renderComponent(PresenceDashboard);
 
     await vi.waitFor(() => {
-      expect(view.root.querySelector('.error')?.textContent).toBe('boom');
+      expect(view.root.querySelector('.error p')?.textContent).toBe('boom');
+    });
+  });
+
+  it('refreshes presence when refresh button is clicked', async () => {
+    fetchPresenceMock.mockResolvedValue({ Cathie: 0 });
+
+    view = renderComponent(PresenceDashboard);
+
+    await vi.waitFor(() => {
+      expect(view.root.querySelector('.present')?.textContent).toBe('Cathie');
+    });
+
+    fetchPresenceMock.mockResolvedValue({ Barry: 0 });
+    const refreshButton = view.root.querySelector('.header wa-button');
+    refreshButton?.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+
+    await vi.waitFor(() => {
+      expect(view.root.querySelector('.present')?.textContent).toBe('Barry');
+    });
+  });
+
+  it('retries loading presence when retry button is clicked', async () => {
+    fetchPresenceMock.mockRejectedValueOnce(new Error('boom'));
+
+    view = renderComponent(PresenceDashboard);
+
+    await vi.waitFor(() => {
+      expect(view.root.querySelector('.error p')?.textContent).toBe('boom');
+    });
+
+    fetchPresenceMock.mockResolvedValue({ Cathie: 0 });
+    const retryButton = view.root.querySelector('.error wa-button');
+    retryButton?.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+
+    await vi.waitFor(() => {
+      expect(view.root.querySelector('.present')?.textContent).toBe('Cathie');
     });
   });
 });

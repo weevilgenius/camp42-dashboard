@@ -15,6 +15,7 @@ vi.mock('../src/firebase.js', () => ({
 }));
 
 vi.mock('@awesome.me/webawesome/dist/components/button/button.js', () => ({}));
+vi.mock('@awesome.me/webawesome/dist/components/input/input.js', () => ({}));
 
 vi.mock('firebase/auth', () => {
   return {

@@ -97,3 +97,9 @@ export async function fetchAIStatus(): Promise<AIStatus> {
     message: 'The air is brisk and the breeze is picking up from the west, so I shall pack an extra wool waistcoat before I venture into the woods. It looks to be a clear evening for adventure, and one must always be prepared for a bit of a chill when the stars begin to peek through the clouds.',
   };
 }
+
+/** Drop-in replacement for the real fetchPresence. */
+export async function fetchPresence(): Promise<Record<string, number>> {
+  await delay(MOCK_DELAY_MS);
+  return { Cathie: 0, Barry: 3 * 60 * 60 };
+}

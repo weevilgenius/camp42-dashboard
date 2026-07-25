@@ -58,6 +58,7 @@ export type {
 export {
   fetchAIStatus,
   fetchBatteryStatus,
+  fetchPresence,
   fetchWeatherStatus,
   setMockBatteryScenario,
   setMockWeatherScenario,

@@ -1,0 +1,8 @@
+.presence-dashboard .loading,
+.presence-dashboard .error {
+  color: var(--wa-color-text-quiet);
+}
+
+.presence-dashboard .error {
+  color: var(--wa-color-danger-on-quiet);
+}

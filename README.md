@@ -74,6 +74,22 @@ http://localhost:5173/?battery=low&weather=stormy
 Parameters can be used individually or combined. Omitted parameters fall back to
 their defaults (`normal` for battery, `clear-day` for weather).
 
+### Presence
+
+Presence is detected on the MikroTik router by checking the current wifi
+registration table against a whitelist of device MAC addresses. Detected
+devices are sent to the `presence` cloud function which maps each address to a
+person and updates timestamps in Firebase Realtime Database (path `/presence`).
+
+The front end uses this data to calculate elapsed seconds since last detection.
+The UI shows people detected within 15 minutes as at camp, keeps people seen
+within a day in the recent list, and hides older entries.
+
+`apps/backend/src/devices.config.ts` is local configuration. Copy
+`devices.example.ts` to create it, add the devices to track, then build the
+backend to generate `apps/backend/doc/presence-detection.script` for router
+installation. The device configuration and presence secret are .gitignored.
+
 ### Storybook
 
 The frontend uses [Storybook](https://storybook.js.org/) for developing and previewing

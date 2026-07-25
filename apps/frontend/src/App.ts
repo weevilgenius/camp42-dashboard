@@ -9,6 +9,7 @@ import type { Unsubscribe, User } from 'firebase/auth';
 import BatteryDashboard from './components/BatteryDashboard.js';
 import GoogleSignInButton from './components/GoogleSignInButton.js';
 import SummaryCard from './components/SummaryCard.js';
+import PresenceDashboard from './components/PresenceDashboard.js';
 import WeatherDashboard from './components/WeatherDashboard.js';
 import { auth } from './firebase.js';
 
@@ -118,6 +119,7 @@ export const App: m.ClosureComponent = () => {
       return m('main', [
         m('h1', 'Camp 42 Dashboard'),
         m(SummaryCard),
+        m(PresenceDashboard),
         m(BatteryDashboard),
         m(WeatherDashboard),
       ]);

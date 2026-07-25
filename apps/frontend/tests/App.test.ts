@@ -42,6 +42,12 @@ vi.mock('../src/components/SummaryCard.js', () => ({
   },
 }));
 
+vi.mock('../src/components/PresenceDashboard.js', () => ({
+  default: {
+    view: () => 'presence dashboard',
+  },
+}));
+
 import { App } from '../src/App.js';
 
 describe('App auth gate', () => {
@@ -90,6 +96,7 @@ describe('App auth gate', () => {
 
     expect(view.root.querySelector('h1')?.textContent).toBe('Camp 42 Dashboard');
     expect(view.root.textContent).toContain('summary card');
+    expect(view.root.textContent).toContain('presence dashboard');
     expect(view.root.textContent).toContain('battery dashboard');
     expect(view.root.textContent).toContain('weather dashboard');
   });

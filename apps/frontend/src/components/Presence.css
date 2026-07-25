@@ -1,0 +1,52 @@
+.presence-dashboard {
+  padding: 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.presence {
+  padding: 1rem;
+  border: 1px solid var(--wa-color-surface-border);
+  border-radius: 0.5rem;
+  background: var(--wa-color-surface-raised);
+}
+
+.presence h2 {
+  margin: 0 0 0.75rem;
+  color: var(--wa-color-text-normal);
+}
+
+.presence .present {
+  margin: 0;
+  font-weight: 500;
+  color: var(--wa-color-text-normal);
+}
+
+.presence h3 {
+  margin: 1rem 0 0.25rem;
+  font-size: 0.875rem;
+  color: var(--wa-color-text-quiet);
+}
+
+.presence .recent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.presence .recent li {
+  color: var(--wa-color-text-quiet);
+}
+
+.presence .name {
+  font-weight: 500;
+  color: var(--wa-color-text-normal);
+}
+
+.presence .empty {
+  margin: 0;
+  color: var(--wa-color-text-quiet);
+}

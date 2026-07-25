@@ -2,9 +2,15 @@ import m from 'mithril';
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
 import type { Unsubscribe, User } from 'firebase/auth';
+
+// WebAwesome components
+import '@awesome.me/webawesome/dist/components/input/input.js';
+import '@awesome.me/webawesome/dist/components/button/button.js';
+import type WaInput from '@awesome.me/webawesome/dist/components/input/input.js';
 
 import BatteryDashboard from './components/BatteryDashboard.js';
 import GoogleSignInButton from './components/GoogleSignInButton.js';
@@ -31,6 +37,29 @@ export const App: m.ClosureComponent = () => {
     user: null as User | null,
     signingIn: false,
     unsubscribe: null as Unsubscribe | null,
+    email: '',
+    password: '',
+    emailError: null as string | null,
+  };
+
+  const startEmailSignIn = async () => {
+    if (state.signingIn) {
+      return;
+    }
+    state.signingIn = true;
+    state.emailError = null;
+    m.redraw();
+
+    try {
+      await signInWithEmailAndPassword(auth, state.email, state.password);
+      state.signingIn = false;
+      m.redraw();
+    } catch (error) {
+      state.signingIn = false;
+      state.emailError = 'Sign-in failed. Check your email and password.';
+      logAuthError('Email/password sign-in failed', error);
+      m.redraw();
+    }
   };
 
   const startGoogleSignIn = async () => {
@@ -113,6 +142,38 @@ export const App: m.ClosureComponent = () => {
               void startGoogleSignIn();
             },
           }),
+          m('form.email-sign-in', {
+            onsubmit: (e: Event) => {
+              e.preventDefault();
+              void startEmailSignIn();
+            },
+          }, [
+            m('wa-input', {
+              type: 'email',
+              label: 'Email',
+              required: true,
+              value: state.email,
+              oninput: (e: Event) => {
+                state.email = (e.target as WaInput).value ?? '';
+              },
+            }),
+            m('wa-input', {
+              type: 'password',
+              label: 'Password',
+              required: true,
+              value: state.password,
+              oninput: (e: Event) => {
+                state.password = (e.target as WaInput).value ?? '';
+              },
+            }),
+            state.emailError ? m('p.email-error', state.emailError) : null,
+            m('wa-button', {
+              type: 'submit',
+              variant: 'brand',
+              size: 'large',
+              loading: state.signingIn,
+            }, 'Sign in with Email'),
+          ]),
         ]);
       }
 

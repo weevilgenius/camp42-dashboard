@@ -19,6 +19,8 @@ import PresenceDashboard from './components/PresenceDashboard.js';
 import WeatherDashboard from './components/WeatherDashboard.js';
 import { auth } from './firebase.js';
 
+import './App.css';
+
 const provider = new GoogleAuthProvider();
 
 const logAuthError = (context: string, error: unknown) => {

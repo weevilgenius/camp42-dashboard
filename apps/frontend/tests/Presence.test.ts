@@ -50,9 +50,29 @@ describe('Presence', () => {
     expect(view.root.textContent).not.toContain('Stale');
   });
 
+  it('shows Nobody and the Seen Recently header when only recent people exist', () => {
+    view = renderComponent(Presence, {
+      attrs: {
+        presence: {
+          Angela: 16 * 60,
+          Ed: 3 * 60 * 60,
+        },
+      },
+    });
+
+    expect(view.root.querySelector('.empty')?.textContent).toBe('Nobody');
+    expect(view.root.querySelector('h3')?.textContent).toBe('Seen Recently');
+    expect(Array.from(view.root.querySelectorAll('.recent li')).map((row) => row.textContent)).toEqual([
+      'Angela 16 minutes ago',
+      'Ed 3 hours ago',
+    ]);
+  });
+
   it('shows the empty state when nobody is recent', () => {
     view = renderComponent(Presence);
 
-    expect(view.root.textContent).toContain('Nobody');
+    expect(view.root.querySelector('.empty')?.textContent).toBe('Nobody');
+    expect(view.root.querySelector('h3')).toBeNull();
+    expect(view.root.querySelector('.recent')).toBeNull();
   });
 });

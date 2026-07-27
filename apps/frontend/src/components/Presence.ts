@@ -35,21 +35,19 @@ export const Presence: m.Component<PresenceAttrs> = {
 
     return m('.presence', [
       m('h2', 'At Camp'),
-      people.length === 0
-        ? m('p.empty', 'Nobody')
-        : [
-          here.length > 0 ? m('p.present', here.map(([name]) => name).join(', ')) : null,
-          recentlySeen.length > 0
-            ? [
-              here.length > 0 ? m('h3', 'Seen Recently') : null,
-              m('ul.recent', recentlySeen.map(([name, secondsAgo]) =>
-                m('li', { key: name }, [
-                  m('span.name', name), ` ${formatPresence(secondsAgo)}`,
-                ]),
-              )),
-            ]
-            : null,
-        ],
+      here.length > 0
+        ? m('p.present', here.map(([name]) => name).join(', '))
+        : m('p.empty', 'Nobody'),
+      recentlySeen.length > 0
+        ? [
+          m('h3', 'Seen Recently'),
+          m('ul.recent', recentlySeen.map(([name, secondsAgo]) =>
+            m('li', { key: name }, [
+              m('span.name', name), ` ${formatPresence(secondsAgo)}`,
+            ]),
+          )),
+        ]
+        : null,
     ]);
   },
 };

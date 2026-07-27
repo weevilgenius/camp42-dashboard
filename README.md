@@ -129,12 +129,13 @@ pnpm run storybook
 
 Root-level scripts that operate across all packages:
 
-| Script               | Description              |
-| -------------------- | ------------------------ |
-| `pnpm run typecheck` | TypeScript type checking |
-| `pnpm run lint`      | Link checking            |
-| `pnpm run check`     | Both typecheck and lint  |
-| `pnpm run build`     | Build all packages       |
+| Script                   | Description                                             |
+| ------------------------ | ------------------------------------------------------- |
+| `pnpm run typecheck`     | TypeScript type checking                                |
+| `pnpm run lint`          | Lint checking                                           |
+| `pnpm run check`         | Typecheck, lint, and test all packages                  |
+| `pnpm run build`         | Build all packages                                      |
+| `pnpm run sync-versions` | Synchronize project versions to match root package.json |
 
 Each package also has its own `check`, `typecheck`, `lint`, and `build` scripts. The frontend additionally has `analyze` for bundle size visualization.
 

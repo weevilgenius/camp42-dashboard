@@ -190,6 +190,7 @@ export default defineConfig(
       'apps/backend/**/*.{ts,mts,cts,js,mjs,cjs}',
       'shared/**/*.{ts,mts,cts,js,mjs,cjs}',
       'mocks/**/*.{ts,mts,cts,js,mjs,cjs}',
+      'scripts/**/*.{ts,mts,cts,js,mjs,cjs}',
     ],
     languageOptions: {
       globals: {

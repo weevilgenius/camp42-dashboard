@@ -36,6 +36,7 @@ node_modules/
 
 # transpilation output directoris
 apps/*/dist/
+apps/*/screenshots/
 
 # Storybook
 *storybook.log

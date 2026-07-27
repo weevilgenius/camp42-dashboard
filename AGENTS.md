@@ -42,6 +42,32 @@ Ensure the project compiles and lint checks when making changes:
 - Check all (typecheck + lint + test): `pnpm run check`
 - Build project: `pnpm run build`
 
+## Visual Validation (Screenshots)
+
+Use the frontend Playwright screenshot command to inspect light/dark mode,
+mobile layouts, and general UI changes. It reuses a dev server at port 5173 or
+starts a temporary Vite server and stops it after capture.
+
+- Capture a screenshot: `pnpm --filter @camp42/frontend screenshot -- [options]`
+  - `--out <file>` output path (default `screenshots/screenshot.png`)
+  - `--theme <light|dark>` color scheme (default `light`)
+  - `--device <name>` Playwright device, e.g. `"iPhone 15"`, `"Pixel 7"`
+  - `--width <n>` / `--height <n>` viewport size (ignored with `--device`)
+  - `--full-page` capture the full scrollable page
+  - `--wait <selector>` wait for a CSS selector before capturing
+  - `--delay <ms>` extra settle delay before capturing
+  - `--url <base>` target an explicit base URL (disables auto-start)
+  - `--login-email <email>` / `--login-password <pw>` sign in before capture
+
+  Examples:
+  ```sh
+  pnpm --filter @camp42/frontend screenshot -- --theme dark --out screenshots/dark.png
+  pnpm --filter @camp42/frontend screenshot -- --device "iPhone 15" --full-page
+  ```
+
+  Output goes to `apps/frontend/screenshots/` (gitignored). View the PNG after
+  capturing to inspect the layout.
+
 ### Testing
 
 Both `apps/frontend` and `apps/backend` have unit tests run by [Vitest](https://vitest.dev/).
@@ -194,4 +220,3 @@ Web Awesome provides a comprehensive color system with CSS variables for theming
 - **Callback naming** - use `on<Event>` pattern for callbacks (`onChange`, `onPuzzleChanged`)
 - **Optional chaining** - prefer `?.` for potentially null/undefined values, enforced by lint rule
 - **Nullish coalescing** - prefer `??` over `||` when dealing with null/undefined, enforced by lint rule
-

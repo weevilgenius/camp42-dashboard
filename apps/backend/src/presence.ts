@@ -6,20 +6,24 @@ import { logger } from 'firebase-functions';
 import { onRequest } from 'firebase-functions/https';
 
 import { PRESENCE_SECRET } from './config.js';
-import { DEVICES } from './devices.config.js';
+import { invertPresenceDevices } from './presenceDevices.js';
 
 /* ========================================================= *\
  *  Presence reporting                                        *
 \* ========================================================= */
 
-// map device MAC addresses to people
-const USERS_BY_MAC: Readonly<Record<string, string>> = Object.fromEntries(
-  DEVICES.map((device) => [device.mac.trim().toUpperCase(), device.name])
-);
-
-
 // initialize Firebase
 initializeApp();
+
+/**
+ * Loads the MAC → person map from RTDB `/presence-devices`.
+ * @returns Map of normalized MAC to person name
+ */
+const getUsersByMac = async (): Promise<Readonly<Record<string, string>>> => {
+  const snapshot = await getDatabase().ref('presence-devices').once('value');
+  const val: unknown = snapshot.val();
+  return invertPresenceDevices(val);
+};
 
 /**
  * Checks whether an Authorization header matches the configured shared secret.
@@ -110,8 +114,9 @@ export const presence = onRequest({
     return;
   }
 
+  const usersByMac = await getUsersByMac();
   const users = macs.flatMap((mac) => {
-    const user = USERS_BY_MAC[mac.trim().toUpperCase()];
+    const user = usersByMac[mac.trim().toUpperCase()];
     if (!user) { logger.warn('Ignoring unknown presence MAC address', { mac }); }
     return user ? [user] : [];
   });

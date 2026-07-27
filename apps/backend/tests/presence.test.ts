@@ -8,6 +8,11 @@ const mockRef = vi.fn(() => ({ once: mockOnce, update: mockUpdate }));
 const mockWarn = vi.fn();
 const mockVerifyIdToken = vi.fn();
 
+const PRESENCE_DEVICES = {
+  Alice: { 'AA:BB:CC:DD:EE:01': 'Phone' },
+  Bob: { 'AA:BB:CC:DD:EE:02': 'Tablet' },
+} as const;
+
 vi.mock('firebase-admin/app', () => ({ initializeApp: vi.fn() }));
 vi.mock('firebase-admin/database', () => ({
   getDatabase: () => ({ ref: mockRef }),
@@ -21,34 +26,34 @@ vi.mock('../src/config.js', () => ({
   PRESENCE_SECRET: { value: () => SECRET },
 }));
 
-import { DEVICES } from '../src/devices.config.js';
-
 const { presence } = await import('../src/presence.js');
 
 describe('presence', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUpdate.mockResolvedValue(undefined);
-    mockOnce.mockResolvedValue({ val: () => null });
+    mockOnce.mockImplementation(() => Promise.resolve({
+      val: () => PRESENCE_DEVICES,
+    }));
     mockVerifyIdToken.mockResolvedValue({ uid: 'user' });
   });
 
   it('updates known devices and returns 204', async () => {
     const response = mockResponse();
-    const testDevices = DEVICES.slice(0, 2);
-    const expectedUpdates = Object.fromEntries(
-      testDevices.map((d) => [d.name, { '.sv': 'timestamp' }])
-    );
 
     await presence({
       method: 'POST',
-      body: { present: testDevices.map((d) => d.mac) },
+      body: { present: ['AA:BB:CC:DD:EE:01', 'aa:bb:cc:dd:ee:02'] },
       headers: {},
       get: () => `Bearer ${SECRET}`,
     } as never, response as never);
 
+    expect(mockRef).toHaveBeenCalledWith('presence-devices');
     expect(mockRef).toHaveBeenCalledWith('presence');
-    expect(mockUpdate).toHaveBeenCalledWith(expectedUpdates);
+    expect(mockUpdate).toHaveBeenCalledWith({
+      Alice: { '.sv': 'timestamp' },
+      Bob: { '.sv': 'timestamp' },
+    });
     expect(response.set).toHaveBeenCalledWith('Connection', 'close');
     expect(response.status).toHaveBeenCalledWith(204);
     expect(response.send).toHaveBeenCalledWith();
@@ -69,6 +74,24 @@ describe('presence', () => {
     expect(response.status).toHaveBeenCalledWith(204);
   });
 
+  it('treats missing presence-devices as all unknown', async () => {
+    const response = mockResponse();
+    mockOnce.mockResolvedValue({ val: () => null });
+
+    await presence({
+      method: 'POST',
+      body: { present: ['AA:BB:CC:DD:EE:01'] },
+      headers: {},
+      get: () => `Bearer ${SECRET}`,
+    } as never, response as never);
+
+    expect(mockUpdate).not.toHaveBeenCalled();
+    expect(mockWarn).toHaveBeenCalledWith('Ignoring unknown presence MAC address', {
+      mac: 'AA:BB:CC:DD:EE:01',
+    });
+    expect(response.status).toHaveBeenCalledWith(204);
+  });
+
   it('returns presence timestamps as seconds ago for signed-in users', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-07-23T12:00:00Z'));
@@ -84,6 +107,7 @@ describe('presence', () => {
     } as never, response as never);
 
     expect(mockVerifyIdToken).toHaveBeenCalledWith(USER_TOKEN);
+    expect(mockRef).toHaveBeenCalledWith('presence');
     expect(response.json).toHaveBeenCalledWith({ Alice: 2, Bob: 0 });
     vi.useRealTimers();
   });

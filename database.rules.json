@@ -5,6 +5,11 @@
       ".read": "auth != null && auth.provider != 'anonymous'",
       // only cloud functions can update
       ".write": false
+    },
+    "presence-devices": {
+      // only read by cloud functions
+      ".read": false,
+      ".write": false
     }
   }
 }

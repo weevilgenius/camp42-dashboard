@@ -4,7 +4,7 @@
 # Set to true to skip the HTTP POST and simply log to console
 :local debug false
 
-# Define the specific MAC addresses to track (generated from devices.config.ts during build)
+# Define the specific MAC addresses to track (generated from RTDB /presence-devices)
 :local trackedMacs [:toarray ""]
 :set trackedMacs ($trackedMacs, "00:00:00:00:00:01"); # Sample Device
 

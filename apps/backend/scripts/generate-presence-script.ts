@@ -1,50 +1,80 @@
 /**
- * Generates the MikroTik RouterOS presence detection script (presence-detection.production.script)
- * from the single source of truth device configuration (src/devices.config.ts).
+ * Generates the MikroTik RouterOS presence detection script
+ * (`doc/presence-detection.script`) from RTDB `/presence-devices` on a
+ * locally running Firebase database emulator.
  *
- * Workflow:
- * 1. Ensures src/devices.config.ts exists (copies src/devices.example.ts if missing).
- * 2. Reads device MAC addresses and names from src/devices.config.ts.
- * 3. Injects tracked MAC statements into doc/presence-detection.script template.
- * 4. Outputs gitignored doc/presence-detection.production.script for router deployment.
+ * Prerequisites: database emulator on port 9000 with presence-devices data
+ * (e.g. `pnpm run serve` in apps/backend, which imports emulator_data).
+ *
+ * Usage: pnpm run generate:presence-script
  */
 
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { flattenPresenceDevices } from '../src/presenceDevices.ts';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const srcDir = join(__dirname, '../src');
 const docDir = join(__dirname, '../doc');
 
-const configPath = join(srcDir, 'devices.config.ts');
-const examplePath = join(srcDir, 'devices.example.ts');
+/** Default emulator REST URL for /presence-devices (see firebase.json + export name). */
+const DEFAULT_URL =
+  'http://127.0.0.1:9000/presence-devices.json?ns=camp42-dashboard-default-rtdb';
 
-// Ensure local config exists on fresh checkout
-if (!existsSync(configPath)) {
-  console.log('devices.config.ts not found. Creating from devices.example.ts...');
-  copyFileSync(examplePath, configPath);
+const url = process.env.PRESENCE_DEVICES_URL ?? DEFAULT_URL;
+
+let raw: unknown;
+try {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error(
+      `Failed to fetch presence-devices from emulator (${response.status} ${response.statusText}).\n`
+      + `URL: ${url}\n`
+      + 'Start the database emulator first (e.g. `pnpm run serve` in apps/backend).'
+    );
+    process.exit(1);
+  }
+  raw = await response.json();
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(
+    `Could not reach the database emulator at ${url}\n`
+    + `${message}\n`
+    + 'Start the database emulator first (e.g. `pnpm run serve` in apps/backend).'
+  );
+  process.exit(1);
 }
 
-// Load device configuration
-const { DEVICES } = await import('../src/devices.config.ts');
+const devices = flattenPresenceDevices(raw);
+if (devices.length === 0) {
+  console.error(
+    'No devices found at /presence-devices on the emulator.\n'
+    + 'Seed presence-devices (person → MAC → label) before generating the script.'
+  );
+  process.exit(1);
+}
 
-// Format RouterOS array assignment statements for each tracked MAC
-const macLines = DEVICES.map((d) => {
+const macLines = devices.map((d) => {
   const commentStr = d.device ? ` # ${d.name} (${d.device})` : ` # ${d.name}`;
-  return `:set trackedMacs ($trackedMacs, "${d.mac.trim().toUpperCase()}");${commentStr}`;
+  return `:set trackedMacs ($trackedMacs, "${d.mac}");${commentStr}`;
 }).join('\n');
 
 const templatePath = join(docDir, 'presence-detection.script.template');
 const outputPath = join(docDir, 'presence-detection.script');
 
-// Read template script and replace tracked MACs block
 const templateContent = readFileSync(templatePath, 'utf8');
 const regex = /# Define the specific MAC addresses to track[\s\S]*?(?=:local activeTracked)/;
-const replacement = `# Define the specific MAC addresses to track (generated from devices.config.ts)\n:local trackedMacs [:toarray ""]\n${macLines}\n\n`;
+const replacement =
+  `# Define the specific MAC addresses to track (generated from RTDB /presence-devices)\n`
+  + `:local trackedMacs [:toarray ""]\n`
+  + `${macLines}\n\n`;
+
+if (!regex.test(templateContent)) {
+  console.error(`Could not find tracked-MAC block in ${templatePath}`);
+  process.exit(1);
+}
 
 const updatedContent = templateContent.replace(regex, replacement);
-
-// Write out production router script
 writeFileSync(outputPath, updatedContent, 'utf8');
-//console.log(`Generated ${outputPath}`);
+console.log(`Wrote ${outputPath} (${devices.length} device(s))`);

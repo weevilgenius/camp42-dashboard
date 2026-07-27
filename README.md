@@ -85,10 +85,33 @@ The front end uses this data to calculate elapsed seconds since last detection.
 The UI shows people detected within 15 minutes as at camp, keeps people seen
 within a day in the recent list, and hides older entries.
 
-`apps/backend/src/devices.config.ts` is local configuration. Copy
-`devices.example.ts` to create it, add the devices to track, then build the
-backend to generate `apps/backend/doc/presence-detection.script` for router
-installation. The device configuration and presence secret are .gitignored.
+**Device mapping** lives in RTDB at `/presence-devices` (person → MAC → device
+label). The cloud function loads this map on each router POST, so you can add
+or remove devices without redeploying. Edit in the Firebase console (production)
+or emulator UI / import data (local). Shape:
+
+```
+presence-devices/{person}/{MAC} = "device label"
+```
+
+**Router whitelist** is a separate, manual step. When the MAC set changes,
+regenerate the MikroTik script from a running database emulator (which should
+include current `presence-devices` data):
+
+```bash
+# Terminal with backend emulators (imports emulator_data)
+cd apps/backend
+pnpm run serve
+
+# Another terminal
+cd apps/backend
+pnpm run generate:presence-script
+# install apps/backend/doc/presence-detection.script on the MikroTik
+```
+
+New devices need both an RTDB entry (for recognition) and an updated router
+script (so the MAC is reported). Removing a MAC only from RTDB stops recognition
+without a router update.
 
 ### Storybook
 

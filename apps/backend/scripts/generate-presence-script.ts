@@ -26,7 +26,9 @@ const url = process.env.PRESENCE_DEVICES_URL ?? DEFAULT_URL;
 
 let raw: unknown;
 try {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: { Authorization: 'Bearer dummy-token' },
+  });
   if (!response.ok) {
     console.error(
       `Failed to fetch presence-devices from emulator (${response.status} ${response.statusText}).\n`

@@ -45,3 +45,10 @@ storybook-static
 # generated MikroTik presence script
 apps/backend/doc/presence-detection.script
 
+# Firebase stuff
+emulator_data/
+firebase-debug.log
+database-debug.log
+ui-debug.log
+pglite-debug.log
+

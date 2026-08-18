@@ -76,6 +76,9 @@ export default defineConfig(
       // unused imports
       "unused-imports/no-unused-imports": "error",
 
+      // flag use of declarations marked with @deprecated
+      "@typescript-eslint/no-deprecated": "warn",
+
       // unused variables/arguments
       "@typescript-eslint/no-unused-vars": "off",
       "unused-imports/no-unused-vars": [

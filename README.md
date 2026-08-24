@@ -86,32 +86,17 @@ The UI shows people detected within 15 minutes as at camp, keeps people seen
 within a day in the recent list, and hides older entries.
 
 **Device mapping** lives in RTDB at `/presence-devices` (person → MAC → device
-label). The cloud function loads this map on each router POST, so you can add
-or remove devices without redeploying. Edit in the Firebase console (production)
-or emulator UI / import data (local). Shape:
+label). The router fetches this map from the cloud function before each scan,
+so you can add or remove devices without redeploying. Edit in the Firebase
+console (production) or emulator UI / import data (local). Shape:
 
 ```
 presence-devices/{person}/{MAC} = "device label"
 ```
 
-**Router whitelist** is a separate, manual step. When the MAC set changes,
-regenerate the MikroTik script from a running database emulator (which should
-include current `presence-devices` data):
-
-```bash
-# Terminal with backend emulators (imports emulator_data)
-cd apps/backend
-pnpm run serve
-
-# Another terminal
-cd apps/backend
-pnpm run generate:presence-script
-# install apps/backend/doc/presence-detection.script on the MikroTik
-```
-
-New devices need both an RTDB entry (for recognition) and an updated router
-script (so the MAC is reported). Removing a MAC only from RTDB stops recognition
-without a router update.
+Set the endpoint URL and bearer secret in
+`apps/backend/doc/presence-detection.script.template`, then install it on the
+MikroTik once. New and removed devices take effect on the router's next scan.
 
 ### Storybook
 
@@ -151,10 +136,14 @@ camp-dashboard/
 │   │       ├── firebase.ts   # Firebase client config
 │   │       └── main.ts       # app entry point
 │   └── backend/              # Firebase Cloud Functions
+│       ├── doc/
+│       │   └── presence-detection.script.template # MikroTik presence script
 │       └── src/
 │           ├── index.ts      # Cloud Function exports
 │           ├── batteries.ts  # battery status and management
 │           ├── weather.ts    # weather status and forecast
+│           ├── presence.ts   # router presence HTTP endpoint
+│           ├── presenceDevices.ts # presence-device mapping helpers
 │           ├── libEcoflow.ts # simple library wrapping Ecoflow REST API
 │           └── libTempest.ts # simple library wrapping Tempest REST API
 ├── shared/                   # '@camp42/shared' TypeScript interfaces

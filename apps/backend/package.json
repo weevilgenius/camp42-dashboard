@@ -8,8 +8,7 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "build": "tsup",
-    "generate:presence-script": "tsx scripts/generate-presence-script.ts",
-    "lint": "eslint src tests scripts",
+    "lint": "eslint src tests",
     "check": "pnpm run typecheck && pnpm run lint && pnpm run test",
     "serve": "pnpm run build && cd ../.. && firebase emulators:start --only functions,database --import ./emulator_data",
     "emulators:export": "firebase emulators:export ../../emulator_data",

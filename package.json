@@ -21,13 +21,13 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^24.13.3",
     "@typescript/native": "npm:typescript@^7.0.2",
-    "eslint": "^10.8.0",
+    "eslint": "^10.9.0",
     "eslint-plugin-storybook": "^10.5.7",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "globals": "^17.9.0",
+    "globals": "^17.11.0",
     "tsx": "^4.23.12",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.66.0",
+    "typescript-eslint": "^8.67.0",
     "vitest": "^4.1.11"
   }
 }

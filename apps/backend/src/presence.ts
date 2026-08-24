@@ -4,7 +4,7 @@ import { logger } from 'firebase-functions';
 import { onRequest } from 'firebase-functions/https';
 
 import { PRESENCE_SECRET } from './config.js';
-import { invertPresenceDevices } from './presenceDevices.js';
+import { flattenPresenceDevices, invertPresenceDevices } from './presenceDevices.js';
 
 /* ========================================================= *\
  *  Presence reporting                                        *
@@ -50,19 +50,28 @@ export const presence = onRequest({
   cors: true,
   secrets: [PRESENCE_SECRET],
 }, async (request, response) => {
-  if (request.method !== 'POST') {
+  if (request.method !== 'GET' && request.method !== 'POST') {
     logger.warn(`rejecting request method ${request.method}`);
-    response.set('Connection', 'close').set('Allow', 'POST').sendStatus(405);
+    response.set('Connection', 'close').set('Allow', 'GET, POST').sendStatus(405);
     return;
   }
 
-  // POST flow: update one or more presence records
   if (!isAuthorized(request.get('Authorization'))) {
     logger.warn('Missing or bad Authorization header, rejecting');
     response.set('Connection', 'close').sendStatus(401);
     return;
   }
 
+  // GET flow: return the whitelisted MAC addresses
+  if (request.method === 'GET') {
+    const snapshot = await getDatabase().ref('presence-devices').once('value');
+    // response format is flat string, comma separated
+    const macs = flattenPresenceDevices(snapshot.val()).map(({ mac }) => mac).join(',');
+    response.set('Connection', 'close').type('text/plain').status(200).send(macs);
+    return;
+  }
+
+  // POST flow: update one or more presence records
   // parse the payload and extract MAC addresses
   const macs = getPresentMacs(request.body);
   if (!macs) {

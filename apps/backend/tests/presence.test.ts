@@ -95,6 +95,11 @@ describe('presence', () => {
     await presence({ method: 'POST', body: { present: [] }, headers: {}, get: () => SECRET } as never, response2 as never);
     expect(response2.set).toHaveBeenCalledWith('Connection', 'close');
     expect(response2.sendStatus).toHaveBeenCalledWith(401);
+
+    const response3 = mockResponse();
+    await presence({ method: 'GET', headers: {}, get: () => 'wrong' } as never, response3 as never);
+    expect(response3.set).toHaveBeenCalledWith('Connection', 'close');
+    expect(response3.sendStatus).toHaveBeenCalledWith(401);
   });
 
   it('closes malformed POST requests', async () => {
@@ -106,12 +111,34 @@ describe('presence', () => {
     expect(response.sendStatus).toHaveBeenCalledWith(400);
   });
 
-  it('rejects GET requests', async () => {
+  it('returns configured devices as comma-separated plain text', async () => {
     const response = mockResponse();
 
-    await presence({ method: 'GET', headers: {} } as never, response as never);
+    await presence({ method: 'GET', headers: {}, get: () => `Bearer ${SECRET}` } as never, response as never);
 
-    expect(response.set).toHaveBeenCalledWith('Allow', 'POST');
+    expect(mockRef).toHaveBeenCalledWith('presence-devices');
+    expect(response.set).toHaveBeenCalledWith('Connection', 'close');
+    expect(response.type).toHaveBeenCalledWith('text/plain');
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledWith('AA:BB:CC:DD:EE:01,AA:BB:CC:DD:EE:02');
+  });
+
+  it('returns an empty string when no devices are configured', async () => {
+    const response = mockResponse();
+    mockOnce.mockResolvedValue({ val: () => null });
+
+    await presence({ method: 'GET', headers: {}, get: () => `Bearer ${SECRET}` } as never, response as never);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledWith('');
+  });
+
+  it('rejects unsupported request methods', async () => {
+    const response = mockResponse();
+
+    await presence({ method: 'PUT', headers: {} } as never, response as never);
+
+    expect(response.set).toHaveBeenCalledWith('Allow', 'GET, POST');
     expect(response.sendStatus).toHaveBeenCalledWith(405);
   });
 });
@@ -127,8 +154,10 @@ function mockResponse() {
     set: vi.fn(),
     setHeader: vi.fn(),
     status: vi.fn(),
+    type: vi.fn(),
   };
   response.status.mockReturnValue(response);
   response.set.mockReturnValue(response);
+  response.type.mockReturnValue(response);
   return response;
 }

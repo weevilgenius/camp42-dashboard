@@ -4,19 +4,42 @@
 # Set to true to skip the HTTP POST and simply log to console
 :local debug false
 
-# Define the specific MAC addresses to track (generated from RTDB /presence-devices)
-:local trackedMacs [:toarray ""]
-:set trackedMacs ($trackedMacs, "00:00:00:00:00:01"); # Sample Device
-
-
-:local activeTracked ""
-:local q "\""
+# Auth configuration
+:local endpointUrl "https://example.com"
+:local authHeader "Authorization: Bearer ABC123"
 
 # check if router has been powered on for at least 5 minutes
 :if ([/system resource get uptime] < 5m) do={
     :log info "Presence Tracker: Skipping run (Router booted less than 5m ago, letting Starlink settle)"
     :error "Boot delay active"
 }
+
+:local trackedMacs [:toarray ""]
+
+:do {
+    # fetch the server provided whitelist of MAC addresses (plain text CSV)
+    :local fetchResult [/tool fetch http-method=get \
+        url=$endpointUrl \
+        http-header-field=$authHeader \
+        output=user as-value]
+
+    # convert into a RouterOS array
+    :local rawBody ($fetchResult->"data")
+    :set trackedMacs [:toarray $rawBody]
+} on-error={
+    :log info "Presence Tracker: Failed to fetch MAC whitelist from backend"
+    :error "Whitelist fetch failed"
+}
+
+# If the backend returned an empty string or failed to populate, abort
+:if ([:len $trackedMacs] = 0) do={
+    :log info "Presence Tracker: No MAC addresses found in whitelist payload"
+    :error "Empty whitelist"
+}
+
+
+:local activeTracked ""
+:local q "\""
 
 # detection logic
 :foreach mac in=$trackedMacs do={
@@ -39,8 +62,8 @@
     # Production Mode (With Outbound Starlink Failsafe)
     :do {
         /tool fetch http-method=post http-data=$payload \
-            url="https://presence-rtsxjuo3va-uc.a.run.app" \
-            http-header-field="Content-Type: application/json,Authorization: Bearer 2080A250-CCA3-4317-9535-2D03F0FC5698" \
+            url=$endpointUrl \
+            http-header-field="Content-Type: application/json,$authHeader" \
             keep-result=no
     } on-error={
         # Silently catch DNS/connection errors when Starlink is offline
@@ -48,6 +71,7 @@
     }
 } else={
     # Local Testing Mode
+    :put "DEBUG: Whitelist loaded: [:tostr $trackedMacs]"
     :put "DEBUG: Payload: $payload"
     :log info "Presence Tracker - $payload"
 }

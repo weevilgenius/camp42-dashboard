@@ -1,25 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const SECRET = '2080A250-CCA3-4317-9535-2D03F0FC5698';
-const USER_TOKEN = 'firebase-id-token';
 const mockUpdate = vi.fn();
 const mockOnce = vi.fn();
 const mockRef = vi.fn(() => ({ once: mockOnce, update: mockUpdate }));
 const mockWarn = vi.fn();
-const mockVerifyIdToken = vi.fn();
 
 const PRESENCE_DEVICES = {
   Alice: { 'AA:BB:CC:DD:EE:01': 'Phone' },
   Bob: { 'AA:BB:CC:DD:EE:02': 'Tablet' },
 } as const;
 
-vi.mock('firebase-admin/app', () => ({ initializeApp: vi.fn() }));
 vi.mock('firebase-admin/database', () => ({
   getDatabase: () => ({ ref: mockRef }),
   ServerValue: { TIMESTAMP: { '.sv': 'timestamp' } },
-}));
-vi.mock('firebase-admin/auth', () => ({
-  getAuth: () => ({ verifyIdToken: mockVerifyIdToken }),
 }));
 vi.mock('firebase-functions', () => ({ logger: { warn: mockWarn } }));
 vi.mock('../src/config.js', () => ({
@@ -35,7 +29,6 @@ describe('presence', () => {
     mockOnce.mockImplementation(() => Promise.resolve({
       val: () => PRESENCE_DEVICES,
     }));
-    mockVerifyIdToken.mockResolvedValue({ uid: 'user' });
   });
 
   it('updates known devices and returns 204', async () => {
@@ -92,26 +85,6 @@ describe('presence', () => {
     expect(response.status).toHaveBeenCalledWith(204);
   });
 
-  it('returns presence timestamps as seconds ago for signed-in users', async () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-07-23T12:00:00Z'));
-    const response = mockResponse();
-    mockOnce.mockResolvedValue({
-      val: () => ({ Alice: Date.now() - 2_500, Bob: Date.now() + 1_000, ignored: 'invalid' }),
-    });
-
-    await presence({
-      method: 'GET',
-      headers: {},
-      get: () => `Bearer ${USER_TOKEN}`,
-    } as never, response as never);
-
-    expect(mockVerifyIdToken).toHaveBeenCalledWith(USER_TOKEN);
-    expect(mockRef).toHaveBeenCalledWith('presence');
-    expect(response.json).toHaveBeenCalledWith({ Alice: 2, Bob: 0 });
-    vi.useRealTimers();
-  });
-
   it('rejects unauthorized requests', async () => {
     const response1 = mockResponse();
     await presence({ method: 'POST', body: { present: [] }, headers: {}, get: () => 'wrong' } as never, response1 as never);
@@ -133,12 +106,12 @@ describe('presence', () => {
     expect(response.sendStatus).toHaveBeenCalledWith(400);
   });
 
-  it('allows only POST requests', async () => {
+  it('rejects GET requests', async () => {
     const response = mockResponse();
 
-    await presence({ method: 'PUT', headers: {} } as never, response as never);
+    await presence({ method: 'GET', headers: {} } as never, response as never);
 
-    expect(response.set).toHaveBeenCalledWith('Allow', 'GET, POST');
+    expect(response.set).toHaveBeenCalledWith('Allow', 'POST');
     expect(response.sendStatus).toHaveBeenCalledWith(405);
   });
 });

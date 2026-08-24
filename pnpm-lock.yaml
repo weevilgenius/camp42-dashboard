@@ -51,8 +51,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(supports-color@8.1.1)
       '@google/genai':
-        specifier: ^2.16.0
-        version: 2.16.0(supports-color@8.1.1)
+        specifier: ^2.18.0
+        version: 2.18.0(supports-color@8.1.1)
       firebase-admin:
         specifier: ^14.2.0
         version: 14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1)
@@ -849,8 +849,8 @@ packages:
     resolution: {integrity: sha512-l+IFTkd+6Y5LoAuXyYCKNAKtw/Ci+rAMqgdTB1jv4iZiLhw0rtq+0qjIRbBizXkNzEFmXiXUW0H7sZQQvk1ffA==}
     engines: {node: '>=14'}
 
-  '@google/genai@2.16.0':
-    resolution: {integrity: sha512-K+1C1sqR0u7NJ5xpKJCQBws0QXpfuklo3WTNuUIMvtbQfNW2O5OohX0BYT2V+PXzsUzQEwGCXPWQxttLyGQ6xw==}
+  '@google/genai@2.18.0':
+    resolution: {integrity: sha512-uy9gWVTAZXuA/2tld0QJl/QNiGEn4QOmfX4PiRgZQmeFQRQhojpD/Gf41SPnBJmjEnT83a+h4AdU1HHYaYvVDw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.25.2
@@ -4630,7 +4630,7 @@ snapshots:
       - supports-color
     optional: true
 
-  '@google/genai@2.16.0(supports-color@8.1.1)':
+  '@google/genai@2.18.0(supports-color@8.1.1)':
     dependencies:
       google-auth-library: 10.9.1(supports-color@8.1.1)
       p-retry: 4.6.2

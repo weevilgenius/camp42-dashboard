@@ -54,11 +54,11 @@ importers:
         specifier: ^2.18.0
         version: 2.18.0(supports-color@8.1.1)
       firebase-admin:
-        specifier: ^14.2.0
-        version: 14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1)
+        specifier: ^14.3.0
+        version: 14.3.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1)
       firebase-functions:
         specifier: ^7.3.2
-        version: 7.3.2(firebase-admin@14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 7.3.2(firebase-admin@14.3.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1))(supports-color@8.1.1)
     devDependencies:
       dotenv:
         specifier: ^17.4.2
@@ -845,9 +845,9 @@ packages:
     resolution: {integrity: sha512-Orxzlfb9c67A15cq2JQEyVc7wEsmFBmHjZWZYQMUyJ1qivXyMwdyNOs9odi79hze+2zqdTtu1E19IM/FtqZ10g==}
     engines: {node: '>=14'}
 
-  '@google-cloud/storage@7.21.0':
-    resolution: {integrity: sha512-l+IFTkd+6Y5LoAuXyYCKNAKtw/Ci+rAMqgdTB1jv4iZiLhw0rtq+0qjIRbBizXkNzEFmXiXUW0H7sZQQvk1ffA==}
-    engines: {node: '>=14'}
+  '@google-cloud/storage@7.22.0':
+    resolution: {integrity: sha512-W98gTQOAntEeEQ7/pZxSQXxfUO5CiQcXJRsxBpUa6UU25n8YN/VtogPBi0H+MAmUrn/6bY/sBhFansoWEsr2/g==}
+    engines: {node: '>=18'}
 
   '@google/genai@2.18.0':
     resolution: {integrity: sha512-uy9gWVTAZXuA/2tld0QJl/QNiGEn4QOmfX4PiRgZQmeFQRQhojpD/Gf41SPnBJmjEnT83a+h4AdU1HHYaYvVDw==}
@@ -2442,8 +2442,8 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  firebase-admin@14.2.0:
-    resolution: {integrity: sha512-zfs5PdccEgjX479bbMmz95Rqc7ttQ4LV3qkGFlPiqOaOu/suBZc3fG52Qzn2hQjiSHkBM4NP2AZV5r2NvAt0TQ==}
+  firebase-admin@14.3.0:
+    resolution: {integrity: sha512-FUxr5HI9C0RNJW3B+CKyJOnIt5uXn/XHheyCECVTLQGSJ/MaE1Zcwf+dCaaG+xx0+VX1A4sZ1t+hc35bu73dVw==}
     engines: {node: '>=22'}
 
   firebase-functions@7.3.2:
@@ -4609,7 +4609,7 @@ snapshots:
   '@google-cloud/promisify@4.0.0':
     optional: true
 
-  '@google-cloud/storage@7.21.0(supports-color@8.1.1)':
+  '@google-cloud/storage@7.22.0(supports-color@8.1.1)':
     dependencies:
       '@google-cloud/paginator': 5.0.2
       '@google-cloud/projectify': 4.0.0
@@ -6108,7 +6108,7 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  firebase-admin@14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1):
+  firebase-admin@14.3.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1):
     dependencies:
       '@fastify/busboy': 3.2.0
       '@firebase/database-compat': 2.1.6(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)
@@ -6119,20 +6119,20 @@ snapshots:
       jwks-rsa: 4.1.0(supports-color@8.1.1)
     optionalDependencies:
       '@google-cloud/firestore': 8.7.1(supports-color@8.1.1)
-      '@google-cloud/storage': 7.21.0(supports-color@8.1.1)
+      '@google-cloud/storage': 7.22.0(supports-color@8.1.1)
     transitivePeerDependencies:
       - '@firebase/app'
       - '@firebase/app-compat'
       - encoding
       - supports-color
 
-  firebase-functions@7.3.2(firebase-admin@14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1))(supports-color@8.1.1):
+  firebase-functions@7.3.2(firebase-admin@14.3.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@types/cors': 2.8.19
       '@types/express': 5.0.6
       cors: 2.8.6
       express: 5.2.1(supports-color@8.1.1)
-      firebase-admin: 14.2.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1)
+      firebase-admin: 14.3.0(@firebase/app-compat@0.5.17)(@firebase/app@0.16.1)(supports-color@8.1.1)
       protobufjs: 7.6.5
     transitivePeerDependencies:
       - supports-color

@@ -38,7 +38,7 @@
     "@testing-library/user-event": "^14.6.6",
     "@types/mithril": "^2.2.9",
     "@typescript-eslint/utils": "^8.70.0",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^5.0.0",
     "happy-dom": "^20.11.6",
     "lit": "^3.3.3",
     "rollup-plugin-visualizer": "^7.1.1",

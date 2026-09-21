@@ -42,6 +42,14 @@ Ensure the project compiles and lint checks when making changes:
 - Check all (typecheck + lint + test): `pnpm run check`
 - Build project: `pnpm run build`
 
+### pnpm Version Pinning
+
+The root `package.json` pins `packageManager` to **pnpm 11** while `devEngines.packageManager`
+specifies **pnpm 12**. This split is intentional: Firebase Functions does not yet support
+pnpm 12 and its installer reads only `packageManager`, so the pin keeps backend deploys
+working while pnpm 12 is used everywhere else. JSON allows no comments, hence this note.
+Do not "fix" the mismatch; revisit when Firebase Functions supports pnpm 12.
+
 ## Visual Validation (Screenshots)
 
 Use the frontend Playwright screenshot command to inspect light/dark mode,

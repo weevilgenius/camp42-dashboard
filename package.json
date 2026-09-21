@@ -15,7 +15,14 @@
     "test": "pnpm --recursive run test",
     "sync-versions": "tsx scripts/sync-versions.ts"
   },
-  "packageManager": "pnpm@12.3.4",
+  "packageManager": "pnpm@11.27.1",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.5.1",
+      "onFail": "download"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",

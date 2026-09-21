@@ -228,8 +228,8 @@ importers:
   apps/frontend:
     dependencies:
       '@awesome.me/webawesome':
-        specifier: ^3.12.0
-        version: 3.12.0(@floating-ui/utils@0.2.12)(@types/node@24.13.6)(@types/react@19.2.18)
+        specifier: ^3.13.0
+        version: 3.13.0(@floating-ui/utils@0.2.12)(@types/node@24.13.6)(@types/react@19.2.18)
       '@camp42/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -296,8 +296,8 @@ packages:
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
 
-  '@awesome.me/webawesome@3.12.0':
-    resolution: {integrity: sha512-cO/vSvlyZqiki1upynxpk9q2N48U2+nflIj40OtCKYOs6ZXa4zXhW6+asXKOfeNw1AnD4nzsSIdZSt/Ti9QONA==}
+  '@awesome.me/webawesome@3.13.0':
+    resolution: {integrity: sha512-egDzZAHCMj31xaYW2AFhwxl5XMj4lAFGxh9Q0WMQjRHdC6sy45JofA8ojGl28LuztDhrjfmz6tP5KG4anpjT8w==}
     engines: {node: '>=14.17.0'}
 
   '@babel/code-frame@7.29.7':
@@ -3968,7 +3968,7 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@awesome.me/webawesome@3.12.0(@floating-ui/utils@0.2.12)(@types/node@24.13.6)(@types/react@19.2.18)':
+  '@awesome.me/webawesome@3.13.0(@floating-ui/utils@0.2.12)(@types/node@24.13.6)(@types/react@19.2.18)':
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@floating-ui/dom': 1.8.0

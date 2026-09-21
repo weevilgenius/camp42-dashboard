@@ -16,6 +16,9 @@ vi.mock('../src/firebase.js', () => ({ functions: firebaseMocks.functions }));
 
 const { fetchPresence } = await import('../src/services/presence.js');
 
+// vitest clears mock history before each test, so capture the import-time wiring now
+const httpsCallableCalls = [...firebaseMocks.httpsCallable.mock.calls];
+
 describe('fetchPresence', () => {
   beforeEach(() => {
     firebaseMocks.getPresence.mockReset();
@@ -27,7 +30,7 @@ describe('fetchPresence', () => {
 
     await expect(fetchPresence()).resolves.toEqual(presence);
 
-    expect(firebaseMocks.httpsCallable).toHaveBeenCalledWith(firebaseMocks.functions, 'getPresence');
+    expect(httpsCallableCalls).toEqual([[firebaseMocks.functions, 'getPresence']]);
     expect(firebaseMocks.getPresence).toHaveBeenCalledWith();
   });
 });

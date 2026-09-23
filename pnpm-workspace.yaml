@@ -8,3 +8,5 @@ allowBuilds:
   esbuild: true
   protobufjs: true
   unrs-resolver: true
+autoDedupe: true
+saveTypes: true

@@ -37,7 +37,7 @@
     "@testing-library/dom": "^10.4.2",
     "@testing-library/user-event": "^14.6.7",
     "@types/mithril": "^2.2.9",
-    "@typescript-eslint/utils": "^8.70.0",
+    "@typescript-eslint/utils": "^8.70.1",
     "@vitest/coverage-v8": "^5.0.1",
     "happy-dom": "^20.14.5",
     "lit": "^3.3.3",

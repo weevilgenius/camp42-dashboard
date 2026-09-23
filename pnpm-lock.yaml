@@ -219,8 +219,8 @@ importers:
         version: 7.4.0(firebase-admin@14.4.0(@firebase/app-compat@0.5.18)(@firebase/app@0.16.2))
     devDependencies:
       dotenv:
-        specifier: ^18.0.1
-        version: 18.0.1
+        specifier: ^18.0.3
+        version: 18.0.3
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(postcss@8.5.28)(tsx@4.23.15)(typescript@6.0.3)
@@ -2328,8 +2328,8 @@ packages:
   dom-accessibility-api@0.6.3:
     resolution: {integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==}
 
-  dotenv@18.0.1:
-    resolution: {integrity: sha512-0eR4m4D/jH5eaI3evo2ZqqMii5mrTCR12v12VChdie6O1gPHs7XAjzTep0CWc1Bd+oNx3vVfbi734dK4zghigw==}
+  dotenv@18.0.3:
+    resolution: {integrity: sha512-/8CJTyL817qPnfbQrJgOEcrU3fDrJkRIoXBE566wHuvIXKOCHUZhPqGPbCPi9SogjdGnreF0TlvnTgK6J/8zpA==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -5845,7 +5845,7 @@ snapshots:
 
   dom-accessibility-api@0.6.3: {}
 
-  dotenv@18.0.1: {}
+  dotenv@18.0.3: {}
 
   dunder-proto@1.0.1:
     dependencies:

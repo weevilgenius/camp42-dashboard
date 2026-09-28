@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "24"
+    "node": ">=24"
   },
   "scripts": {
     "build": "pnpm --recursive run build",
@@ -15,11 +15,11 @@
     "test": "pnpm --recursive run test",
     "sync-versions": "tsx scripts/sync-versions.ts"
   },
-  "packageManager": "pnpm@11.27.1",
+  "packageManager": "pnpm@11.28.2",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "12.6.0",
+      "version": "12.8.1",
       "onFail": "download"
     }
   },

@@ -15,7 +15,7 @@
     "test": "vitest run"
   },
   "engines": {
-    "node": "24"
+    "node": ">=24"
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^5.0.5",

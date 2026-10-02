@@ -15,7 +15,7 @@
     "test": "pnpm --recursive run test",
     "sync-versions": "tsx scripts/sync-versions.ts"
   },
-  "packageManager": "pnpm@11.28.2",
+  "packageManager": "pnpm@11.28.3",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
@@ -31,10 +31,10 @@
     "eslint": "^10.11.0",
     "eslint-plugin-storybook": "^10.6.0",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "tsx": "^4.23.15",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.70.1",
+    "typescript-eslint": "^8.71.0",
     "vitest": "^5.0.2"
   }
 }

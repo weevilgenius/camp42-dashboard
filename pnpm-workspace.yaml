@@ -2,12 +2,17 @@ packages:
   - apps/*
   - shared
   - mocks
-allowBuilds:
-  '@firebase/util': true
-  '@google/genai': false
-  esbuild: true
-  protobufjs: true
-  unrs-resolver: true
+permissions:
+  '@firebase/util':
+    build: true
+  '@google/genai':
+    build: false # postinstall hook is a noop placeholder
+  esbuild:
+    build: true
+  protobufjs:
+    build: true
+  unrs-resolver:
+    build: true
 autoDedupe: true
 saveTypes: true
 peerDependencyRules:

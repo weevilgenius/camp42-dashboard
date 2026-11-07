@@ -56,6 +56,10 @@ Use the frontend Playwright screenshot command to inspect light/dark mode,
 mobile layouts, and general UI changes. It reuses a dev server at port 5173 or
 starts a temporary Vite server and stops it after capture.
 
+Chromium is not downloaded by `pnpm install`. The screenshot script installs
+Playwright's Chromium on first use, or uses the one preinstalled at
+`/opt/pw-browsers/chromium` in cloud containers (`apps/frontend/scripts/chromium.ts`).
+
 - Capture a screenshot: `pnpm --filter @camp42/frontend screenshot -- [options]`
   - `--out <file>` output path (default `screenshots/screenshot.png`)
   - `--theme <light|dark>` color scheme (default `light`)

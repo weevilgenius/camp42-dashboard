@@ -4,6 +4,7 @@ import { parseArgs } from 'node:util';
 import process from 'node:process';
 import { chromium, devices } from '@playwright/test';
 import { createServer } from 'vite';
+import { chromiumPath } from './chromium';
 
 const { values } = parseArgs({
   args: process.argv.slice(2).filter((argument) => argument !== '--'),
@@ -45,7 +46,7 @@ if (!values.url && !(await serverRunning(baseUrl))) {
   await server.listen();
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: chromiumPath() });
 try {
   const context = await browser.newContext({
     colorScheme: values.theme === 'dark' ? 'dark' : 'light',

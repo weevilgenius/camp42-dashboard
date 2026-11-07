@@ -31,8 +31,8 @@
   "devDependencies": {
     "@camp42/mocks": "workspace:*",
     "@playwright/test": "^1.65.0",
-    "@storybook/addon-a11y": "^10.6.3",
-    "@storybook/web-components-vite": "^10.6.3",
+    "@storybook/addon-a11y": "^10.6.6",
+    "@storybook/web-components-vite": "^10.6.6",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/user-event": "^14.6.8",
     "@types/mithril": "^2.2.9",
@@ -41,7 +41,7 @@
     "happy-dom": "^21.0.4",
     "lit": "^3.3.3",
     "rollup-plugin-visualizer": "^7.1.2",
-    "storybook": "^10.6.3",
+    "storybook": "^10.6.6",
     "vite": "^8.3.6"
   }
 }

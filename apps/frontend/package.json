@@ -38,7 +38,7 @@
     "@types/mithril": "^2.2.9",
     "@typescript-eslint/utils": "^8.72.1",
     "@vitest/coverage-v8": "^5.1.0",
-    "happy-dom": "^21.0.3",
+    "happy-dom": "^21.0.4",
     "lit": "^3.3.3",
     "rollup-plugin-visualizer": "^7.1.2",
     "storybook": "^10.6.3",

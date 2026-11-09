@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
-    "build": "tsup",
+    "build": "vite build",
     "lint": "eslint src tests",
     "check": "pnpm run typecheck && pnpm run lint && pnpm run test",
     "serve": "pnpm run build && cd ../.. && firebase emulators:start --only functions,database --import ./emulator_data",
@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "dotenv": "^18.0.9",
-    "tsup": "^9.0.0"
+    "vite": "^8.3.6"
   }
 }

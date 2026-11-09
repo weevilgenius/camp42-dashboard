@@ -10,7 +10,7 @@ via the Ecoflow API and the local weather via a Tempest weather station.
 This project is structured as a `pnpm` workspace, sharing TypeScript interfaces between a Vite frontend and a Firebase Cloud Functions backend.
 
 - **`apps/frontend`**: A mobile-friendly web dashboard built with Vite, Mithril, and WebAwesome.
-- **`apps/backend`**: Firebase Cloud Functions (2nd Gen, Node 24, ESM). It uses `tsup` to bundle the TypeScript source and inline shared workspace dependencies for seamless cloud deployment.
+- **`apps/backend`**: Firebase Cloud Functions (2nd Gen, Node 24, ESM). It uses a Vite SSR build (`vite build`) to bundle the TypeScript source and inline shared workspace dependencies for seamless cloud deployment.
 - **`shared`**: An internal local package (`@camp42/shared`) containing the TypeScript interfaces and data contracts used by both the frontend and backend.
 
 ### Front End

@@ -6,7 +6,7 @@
     "paths": {
       "@camp42/shared": ["../../shared/src/index.ts"],
     },
-    "noEmit": true, // tsup handles compiling
+    "noEmit": true, // vite handles compiling
     "allowImportingTsExtensions": true
   },
   "include": [

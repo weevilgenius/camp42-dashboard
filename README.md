@@ -8,7 +8,7 @@ and solar, via Ecoflow, weather via Tempest, and on site cameras.
 This project is a monorepo using **pnpm workspace** with three packages:
 
 - **`apps/frontend`** -- Vite + Mithril + Web Awesome. A lightweight SPA that displays camp status.
-- **`apps/backend`** -- Firebase Cloud Functions (2nd Gen, Node 24, ESM). Bundled with tsup, which inlines the shared package for seamless cloud deployment.
+- **`apps/backend`** -- Firebase Cloud Functions (2nd Gen, Node 24, ESM). Bundled with a Vite SSR build, which inlines the shared package for seamless cloud deployment.
 - **`shared`** -- `@camp42/shared`, an internal package containing TypeScript interfaces and data contracts used by both frontend and backend.
 - **`mocks`** -- `@camp42/mocks`, mock data factories and scenarios for frontend development and testing without live APIs.
 

@@ -254,8 +254,8 @@ importers:
         specifier: ^10.6.6
         version: 10.6.6(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))
       '@storybook/web-components-vite':
-        specifier: ^10.6.6
-        version: 10.6.6(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))
+        specifier: ^10.6.7
+        version: 10.6.7(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))
       '@testing-library/dom':
         specifier: ^10.4.2
         version: 10.4.2
@@ -1636,10 +1636,10 @@ packages:
     peerDependencies:
       storybook: ^10.6.6
 
-  '@storybook/builder-vite@10.6.6':
-    resolution: {integrity: sha512-DIA992qGuPZpTZqupWuhw3upWc6Qphm0tQFfSnCpgr5Nlvhe0C5Mth9eYz7CUpy49szJ6eOgQ2V8ktKtKaXyNA==}
+  '@storybook/builder-vite@10.6.7':
+    resolution: {integrity: sha512-6DI3XP4He/nMMK4vGLl9tkneygr5bJvYx5EwNZMzw15tCosvGuWRREBvWqTHjZdoRa8HJpqosoFm60splBoAew==}
     peerDependencies:
-      storybook: ^10.6.6
+      storybook: ^10.6.7
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
 
   '@storybook/global@5.0.0':
@@ -1650,17 +1650,17 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@storybook/web-components-vite@10.6.6':
-    resolution: {integrity: sha512-ua90VwBz53HD/c6AZBZ2lROEDvGsCh4teoUgFr3W5StNxGInlMLzFZ+aMg1kp77MuqsEeMuPH62BMOZqlDCYWw==}
+  '@storybook/web-components-vite@10.6.7':
+    resolution: {integrity: sha512-c+wmIc/h7pkyOuli+pwhk17MiA2RYdDdFjvgIc0+EH2b4oxb24NMl6m702yRDQ83hw26ZchYV6CoiY4wFDjgWQ==}
     peerDependencies:
-      storybook: ^10.6.6
+      storybook: ^10.6.7
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  '@storybook/web-components@10.6.6':
-    resolution: {integrity: sha512-BnDbihM8ZbeCKgUPMO/w7J42HOXbvbcqEa6iYGGV2f4nUycIaV/hp45dXx3o1IxAyjpBGccSsA0N+bVlnWkzzg==}
+  '@storybook/web-components@10.6.7':
+    resolution: {integrity: sha512-cCGI3eY36MketHeAgJyf3YfH2X2QmfRTWmDfexa6f1IeLgmgAQC9k1Tg+vST5mTCZRc9HyT9s3BhNqZc4i+/0Q==}
     peerDependencies:
       lit: ^2.0.0 || ^3.0.0
-      storybook: ^10.6.6
+      storybook: ^10.6.7
 
   '@stylistic/eslint-plugin@5.10.0':
     resolution: {integrity: sha512-nPK52ZHvot8Ju/0A4ucSX1dcPV2/1clx0kLcH5wDmrE4naKso7TUC/voUyU1O9OTKTrR6MYip6LP0ogEMQ9jPQ==}
@@ -5019,7 +5019,7 @@ snapshots:
       axe-core: 4.14.0
       storybook: 10.6.6(@types/react@19.3.0)(react@19.3.1)
 
-  '@storybook/builder-vite@10.6.6(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))':
+  '@storybook/builder-vite@10.6.7(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))':
     dependencies:
       storybook: 10.6.6(@types/react@19.3.0)(react@19.3.1)
       ts-dedent: 2.3.0
@@ -5031,16 +5031,16 @@ snapshots:
     dependencies:
       react: 19.3.1
 
-  '@storybook/web-components-vite@10.6.6(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))':
+  '@storybook/web-components-vite@10.6.7(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))':
     dependencies:
-      '@storybook/builder-vite': 10.6.6(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))
-      '@storybook/web-components': 10.6.6(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))
+      '@storybook/builder-vite': 10.6.7(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))
+      '@storybook/web-components': 10.6.7(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))
       storybook: 10.6.6(@types/react@19.3.0)(react@19.3.1)
       vite: 8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15)
     transitivePeerDependencies:
       - lit
 
-  '@storybook/web-components@10.6.6(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))':
+  '@storybook/web-components@10.6.7(lit@3.3.3)(storybook@10.6.6(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@storybook/global': 5.0.0
       lit: 3.3.3

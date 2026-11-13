@@ -22,7 +22,7 @@
     "@types/node": "^24.19.2",
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^10.14.0",
-    "eslint-plugin-storybook": "^10.6.6",
+    "eslint-plugin-storybook": "^10.6.7",
     "eslint-plugin-unused-imports": "^4.4.1",
     "globals": "^17.14.0",
     "tsx": "^4.23.15",

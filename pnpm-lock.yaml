@@ -213,8 +213,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
       '@google/genai':
-        specifier: ^2.32.0
-        version: 2.32.0
+        specifier: ^3.3.0
+        version: 3.3.0
       firebase-admin:
         specifier: ^14.5.1
         version: 14.5.1(@firebase/app-compat@0.5.22)(@firebase/app@0.16.6)
@@ -860,9 +860,9 @@ packages:
     resolution: {integrity: sha512-M3kA6UA2Tjp5aznCrgKcm9CzOjiQyRMnquqalqXAeS5wvkqqZxN8wpNjjHafOSYs6lQ82U7f2i8we4eTfIrpkA==}
     engines: {node: '>=22'}
 
-  '@google/genai@2.32.0':
-    resolution: {integrity: sha512-60c79uXpR0a47bmGqDxbXEBuQUalNmwo5mx5kqb91jIW4FoqpsLSt86DeVhRhtH5+s/16Wqxt3sXzFQn2U1OHQ==}
-    engines: {node: '>=20.0.0'}
+  '@google/genai@3.3.0':
+    resolution: {integrity: sha512-XLjXedj0X8UrULZz1GnlTMSQxBDFdr+NCKZkOBaSVVYqmK30C6FCnKW31Ppn0ItO9DpNspCHFui257kPNpumKQ==}
+    engines: {node: '>=22.0.0'}
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.25.2
     peerDependenciesMeta:
@@ -4451,7 +4451,7 @@ snapshots:
       - supports-color
     optional: true
 
-  '@google/genai@2.32.0':
+  '@google/genai@3.3.0':
     dependencies:
       google-auth-library: 10.9.1
       p-retry: 4.6.2

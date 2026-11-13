@@ -21,3 +21,5 @@ peerDependencyRules:
     "@lit-labs/ssr>@types/node": ">=20"
 lockfile:
   includeResolutionSettings: true
+minimumReleaseAgeExclude:
+  - '@google/genai@3.3.0'

@@ -34,7 +34,7 @@
     "@storybook/addon-a11y": "^10.6.7",
     "@storybook/web-components-vite": "^10.6.7",
     "@testing-library/dom": "^10.4.2",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.10",
     "@types/mithril": "^2.2.9",
     "@typescript-eslint/utils": "^8.72.2",
     "@vitest/coverage-v8": "^5.1.0",

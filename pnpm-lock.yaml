@@ -251,8 +251,8 @@ importers:
   apps/frontend:
     dependencies:
       '@awesome.me/webawesome':
-        specifier: ^3.14.0
-        version: 3.14.0(@floating-ui/utils@0.2.12)(@types/node@24.19.2)(@types/react@19.3.0)
+        specifier: ^3.15.0
+        version: 3.15.0(@floating-ui/utils@0.2.12)(@types/node@24.19.2)(@types/react@19.3.0)
       '@camp42/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -319,8 +319,8 @@ packages:
   '@adobe/css-tools@4.5.0':
     resolution: {integrity: sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q==}
 
-  '@awesome.me/webawesome@3.14.0':
-    resolution: {integrity: sha512-m5rTGLK/iOvaVFOkYxRjiBOp8lwrBap5tv+zz1gsqLgAxlfwdvElB7BVGjs+Lf9gDps7bWRPTkG0FwZk40mk2A==}
+  '@awesome.me/webawesome@3.15.0':
+    resolution: {integrity: sha512-r2RWOu/QAaTShbTy3QfpOw+j2Mc7z+iY/PA1rBbsmrWOm2DMv7K2wNYe4IXt6TgTswkrKuQM19RCGC5FJh7GFg==}
     engines: {node: '>=14.17.0'}
 
   '@babel/code-frame@7.29.7':
@@ -2801,6 +2801,10 @@ packages:
     resolution: {integrity: sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==}
     engines: {node: '>=18'}
 
+  microlighter@2.2.0:
+    resolution: {integrity: sha512-XFUHmKclX4taKWVpYkqJ/GlfUS27FzQTCph1u3v9OwkmQJGXry3Pk1e7SivLz6xGOCxRVyi3DSrztF3e460jrg==}
+    engines: {node: '>=18'}
+
   mime-db@1.54.0:
     resolution: {integrity: sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==}
     engines: {node: '>= 0.6'}
@@ -3547,7 +3551,7 @@ snapshots:
 
   '@adobe/css-tools@4.5.0': {}
 
-  '@awesome.me/webawesome@3.14.0(@floating-ui/utils@0.2.12)(@types/node@24.19.2)(@types/react@19.3.0)':
+  '@awesome.me/webawesome@3.15.0(@floating-ui/utils@0.2.12)(@types/node@24.19.2)(@types/react@19.3.0)':
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@floating-ui/dom': 1.8.0
@@ -3561,6 +3565,7 @@ snapshots:
       composed-offset-position: 0.0.6(@floating-ui/utils@0.2.12)
       lit: 3.3.3
       marked: 11.2.0
+      microlighter: 2.2.0
       nanoid: 5.1.16
     transitivePeerDependencies:
       - '@floating-ui/utils'
@@ -6091,6 +6096,8 @@ snapshots:
   media-typer@1.1.1: {}
 
   merge-descriptors@2.0.0: {}
+
+  microlighter@2.2.0: {}
 
   mime-db@1.54.0: {}
 

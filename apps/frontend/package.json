@@ -32,7 +32,7 @@
     "@camp42/mocks": "workspace:*",
     "@playwright/test": "^1.65.1",
     "@storybook/addon-a11y": "^10.6.8",
-    "@storybook/web-components-vite": "^10.6.8",
+    "@storybook/web-components-vite": "^10.6.9",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/user-event": "^14.6.13",
     "@types/mithril": "^2.2.9",

@@ -270,8 +270,8 @@ importers:
         specifier: ^1.65.1
         version: 1.65.1
       '@storybook/addon-a11y':
-        specifier: ^10.6.8
-        version: 10.6.8(storybook@10.6.8(@types/react@19.3.0)(react@19.3.1))
+        specifier: ^10.6.9
+        version: 10.6.9(storybook@10.6.8(@types/react@19.3.0)(react@19.3.1))
       '@storybook/web-components-vite':
         specifier: ^10.6.8
         version: 10.6.8(lit@3.3.3)(storybook@10.6.8(@types/react@19.3.0)(react@19.3.1))(vite@8.3.8(@types/node@24.19.2)(esbuild@0.28.2)(tsx@4.23.15))
@@ -1484,10 +1484,10 @@ packages:
   '@shoelace-style/localize@3.2.3':
     resolution: {integrity: sha512-pWoZywizMilenLfQcpE9bjaqi7WKiQXJB42cxvmSPwYS76U776wJ7B5QQ0P28yVit1vpHuFZzq1CtfVFv32jaQ==}
 
-  '@storybook/addon-a11y@10.6.8':
-    resolution: {integrity: sha512-+tzs6nyvy4A4/tCFcXZoYrt7d5K8nQN8p7H1nP1GFicTHY4mlQpebP2PZUBcitupXUpyvHfYvw8fJUhrQKJC4Q==}
+  '@storybook/addon-a11y@10.6.9':
+    resolution: {integrity: sha512-z+nQJ0yCIRovchelyzE5I1ReujJ0FdTcA3eMyzB7zM+zZbUc3OO6NqDMdyYNhybocNbhVH5+wa2Jd470HeOnvQ==}
     peerDependencies:
-      storybook: ^10.6.8
+      storybook: ^10.6.9
 
   '@storybook/builder-vite@10.6.8':
     resolution: {integrity: sha512-prL9t88RSzN3uk8Kzx5LnkqIODhRbwKa0PMryTlIEcew1J1hAiXcCNCJTDM5uhKjTO8s4OSBsCozVozdd+C2TQ==}
@@ -4674,7 +4674,7 @@ snapshots:
 
   '@shoelace-style/localize@3.2.3': {}
 
-  '@storybook/addon-a11y@10.6.8(storybook@10.6.8(@types/react@19.3.0)(react@19.3.1))':
+  '@storybook/addon-a11y@10.6.9(storybook@10.6.8(@types/react@19.3.0)(react@19.3.1))':
     dependencies:
       '@storybook/global': 5.0.0
       axe-core: 4.14.1
